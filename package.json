@@ -1,0 +1,19 @@
+{
+  "name": "javascript-lessons",
+  "version": "1.0.0",
+  "description": "JavaScriptの練習用",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kobayashi-m42/javascript-lessons.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kobayashi-m42/javascript-lessons/issues"
+  },
+  "homepage": "https://github.com/kobayashi-m42/javascript-lessons#readme"
+}
