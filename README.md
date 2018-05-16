@@ -1,2 +1,2 @@
-# javascript-lessens
+# javascript-lessons
 JavaScriptの練習用
