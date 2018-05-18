@@ -41,7 +41,7 @@ body {
   width: 90px;
 }
 
-.spin {
+#spin {
   background: #3498db;
   border-radius: 20px;
   box-shadow: 0 3px 0 #2880b9;
