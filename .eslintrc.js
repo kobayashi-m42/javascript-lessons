@@ -8,7 +8,8 @@ module.exports = {
     },
     "rules": {
         "prettier/prettier": [
-            "error"
+            "error",
+            {"singleQuote": true}
         ]
     }
 };
