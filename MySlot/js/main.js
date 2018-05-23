@@ -10,6 +10,7 @@
 
   const timers = [];
   const panelsLength = panels.length;
+  let stopCount = 0;
 
   /**
    * スロットの実行
@@ -24,21 +25,53 @@
   };
 
   /**
-   * パネルの停止
+   * 結果を判定
    */
-  const stopPanel = () => {
-    for (let i = 0; i < panelsLength; i += 1) {
-      panels[i].children[1].addEventListener('click', (e) => {
-        clearTimeout(timers[e.target.dataset.index]);
-      });
+  const checkResults = () => {
+    const img0 = panels[0].children[0];
+    const img1 = panels[1].children[0];
+    const img2 = panels[2].children[0];
+
+    if (img0.src !== img1.src && img0.src !== img2.src) {
+      img0.className = 'unmatched';
+    }
+    if (img1.src !== img0.src && img1.src !== img2.src) {
+      img1.className = 'unmatched';
+    }
+    if (img2.src !== img0.src && img2.src !== img1.src) {
+      img2.className = 'unmatched';
     }
   };
 
-  stopPanel();
+  /**
+   * パネルの停止
+   *
+   * @param e
+   */
+  const stopPanel = (e) => {
+    clearTimeout(timers[e.target.dataset.index]);
+    stopCount += 1;
+    if (stopCount === panelsLength) {
+      stopCount = 0;
+      checkResults();
+    }
+  };
+
+  /**
+   * パネル押下時のイベント作成
+   */
+  const createPanelEvent = () => {
+    for (let i = 0; i < panelsLength; i += 1) {
+      panels[i].children[1].addEventListener('click', (e) => { stopPanel(e); });
+    }
+  };
+
+  createPanelEvent();
 
   spin.addEventListener('click', () => {
     for (let i = 0; i < panelsLength; i += 1) {
       runSlot(i);
+      panels[i].children[0].className = '';
     }
   });
 })();
