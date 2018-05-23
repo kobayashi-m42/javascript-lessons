@@ -2,11 +2,7 @@
   const panels = document.getElementsByClassName('panel');
   const spin = document.getElementById('spin');
 
-  const cards = [
-    'seven.png',
-    'bell.png',
-    'cherry.png',
-  ];
+  const cards = ['seven.png', 'bell.png', 'cherry.png'];
 
   const timers = [];
   const panelsLength = panels.length;
@@ -17,9 +13,11 @@
    *
    * @param n
    */
-  const runSlot = (n) => {
+  const runSlot = n => {
     timers[n] = setTimeout(() => {
-      panels[n].children[0].src = `img/${cards[Math.floor(Math.random() * cards.length)]}`;
+      panels[n].children[0].src = `img/${
+        cards[Math.floor(Math.random() * cards.length)]
+      }`;
       runSlot(n);
     }, 50);
   };
@@ -48,12 +46,17 @@
    *
    * @param e
    */
-  const stopPanel = (e) => {
+  const stopPanel = e => {
+    if (e.target.className.indexOf('inactive') !== -1) {
+      return;
+    }
     clearTimeout(timers[e.target.dataset.index]);
+    panels[e.target.dataset.index].children[1].className = 'stop inactive';
     stopCount += 1;
     if (stopCount === panelsLength) {
       stopCount = 0;
       checkResults();
+      spin.className = '';
     }
   };
 
@@ -62,16 +65,23 @@
    */
   const createPanelEvent = () => {
     for (let i = 0; i < panelsLength; i += 1) {
-      panels[i].children[1].addEventListener('click', (e) => { stopPanel(e); });
+      panels[i].children[1].addEventListener('click', e => {
+        stopPanel(e);
+      });
     }
   };
 
   createPanelEvent();
 
-  spin.addEventListener('click', () => {
+  spin.addEventListener('click', e => {
+    if (e.target.className.indexOf('inactive') !== -1) {
+      return;
+    }
     for (let i = 0; i < panelsLength; i += 1) {
+      e.target.className = 'inactive';
       runSlot(i);
       panels[i].children[0].className = '';
+      panels[i].children[1].className = 'stop';
     }
   });
 })();
