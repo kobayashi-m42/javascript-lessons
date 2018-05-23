@@ -54,3 +54,7 @@ body {
   user-select: none;
   width: 280px;
 }
+
+.unmatched {
+  opacity: 0.6;
+}
