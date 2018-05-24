@@ -1,0 +1,35 @@
+body {
+  background: #ddd;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.stage {
+  height: 260px;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 500px;
+}
+
+#cards {
+  height: 260px;
+  transition: 0.8s;
+  width: 1500px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  float: left;
+  height: 210px;
+  padding: 25px;
+  width: 450px;
+}
+
+.card + .card {
+  margin-left: 500px;
+}
+
+#cards.move {
+  transform: translate(-1000px, 0);
+}
