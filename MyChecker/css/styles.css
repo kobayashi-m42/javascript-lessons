@@ -33,3 +33,41 @@ body {
 #cards.move {
   transform: translate(-1000px, 0);
 }
+
+.left-side {
+  float: left;
+  width: 160px;
+}
+
+.left-side img {
+  border-radius: 10px;
+}
+
+.right-side {
+  float: right;
+  text-align: center;
+  width: 260px;
+}
+
+.right-side h1 {
+  margin: 10px 0;
+}
+
+.card input {
+  font-size: 14px;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 230px;
+}
+
+.btn {
+  background: #35ac64;
+  border-radius: 20px;
+  box-shadow: 0 5px 0 green;
+  color: #fff;
+  cursor: pointer;
+  height: 45px;
+  line-height: 45px;
+  margin: 0 auto;
+  width: 200px;
+}
