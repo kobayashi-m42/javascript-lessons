@@ -66,8 +66,28 @@ body {
   box-shadow: 0 5px 0 green;
   color: #fff;
   cursor: pointer;
+  display: block;
   height: 45px;
   line-height: 45px;
   margin: 0 auto;
+  text-decoration: none;
   width: 200px;
+}
+
+#tweet {
+  background: #1da1f2;
+  box-shadow: 0 5px 0 #006dbf;
+  margin-bottom: 20px;
+}
+
+#result_name,
+#result_message,
+#result_job,
+#result_type {
+  font-weight:  bold;
+}
+
+#retry {
+  cursor: pointer;
+  text-decoration: underline;
 }
