@@ -35,6 +35,8 @@ body {
 }
 
 .left-side {
+  background-size: cover;
+  border-radius: 10px;
   float: left;
   width: 160px;
 }
@@ -91,3 +93,15 @@ body {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.bg-fire {
+  background-image: url(../img/bg-fire.gif);
+}
+
+.bg-water {
+  background-image: url(../img/bg-water.gif);
+}
+
+.bg-thunder {
+   background-image: url(../img/bg-thunder.gif);
+ }
