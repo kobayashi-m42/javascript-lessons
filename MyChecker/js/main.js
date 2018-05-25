@@ -2,7 +2,9 @@
   const cards = document.getElementById('cards');
   const check = document.getElementById('check');
   const retry = document.getElementById('retry');
+  const userName = document.getElementById('user_name');
 
+  userName.focus();
   /**
    * キャラクラーを生成する
    *
@@ -45,6 +47,11 @@
       document.getElementById(id).textContent = text;
     };
 
+    if (userName.value === '' || userName.value.length > 10) {
+      userName.value = '名無し';
+    }
+
+    displayTextContent('result_name', userName.value);
     displayTextContent('result_message', characterContents.message);
     displayTextContent('result_job', characterContents.job.name);
     displayTextContent('result_type', characterContents.type.name);
@@ -69,5 +76,7 @@
 
   retry.addEventListener('click', () => {
     cards.className = '';
+    userName.value = '';
+    userName.focus();
   });
 })();
