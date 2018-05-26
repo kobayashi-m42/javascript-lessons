@@ -1,0 +1,23 @@
+body {
+  background: #102f44;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.box + .box {
+  margin-left: 40px;
+}
+
+.container {
+  margin: 30px auto;
+  width: 335px;
+}
+
+.boxes {
+  font-size: 0;
+  margin-bottom: 40px;
+}
+
+.box {
+  cursor: pointer;
+}
