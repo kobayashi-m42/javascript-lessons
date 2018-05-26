@@ -3,6 +3,7 @@
   const check = document.getElementById('check');
   const retry = document.getElementById('retry');
   const userName = document.getElementById('user_name');
+  const tweet = document.getElementById('tweet');
 
   userName.focus();
   /**
@@ -61,12 +62,22 @@
     resultImg.className = `left-side ${characterContents.type.img}`;
   };
 
+  const addTweetUrl = characterContents => {
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${
+      userName.value
+    }さんは${characterContents.message}${
+      characterContents.job.name
+    }でした！&hashtags=dotinstall`;
+    tweet.href = tweetUrl;
+  };
+
   /**
    * 診断ボタンが押された時の挙動
    */
   const handleCheckBtnClick = () => {
     const characterContents = createCharacterContents();
     displayCharacterContents(characterContents);
+    addTweetUrl(characterContents);
   };
 
   check.addEventListener('click', () => {
