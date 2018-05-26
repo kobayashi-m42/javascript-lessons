@@ -34,3 +34,8 @@ body {
   50% {transform: rotate(-8deg) translate(-1px, 0);}
   100% {transform: rotate(8deg) translate(1px, 0);}
 }
+
+.box.disabled {
+  cursor: auto;
+  opacity: 0.5;
+}
