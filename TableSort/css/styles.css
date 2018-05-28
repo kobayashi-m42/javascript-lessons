@@ -1,0 +1,29 @@
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 16px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 20px auto;
+  width: 540px;
+}
+
+th, td {
+  border: 1px solid #e9eae8;
+  box-sizing: border-box;
+  padding: 8px 20px;
+  width: 180px;
+}
+
+tbody tr:nth-child(odd) {
+  background: #f8f8f8;
+}
+
+.score {
+  text-align: right;
+}
+
+th {
+  cursor: pointer;
+}
