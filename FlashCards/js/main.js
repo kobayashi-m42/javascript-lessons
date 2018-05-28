@@ -16,19 +16,19 @@
     card.className = card.className === '' ? 'open' : '';
   };
 
-  const setCard = () => {
+  const displayCard = () => {
     const wordsNumber = Math.floor(Math.random() * words.length);
     cardFront.innerHTML = words[wordsNumber].en;
     cardBack.innerHTML = words[wordsNumber].ja;
-    card.removeEventListener('transitionend', setCard);
+    card.removeEventListener('transitionend', displayCard);
   };
 
   const next = () => {
     if (card.className === 'open') {
-      card.addEventListener('transitionend', setCard);
+      card.addEventListener('transitionend', displayCard);
       flip();
     } else {
-      setCard();
+      displayCard();
     }
   };
 
@@ -40,5 +40,5 @@
     next();
   });
 
-  setCard();
+  displayCard();
 })();
