@@ -4,7 +4,8 @@ module.exports = {
         "plugin:prettier/recommended"
     ],
     "globals": {
-        "document": true
+        "document": true,
+        "window": true,
     },
     "rules": {
         "prettier/prettier": [
