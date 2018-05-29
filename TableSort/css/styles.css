@@ -27,3 +27,25 @@ tbody tr:nth-child(odd) {
 th {
   cursor: pointer;
 }
+
+th::after {
+  color: #ccc;
+  content: '\f0dc';
+  float: right;
+  font-family: FontAwesome;
+  font-size: 12px;
+  font-weight: normal;
+  padding-top: 4px;
+}
+
+th.asc:after {
+  color: #000;
+  content: '\f0de';
+  font-family: FontAwesome;
+}
+
+th.desc:after {
+  color: #000;
+  content: '\f0dd';
+  font-family: FontAwesome;
+}
