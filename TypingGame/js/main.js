@@ -1,18 +1,26 @@
 (() => {
+  const words = ['apple', 'imagine', 'supply', 'fun', 'happy', 'air', 'sky'];
+
   const target = document.getElementById('target');
   const scoreLabel = document.getElementById('score');
   const missLabel = document.getElementById('miss');
 
-  let currentWord = 'apple';
-  let currentLocation = 0;
-  let score = 0;
-  let miss = 0;
+  let currentWord;
+  let currentLocation;
+  let score;
+  let miss;
+  let isStarted = false;
 
-  const words = ['apple', 'imagine', 'supply', 'fun', 'happy', 'air', 'sky'];
-
-  target.innerText = currentWord;
-  scoreLabel.innerText = score;
-  missLabel.innerText = miss;
+  const init = () => {
+    currentWord = 'click to start';
+    currentLocation = 0;
+    score = 0;
+    miss = 0;
+    isStarted = false;
+    target.innerText = currentWord;
+    scoreLabel.innerText = score;
+    missLabel.innerText = miss;
+  };
 
   const configureTarget = () => {
     currentWord = words[Math.floor(Math.random() * words.length)];
@@ -20,11 +28,22 @@
     currentLocation = 0;
   };
 
+  window.addEventListener('click', () => {
+    if (isStarted) {
+      return;
+    }
+    isStarted = true;
+    configureTarget();
+  });
+
   window.addEventListener('keyup', e => {
     if (
       String.fromCharCode(e.keyCode) ===
       currentWord[currentLocation].toUpperCase()
     ) {
+      if (!isStarted) {
+        return;
+      }
       currentLocation += 1;
 
       let placeholder = '';
@@ -46,4 +65,6 @@
       missLabel.innerText = miss;
     }
   });
+
+  init();
 })();
