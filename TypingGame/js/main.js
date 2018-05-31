@@ -4,11 +4,13 @@
   const target = document.getElementById('target');
   const scoreLabel = document.getElementById('score');
   const missLabel = document.getElementById('miss');
+  const timerLabel = document.getElementById('timer');
 
   let currentWord;
   let currentLocation;
   let score;
   let miss;
+  let timer;
   let isStarted = false;
 
   const init = () => {
@@ -16,10 +18,12 @@
     currentLocation = 0;
     score = 0;
     miss = 0;
+    timer = 3;
     isStarted = false;
     target.innerText = currentWord;
     scoreLabel.innerText = score;
     missLabel.innerText = miss;
+    timerLabel.innerText = timer;
   };
 
   const configureTarget = () => {
@@ -28,12 +32,26 @@
     currentLocation = 0;
   };
 
+  const updateTimer = () => {
+    setTimeout(() => {
+      timer -= 1;
+      timerLabel.innerText = timer;
+      if (timer <= 0) {
+        alert('game over!!');
+        init();
+        return;
+      }
+      updateTimer();
+    }, 1000);
+  };
+
   window.addEventListener('click', () => {
     if (isStarted) {
       return;
     }
     isStarted = true;
     configureTarget();
+    updateTimer();
   });
 
   window.addEventListener('keyup', e => {

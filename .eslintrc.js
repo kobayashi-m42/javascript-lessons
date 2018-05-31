@@ -6,6 +6,7 @@ module.exports = {
     "globals": {
         "document": true,
         "window": true,
+        "alert": true,
     },
     "rules": {
         "prettier/prettier": [
