@@ -5,7 +5,7 @@
 
   const createPanel = panelNumber => {
     const panel = document.createElement('div');
-    panel.className = 'panel';
+    panel.className = 'panel hidden';
     panel.textContent = panelNumber;
 
     panel.addEventListener('click', e => {
