@@ -27,11 +27,43 @@ body {
   height: 40px;
   line-height: 40px;
   margin: 5px;
+  position: relative;
   text-align: center;
   width: 40px;
 }
 
+.panel.hidden::after {
+  background: lightgray;
+  border-radius: 5px;
+  box-shadow: 0 4px 0 lightgray;
+  content: '';
+  cursor: pointer;
+  height: 40px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 40px;
+}
 .panel.flipped {
   background:  lightgray;
   box-shadow: 0 4px 0 gray;
+}
+
+#btn {
+  background: #f44336;
+  border-radius: 5px;
+  box-shadow: 0 5px 0 #d1483e;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 7px;
+  text-align: center;
+}
+
+#btn:hover {
+  opacity: .8;
+}
+
+#btn:active {
+  box-shadow: none;
+  margin-top: 15px;
 }
