@@ -59,6 +59,11 @@ body {
   text-align: center;
 }
 
+#btn.restart {
+  background: #24b168;
+  box-shadow: 0 5px 0 #20995b;
+}
+
 #btn:hover {
   opacity: .8;
 }
