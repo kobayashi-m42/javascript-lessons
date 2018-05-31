@@ -18,7 +18,7 @@
     currentLocation = 0;
     score = 0;
     miss = 0;
-    timer = 3;
+    timer = 10;
     isStarted = false;
     target.innerText = currentWord;
     scoreLabel.innerText = score;
@@ -37,7 +37,12 @@
       timer -= 1;
       timerLabel.innerText = timer;
       if (timer <= 0) {
-        alert('game over!!');
+        const accuracy =
+          score + miss === 0
+            ? '0.00'
+            : (score / (score + miss) * 100).toFixed(2);
+
+        alert(`${score} letters, ${miss} miss! ${accuracy} % accuracy`);
         init();
         return;
       }
