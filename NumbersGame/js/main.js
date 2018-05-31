@@ -1,6 +1,6 @@
 (() => {
   const board = document.getElementById('board');
-  const startBottun = document.getElementById('btn');
+  const startButton = document.getElementById('btn');
 
   const SIZE = 3;
   let currentNumber = 0;
@@ -20,15 +20,21 @@
     return panel;
   };
 
+  const panels = [];
   for (let i = 0; i < SIZE * SIZE; i += 1) {
-    board.appendChild(createPanel(i));
+    panels.push(createPanel(i));
   }
 
-  startBottun.addEventListener('click', () => {
-    const panels = document.getElementsByClassName('panel');
-    const panelsLength = panels.length;
+  while (panels.length) {
+    const panel = panels.splice(Math.floor(Math.random() * panels.length), 1);
+    board.appendChild(panel[0]);
+  }
+
+  startButton.addEventListener('click', () => {
+    const hiddnPanels = document.getElementsByClassName('panel');
+    const panelsLength = hiddnPanels.length;
     for (let i = 0; i < panelsLength; i += 1) {
-      panels[i].className = 'panel';
+      hiddnPanels[i].className = 'panel';
     }
   });
 })();
