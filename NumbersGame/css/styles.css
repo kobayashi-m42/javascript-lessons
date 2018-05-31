@@ -6,6 +6,7 @@ body {
 }
 
 #container {
+  color: #fff;
   margin: 0 auto;
   width: 170px;
 }
@@ -28,4 +29,9 @@ body {
   margin: 5px;
   text-align: center;
   width: 40px;
+}
+
+.panel.flipped {
+  background:  lightgray;
+  box-shadow: 0 4px 0 gray;
 }
