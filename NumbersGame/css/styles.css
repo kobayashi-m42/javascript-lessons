@@ -1,0 +1,31 @@
+body {
+  background: #CCC;
+  font-family: 'Courier New', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#container {
+  margin: 0 auto;
+  width: 170px;
+}
+
+#board {
+  background: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.panel {
+  background: #00aaff;
+  border-radius: 5px;
+  box-shadow: 0 4px 0 #0088cc;
+  cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+  margin: 5px;
+  text-align: center;
+  width: 40px;
+}
