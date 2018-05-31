@@ -1,5 +1,4 @@
 (() => {
-  const board = document.getElementById('board');
   const startButton = document.getElementById('btn');
 
   const SIZE = 3;
@@ -20,21 +19,34 @@
     return panel;
   };
 
-  const panels = [];
-  for (let i = 0; i < SIZE * SIZE; i += 1) {
-    panels.push(createPanel(i));
-  }
+  const initBoard = () => {
+    const board = document.getElementById('board');
+    const panels = [];
 
-  while (panels.length) {
-    const panel = panels.splice(Math.floor(Math.random() * panels.length), 1);
-    board.appendChild(panel[0]);
-  }
+    while (board.firstChild) {
+      board.removeChild(board.firstChild);
+    }
+
+    for (let i = 0; i < SIZE * SIZE; i += 1) {
+      panels.push(createPanel(i));
+    }
+
+    while (panels.length) {
+      const panel = panels.splice(Math.floor(Math.random() * panels.length), 1);
+      board.appendChild(panel[0]);
+    }
+  };
+
+  initBoard();
 
   startButton.addEventListener('click', () => {
-    const hiddnPanels = document.getElementsByClassName('panel');
-    const panelsLength = hiddnPanels.length;
+    const hiddenPanels = document.getElementsByClassName('panel');
+    const panelsLength = hiddenPanels.length;
+    initBoard();
     for (let i = 0; i < panelsLength; i += 1) {
-      hiddnPanels[i].className = 'panel';
+      hiddenPanels[i].className = 'panel';
     }
+    startButton.innerText = 'RESTART?';
+    startButton.className = 'restart';
   });
 })();
