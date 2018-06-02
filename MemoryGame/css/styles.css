@@ -44,6 +44,7 @@ body {
   top: 0;
   left: 0;
   backface-visibility: hidden;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .card-front {
@@ -62,4 +63,26 @@ body {
   color: #fff;
   text-align: right;
   margin: 0 5px 10px 0;
+}
+
+#restart {
+  text-decoration: none;
+  display: block;
+  background: #2ecc71;
+  color: #fff;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 15px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+#restart.inactive {
+  cursor: default;
+  opacity: 0.4;
+  box-shadow: none;
+  margin-top: 20px;
+
 }

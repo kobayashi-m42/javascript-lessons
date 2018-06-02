@@ -32,6 +32,9 @@
     if (firstCard !== null && secondCard !== null) {
       return;
     }
+    if (card.className.indexOf('open') !== -1) {
+      return;
+    }
 
     const openCard = card;
     openCard.className = 'card open';
@@ -74,6 +77,7 @@
       startTime = Date.now();
       runTimer();
       isStarted = true;
+      document.getElementById('restart').className = '';
     });
 
     container.appendChild(card);
