@@ -1,5 +1,5 @@
 (() => {
-  const pairs = 4;
+  const pairs = 2;
 
   const createCard = num => {
     const container = document.createElement('div');
@@ -7,6 +7,9 @@
 
     const card = document.createElement('div');
     card.className = 'card';
+    card.addEventListener('click', () => {
+      card.className = 'card open';
+    });
 
     const inner = `<div class="card-front">${num}</div><div class="card-back">?</div>`;
 
