@@ -6,12 +6,22 @@
   let firstCard = null;
   let secondCard = null;
 
+  let startTime;
+  let isStarted = false;
+  let correctCount = 0;
+  let timeoutId;
+
   const judgeNumber = () => {
     if (
       firstCard.children[0].textContent !== secondCard.children[0].textContent
     ) {
       firstCard.className = 'card';
       secondCard.className = 'card';
+    } else {
+      correctCount += 1;
+      if (pairs === correctCount) {
+        clearTimeout(timeoutId);
+      }
     }
     secondCard.removeEventListener('transitionend', judgeNumber);
     firstCard = null;
@@ -36,6 +46,16 @@
     }
   };
 
+  const runTimer = () => {
+    document.getElementById('score').textContent = (
+      (Date.now() - startTime) /
+      1000
+    ).toFixed(2);
+    timeoutId = setTimeout(() => {
+      runTimer();
+    }, 10);
+  };
+
   const createCard = num => {
     const container = document.createElement('div');
     container.className = 'card-container';
@@ -48,6 +68,12 @@
 
     card.addEventListener('click', () => {
       flipCard(card);
+      if (isStarted) {
+        return;
+      }
+      startTime = Date.now();
+      runTimer();
+      isStarted = true;
     });
 
     container.appendChild(card);

@@ -56,3 +56,10 @@ body {
   background: #f1c40f;
   color: #fff;
 }
+
+#score {
+  font-size: 20px;
+  color: #fff;
+  text-align: right;
+  margin: 0 5px 10px 0;
+}
