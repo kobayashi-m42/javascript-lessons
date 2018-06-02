@@ -6,6 +6,18 @@
   let firstCard = null;
   let secondCard = null;
 
+  const judgeNumber = () => {
+    if (
+      firstCard.children[0].textContent !== secondCard.children[0].textContent
+    ) {
+      firstCard.className = 'card';
+      secondCard.className = 'card';
+    }
+    secondCard.removeEventListener('transitionend', judgeNumber);
+    firstCard = null;
+    secondCard = null;
+  };
+
   const flipCard = card => {
     if (firstCard !== null && secondCard !== null) {
       return;
@@ -20,6 +32,7 @@
       firstCard = openCard;
     } else {
       secondCard = openCard;
+      secondCard.addEventListener('transitionend', judgeNumber);
     }
   };
 
