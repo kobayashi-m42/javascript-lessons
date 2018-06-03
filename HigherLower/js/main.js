@@ -30,6 +30,9 @@
   };
 
   const displayResult = guess => {
+    if (wrapper.classList.contains('open')) {
+      return;
+    }
     higherButton.classList.add('disabled');
     lowerButton.classList.add('disabled');
     result.classList.remove('hidden');
@@ -55,6 +58,9 @@
   });
 
   dealerCard.addEventListener('click', () => {
+    if (result.classList.contains('hidden')) {
+      return;
+    }
     higherButton.classList.remove('disabled');
     lowerButton.classList.remove('disabled');
     result.classList.add('hidden');
