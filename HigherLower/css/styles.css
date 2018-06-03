@@ -1,0 +1,98 @@
+body {
+  background: #088a4b;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+}
+
+.container {
+  width: 300px;
+  margin: 100px auto;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dealer,
+.player {
+  width: 50px;
+  height: 70px;
+}
+
+.controls {
+  width: 200px;
+  height: 70px;
+  position: relative;
+}
+
+.dealer,
+.player,
+.controls {
+  float: left;
+}
+
+#result {
+  line-height: 70px;
+  color: #f1c40f;
+}
+
+.btn {
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: green;
+  border: 5px solid #fff;
+  font-size: 14px;
+  color: #fff;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+  line-height: 70px;
+  position: absolute;
+  left: 60px;
+}
+
+#higher {
+  top: -85px;
+}
+
+#lower {
+  top: 70px;
+}
+
+.card {
+  width: 50px;
+  height: 70px;
+  background: #fff;
+  border-radius: 5px;
+  line-height: 70px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.player {
+  perspective: 100px;
+}
+
+#wrapper {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: 0.3s;
+}
+
+#wrapper:active {
+  transform: rotateY(180deg);
+}
+
+.card-back,
+.card-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.card-back {
+  background: #f1c40f;
+  color: #fff;
+}
+
+.card-front {
+  transform: rotateY(180deg);
+}
