@@ -10,6 +10,9 @@ body {
   font-weight: bold;
   text-align: center;
 }
+.dealer {
+  cursor: pointer;
+}
 
 .dealer,
 .player {

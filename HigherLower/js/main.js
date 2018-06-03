@@ -12,12 +12,11 @@
   const generateRandomNum = () => Math.floor(Math.random() * 13 + 1);
 
   const prepareGame = () => {
-    result.classList.add('hidden');
-
     dealerValue = generateRandomNum();
     dealerCard.textContent = dealerValue;
     playerValue = generateRandomNum();
     playerCard.textContent = playerValue;
+    wrapper.removeEventListener('transitionend', prepareGame);
   };
 
   const judgeGuess = guess => {
@@ -51,5 +50,11 @@
 
   lowerButton.addEventListener('click', () => {
     displayResult('lower');
+  });
+
+  dealerCard.addEventListener('click', () => {
+    result.classList.add('hidden');
+    wrapper.classList.remove('open');
+    wrapper.addEventListener('transitionend', prepareGame);
   });
 })();
