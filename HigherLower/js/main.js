@@ -30,6 +30,11 @@
   };
 
   const displayResult = guess => {
+    if (wrapper.classList.contains('open')) {
+      return;
+    }
+    higherButton.classList.add('disabled');
+    lowerButton.classList.add('disabled');
     result.classList.remove('hidden');
     wrapper.classList.add('open');
 
@@ -53,6 +58,11 @@
   });
 
   dealerCard.addEventListener('click', () => {
+    if (result.classList.contains('hidden')) {
+      return;
+    }
+    higherButton.classList.remove('disabled');
+    lowerButton.classList.remove('disabled');
     result.classList.add('hidden');
     wrapper.classList.remove('open');
     wrapper.addEventListener('transitionend', prepareGame);
