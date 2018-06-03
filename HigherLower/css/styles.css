@@ -76,7 +76,7 @@ body {
   transition: 0.3s;
 }
 
-#wrapper:active {
+#wrapper.open {
   transform: rotateY(180deg);
 }
 
@@ -95,4 +95,8 @@ body {
 
 .card-front {
   transform: rotateY(180deg);
+}
+
+#result.hidden {
+  visibility: hidden;
 }
