@@ -27,11 +27,35 @@
     return shuffledAnswers;
   };
 
-  question.textContent = quizSet[currentNumber].question;
-  const shuffledAnswers = shuffleAnswers(quizSet[currentNumber].answer);
-  [
-    answers[0].textContent,
-    answers[1].textContent,
-    answers[2].textContent
-  ] = shuffledAnswers;
+  const initQuiz = () => {
+    question.textContent = quizSet[currentNumber].question;
+    const shuffledAnswers = shuffleAnswers(
+      quizSet[currentNumber].answer.slice()
+    );
+    [
+      answers[0].textContent,
+      answers[1].textContent,
+      answers[2].textContent
+    ] = shuffledAnswers;
+  };
+
+  const judgeQuiz = selectedAnswer => {
+    if (selectedAnswer.textContent === quizSet[currentNumber].answer[0]) {
+      console.log('correct!');
+    } else {
+      console.log('wrong!');
+    }
+  };
+
+  const createSelectAnswer = () => {
+    const AnswersLength = answers.length;
+    for (let i = 0; i < AnswersLength; i += 1) {
+      answers[i].addEventListener('click', () => {
+        judgeQuiz(answers[i]);
+      });
+    }
+  };
+
+  initQuiz();
+  createSelectAnswer();
 })();
