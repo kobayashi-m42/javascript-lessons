@@ -40,10 +40,13 @@
   };
 
   const judgeQuiz = selectedAnswer => {
-    if (selectedAnswer.textContent === quizSet[currentNumber].answer[0]) {
-      console.log('correct!');
+    const displayForAnswer = selectedAnswer;
+    if (displayForAnswer.textContent === quizSet[currentNumber].answer[0]) {
+      displayForAnswer.classList.add('correct');
+      displayForAnswer.textContent += ' ... Correct!';
     } else {
-      console.log('wrong!');
+      displayForAnswer.classList.add('wrong');
+      displayForAnswer.textContent += ' ... Wrong!';
     }
   };
 
