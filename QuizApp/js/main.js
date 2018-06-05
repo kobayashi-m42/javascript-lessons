@@ -10,6 +10,7 @@
   ];
 
   const currentNumber = 0;
+  let isAnswered = false;
 
   const shuffleAnswers = arr => {
     let i;
@@ -27,11 +28,42 @@
     return shuffledAnswers;
   };
 
-  question.textContent = quizSet[currentNumber].question;
-  const shuffledAnswers = shuffleAnswers(quizSet[currentNumber].answer);
-  [
-    answers[0].textContent,
-    answers[1].textContent,
-    answers[2].textContent
-  ] = shuffledAnswers;
+  const initQuiz = () => {
+    question.textContent = quizSet[currentNumber].question;
+    const shuffledAnswers = shuffleAnswers(
+      quizSet[currentNumber].answer.slice()
+    );
+    [
+      answers[0].textContent,
+      answers[1].textContent,
+      answers[2].textContent
+    ] = shuffledAnswers;
+  };
+
+  const judgeQuiz = selectedAnswer => {
+    if (isAnswered === true) {
+      return;
+    }
+    isAnswered = true;
+    const displayForAnswer = selectedAnswer;
+    if (displayForAnswer.textContent === quizSet[currentNumber].answer[0]) {
+      displayForAnswer.classList.add('correct');
+      displayForAnswer.textContent += ' ... Correct!';
+    } else {
+      displayForAnswer.classList.add('wrong');
+      displayForAnswer.textContent += ' ... Wrong!';
+    }
+  };
+
+  const createSelectAnswer = () => {
+    const AnswersLength = answers.length;
+    for (let i = 0; i < AnswersLength; i += 1) {
+      answers[i].addEventListener('click', () => {
+        judgeQuiz(answers[i]);
+      });
+    }
+  };
+
+  initQuiz();
+  createSelectAnswer();
 })();
