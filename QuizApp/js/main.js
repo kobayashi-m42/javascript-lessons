@@ -1,7 +1,8 @@
 (() => {
   const question = document.getElementById('question');
   const answers = document.querySelectorAll('#answers > li');
-  const nextBtn = document.getElementById('nextBtn');
+  const nextBtn = document.getElementById('btn');
+  const answersLength = answers.length;
 
   const quizSet = [
     { question: 'What is A?', answer: ['A0', 'A1', 'A2'] },
@@ -9,7 +10,7 @@
     { question: 'What is C?', answer: ['C0', 'C1', 'C2'] }
   ];
 
-  const currentNumber = 0;
+  let currentNumber = 0;
   let isAnswered = false;
 
   const shuffleAnswers = arr => {
@@ -29,6 +30,13 @@
   };
 
   const initQuiz = () => {
+    for (let i = 0; i < answersLength; i += 1) {
+      answers[i].classList.remove('correct');
+      answers[i].classList.remove('wrong');
+    }
+    isAnswered = false;
+    nextBtn.classList.add('disabled');
+
     question.textContent = quizSet[currentNumber].question;
     const shuffledAnswers = shuffleAnswers(
       quizSet[currentNumber].answer.slice()
@@ -41,6 +49,7 @@
   };
 
   const judgeQuiz = selectedAnswer => {
+    nextBtn.classList.remove('disabled');
     if (isAnswered === true) {
       return;
     }
@@ -55,15 +64,22 @@
     }
   };
 
-  const createSelectAnswer = () => {
-    const AnswersLength = answers.length;
-    for (let i = 0; i < AnswersLength; i += 1) {
+  const createSelectAnswerEvent = () => {
+    for (let i = 0; i < answersLength; i += 1) {
       answers[i].addEventListener('click', () => {
         judgeQuiz(answers[i]);
       });
     }
   };
 
+  nextBtn.addEventListener('click', () => {
+    if (nextBtn.classList.contains('disabled')) {
+      return;
+    }
+    currentNumber += 1;
+    initQuiz();
+  });
+
   initQuiz();
-  createSelectAnswer();
+  createSelectAnswerEvent();
 })();
