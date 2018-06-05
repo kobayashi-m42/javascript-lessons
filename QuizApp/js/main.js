@@ -10,6 +10,7 @@
   ];
 
   const currentNumber = 0;
+  let isAnswered = false;
 
   const shuffleAnswers = arr => {
     let i;
@@ -40,6 +41,10 @@
   };
 
   const judgeQuiz = selectedAnswer => {
+    if (isAnswered === true) {
+      return;
+    }
+    isAnswered = true;
     const displayForAnswer = selectedAnswer;
     if (displayForAnswer.textContent === quizSet[currentNumber].answer[0]) {
       displayForAnswer.classList.add('correct');
