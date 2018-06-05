@@ -12,6 +12,7 @@
 
   let currentNumber = 0;
   let isAnswered = false;
+  let score = 0;
 
   const shuffleAnswers = arr => {
     let i;
@@ -36,6 +37,9 @@
     }
     isAnswered = false;
     nextBtn.classList.add('disabled');
+    if (currentNumber === quizSet.length - 1) {
+      nextBtn.textContent = 'Show Score';
+    }
 
     question.textContent = quizSet[currentNumber].question;
     const shuffledAnswers = shuffleAnswers(
@@ -56,12 +60,14 @@
     isAnswered = true;
     const displayForAnswer = selectedAnswer;
     if (displayForAnswer.textContent === quizSet[currentNumber].answer[0]) {
+      score += 1;
       displayForAnswer.classList.add('correct');
       displayForAnswer.textContent += ' ... Correct!';
     } else {
       displayForAnswer.classList.add('wrong');
       displayForAnswer.textContent += ' ... Wrong!';
     }
+    currentNumber += 1;
   };
 
   const createSelectAnswerEvent = () => {
@@ -76,8 +82,14 @@
     if (nextBtn.classList.contains('disabled')) {
       return;
     }
-    currentNumber += 1;
-    initQuiz();
+    if (currentNumber === quizSet.length) {
+      document.getElementById('result').classList.add('show');
+      document.querySelector(
+        '#result > p'
+      ).textContent = `score:${score}/${answersLength}`;
+    } else {
+      initQuiz();
+    }
   });
 
   initQuiz();

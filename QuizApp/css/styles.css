@@ -6,6 +6,7 @@ body {
 .container {
   width: 400px;
   margin: 10px auto;
+  position: relative;
 }
 
 #question {
@@ -49,7 +50,8 @@ body {
   font-weight: bold;
 }
 
-#btn {
+#btn,
+#result > a {
   cursor: pointer;
   background: #3498db;
   border-radius: 4px;
@@ -61,4 +63,33 @@ body {
 
 #btn.disabled {
   opacity: 0.6;
+}
+
+#result {
+  position: absolute;
+  top: -500px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background: #fff;
+  width: 300px;
+  border-radius: 3px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  transition: 0.4s;
+}
+
+#result.show {
+  top: 50px;
+}
+
+#result > p {
+  font-size: 24px;
+}
+
+#result > a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
 }
