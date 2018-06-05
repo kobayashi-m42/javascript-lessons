@@ -82,10 +82,11 @@
     if (nextBtn.classList.contains('disabled')) {
       return;
     }
-    console.log(currentNumber);
-    console.log(quizSet.length);
     if (currentNumber === quizSet.length) {
-      console.log(`score:${score}/${answersLength}`);
+      document.getElementById('result').classList.add('show');
+      document.querySelector(
+        '#result > p'
+      ).textContent = `score:${score}/${answersLength}`;
     } else {
       initQuiz();
     }
