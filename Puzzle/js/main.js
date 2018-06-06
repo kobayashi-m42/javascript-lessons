@@ -30,6 +30,7 @@
         tiles[row][col] = row * COLUMN_COUNT + col;
       }
     }
+    tiles[ROW_COUNT - 1][COLUMN_COUNT - 1] = -1;
   };
 
   /**
@@ -40,19 +41,25 @@
       for (let col = 0; col < COLUMN_COUNT; col += 1) {
         const dx = col * TILE_WIDTH;
         const dy = row * TILE_HEIGHT;
-        const sx = (tiles[row][col] % COLUMN_COUNT) * TILE_WIDTH;
-        const sy = Math.floor(tiles[row][col] / COLUMN_COUNT) * TILE_HEIGHT;
-        context.drawImage(
-          image,
-          sx,
-          sy,
-          TILE_WIDTH,
-          TILE_HEIGHT,
-          dx,
-          dy,
-          TILE_WIDTH,
-          TILE_HEIGHT
-        );
+
+        if (tiles[row][col] === -1) {
+          context.fillStyle = '#eeeeee';
+          context.fillRect(dx, dy, TILE_WIDTH, TILE_HEIGHT);
+        } else {
+          const sx = (tiles[row][col] % COLUMN_COUNT) * TILE_WIDTH;
+          const sy = Math.floor(tiles[row][col] / COLUMN_COUNT) * TILE_HEIGHT;
+          context.drawImage(
+            image,
+            sx,
+            sy,
+            TILE_WIDTH,
+            TILE_HEIGHT,
+            dx,
+            dy,
+            TILE_WIDTH,
+            TILE_HEIGHT
+          );
+        }
       }
     }
   };
