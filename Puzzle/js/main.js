@@ -70,6 +70,20 @@
     drawPuzzle();
   });
 
+  const isClearedPuzzle = () => {
+    for (let row = 0; row < ROW_COUNT; row += 1) {
+      for (let col = 0; col < COLUMN_COUNT; col += 1) {
+        if (row === ROW_COUNT - 1 && col === COLUMN_COUNT - 1) {
+          return true;
+        }
+        if (tiles[row][col] !== row * COLUMN_COUNT + col) {
+          return false;
+        }
+      }
+    }
+    return false;
+  };
+
   canvas.addEventListener('click', e => {
     const rect = e.target.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -97,6 +111,10 @@
           tiles[targetRow][targetCol] = tiles[row][col];
           tiles[row][col] = -1;
           drawPuzzle();
+          if (isClearedPuzzle()) {
+            alert('Game Clear');
+            break;
+          }
         }
       }
     }
