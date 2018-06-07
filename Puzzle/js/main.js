@@ -14,6 +14,7 @@
   const PIC_HEIGHT = 280;
   const TILE_WIDTH = PIC_WIDTH / COLUMN_COUNT;
   const TILE_HEIGHT = PIC_HEIGHT / ROW_COUNT;
+  const UDLR = [[0, 1], [0, -1], [-1, 0], [1, 0]];
 
   const context = canvas.getContext('2d');
   const IMAGE_URL = 'img/15puzzle.png';
@@ -67,5 +68,37 @@
   image.addEventListener('load', () => {
     initTiles();
     drawPuzzle();
+  });
+
+  canvas.addEventListener('click', e => {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const row = Math.floor(y / TILE_HEIGHT);
+    const col = Math.floor(x / TILE_WIDTH);
+
+    if (tiles[row][col] === -1) {
+      return;
+    }
+
+    let targetRow;
+    let targetCol;
+    for (let i = 0; i < UDLR.length; i += 1) {
+      targetRow = row + UDLR[i][1];
+      targetCol = col + UDLR[i][0];
+
+      if (
+        targetRow > 0 &&
+        targetRow < ROW_COUNT &&
+        (targetCol > 0 && targetCol < COLUMN_COUNT)
+      ) {
+        if (tiles[targetRow][targetCol] === -1) {
+          tiles[targetRow][targetCol] = tiles[row][col];
+          tiles[row][col] = -1;
+          drawPuzzle();
+        }
+      }
+    }
   });
 })();
