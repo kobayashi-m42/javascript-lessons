@@ -15,7 +15,7 @@
   const TILE_WIDTH = PIC_WIDTH / COLUMN_COUNT;
   const TILE_HEIGHT = PIC_HEIGHT / ROW_COUNT;
   const UDLR = [[0, 1], [0, -1], [-1, 0], [1, 0]];
-  const moveCount = 2;
+  const moveCount = 40;
 
   const context = canvas.getContext('2d');
   const IMAGE_URL = 'img/15puzzle.png';
@@ -66,20 +66,27 @@
     }
   };
 
+  /**
+   * 空白のタイルを移動し、パズルをシャッフルする
+   *
+   * @param count
+   */
   const moveBlank = count => {
     let blankRow = ROW_COUNT - 1;
     let blankCol = COLUMN_COUNT - 1;
     let movedCount = count;
 
-    while (true) {
+    while (movedCount >= 0) {
       const targetPosition = Math.floor(Math.random() * UDLR.length);
       const targetRow = blankRow + UDLR[targetPosition][1];
       const targetCol = blankCol + UDLR[targetPosition][0];
+      // console.log(`${targetRow}:${targetCol}`);
 
       if (
-        targetRow > 0 &&
+        targetRow >= 0 &&
         targetRow < ROW_COUNT &&
-        (targetCol > 0 && targetCol < COLUMN_COUNT)
+        targetCol >= 0 &&
+        targetCol < COLUMN_COUNT
       ) {
         tiles[blankRow][blankCol] = tiles[targetRow][targetCol];
         tiles[targetRow][targetCol] = -1;
@@ -87,9 +94,6 @@
         blankCol = targetCol;
 
         movedCount -= 1;
-        if (movedCount === 0) {
-          break;
-        }
       }
     }
   };
@@ -133,9 +137,10 @@
       targetCol = col + UDLR[i][0];
 
       if (
-        targetRow > 0 &&
+        targetRow >= 0 &&
         targetRow < ROW_COUNT &&
-        (targetCol > 0 && targetCol < COLUMN_COUNT)
+        targetCol >= 0 &&
+        targetCol < COLUMN_COUNT
       ) {
         if (tiles[targetRow][targetCol] === -1) {
           tiles[targetRow][targetCol] = tiles[row][col];
