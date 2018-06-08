@@ -25,8 +25,14 @@
     }
 
     move() {
+      if (this.x + this.r > canvas.width || this.x - this.r < 0) {
+        this.velocityX *= -1;
+      }
+      if (this.y + this.r > canvas.height || this.y - this.r < 0) {
+        this.velocityY *= -1;
+      }
       this.x += this.velocityX;
-      this.Y += this.velocityY;
+      this.y += this.velocityY;
     }
   }
 
