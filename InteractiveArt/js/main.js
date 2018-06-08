@@ -13,7 +13,10 @@
       this.r = r;
       this.velocityX = rand(-10, 10);
       this.velocityY = rand(-10, 10);
-      this.color = 'hsla(120, 80%, 40%, 0.8)';
+      this.color = `hsla(${rand(50, 100)}, ${rand(40, 80)}%, ${rand(
+        50,
+        60
+      )}%, ${Math.random()}`;
     }
 
     draw() {
