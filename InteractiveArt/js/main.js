@@ -11,6 +11,8 @@
       this.x = x;
       this.y = y;
       this.r = r;
+      this.velocityX = rand(-10, 10);
+      this.velocityY = rand(-10, 10);
       this.color = 'hsla(120, 80%, 40%, 0.8)';
     }
 
@@ -21,8 +23,25 @@
       context.closePath();
       context.fill();
     }
+
+    move() {
+      this.x += this.velocityX;
+      this.Y += this.velocityY;
+    }
   }
 
   const ball = new Ball(rand(100, 200), rand(100, 200), rand(10, 50));
   ball.draw();
+
+  const moveBall = () => {
+    context.fillStyle = '#ecf0f1';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    ball.draw();
+    ball.move();
+    setTimeout(() => {
+      moveBall();
+    }, 30);
+  };
+
+  moveBall();
 })();
