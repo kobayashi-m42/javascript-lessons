@@ -3,8 +3,9 @@
   if (!canvas || !canvas.getContext) return;
 
   const context = canvas.getContext('2d');
-
   const rand = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+
+  const balls = [];
 
   class Ball {
     constructor(x, y, r) {
@@ -39,18 +40,27 @@
     }
   }
 
-  const ball = new Ball(rand(100, 200), rand(100, 200), rand(10, 50));
-  ball.draw();
-
   const moveBall = () => {
     context.fillStyle = '#ecf0f1';
     context.fillRect(0, 0, canvas.width, canvas.height);
-    ball.draw();
-    ball.move();
+
+    const ballsCount = balls.length;
+    for (let i = 0; i < ballsCount; i += 1) {
+      balls[i].draw();
+      balls[i].move();
+    }
+
     setTimeout(() => {
       moveBall();
     }, 30);
   };
+
+  canvas.addEventListener('click', () => {
+    const x = rand(100, 400);
+    const y = rand(100, 200);
+    const r = rand(0, 100) < 20 ? rand(50, 80) : rand(10, 35);
+    balls.push(new Ball(x, y, r));
+  });
 
   moveBall();
 })();
