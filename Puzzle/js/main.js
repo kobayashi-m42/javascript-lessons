@@ -15,6 +15,7 @@
   const TILE_WIDTH = PIC_WIDTH / COLUMN_COUNT;
   const TILE_HEIGHT = PIC_HEIGHT / ROW_COUNT;
   const UDLR = [[0, 1], [0, -1], [-1, 0], [1, 0]];
+  const moveCount = 2;
 
   const context = canvas.getContext('2d');
   const IMAGE_URL = 'img/15puzzle.png';
@@ -65,8 +66,37 @@
     }
   };
 
+  const moveBlank = count => {
+    let blankRow = ROW_COUNT - 1;
+    let blankCol = COLUMN_COUNT - 1;
+    let movedCount = count;
+
+    while (true) {
+      const targetPosition = Math.floor(Math.random() * UDLR.length);
+      const targetRow = blankRow + UDLR[targetPosition][1];
+      const targetCol = blankCol + UDLR[targetPosition][0];
+
+      if (
+        targetRow > 0 &&
+        targetRow < ROW_COUNT &&
+        (targetCol > 0 && targetCol < COLUMN_COUNT)
+      ) {
+        tiles[blankRow][blankCol] = tiles[targetRow][targetCol];
+        tiles[targetRow][targetCol] = -1;
+        blankRow = targetRow;
+        blankCol = targetCol;
+
+        movedCount -= 1;
+        if (movedCount === 0) {
+          break;
+        }
+      }
+    }
+  };
+
   image.addEventListener('load', () => {
     initTiles();
+    moveBlank(moveCount);
     drawPuzzle();
   });
 
