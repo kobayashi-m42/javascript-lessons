@@ -40,20 +40,25 @@
     }
   }
 
-  const moveBall = () => {
-    context.fillStyle = '#ecf0f1';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  class Stage {
+    moveBall() {
+      Stage.clear();
+      const ballsCount = balls.length;
+      for (let i = 0; i < ballsCount; i += 1) {
+        balls[i].draw();
+        balls[i].move();
+      }
 
-    const ballsCount = balls.length;
-    for (let i = 0; i < ballsCount; i += 1) {
-      balls[i].draw();
-      balls[i].move();
+      setTimeout(() => {
+        this.moveBall();
+      }, 30);
     }
 
-    setTimeout(() => {
-      moveBall();
-    }, 30);
-  };
+    static clear() {
+      context.fillStyle = '#ecf0f1';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+  }
 
   const adjustPosition = (position, r, max) => {
     if (position - r < 0) {
@@ -76,5 +81,6 @@
     balls.push(new Ball(x, y, r));
   });
 
-  moveBall();
+  const stage = new Stage();
+  stage.moveBall();
 })();
