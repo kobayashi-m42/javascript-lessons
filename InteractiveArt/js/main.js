@@ -55,10 +55,24 @@
     }, 30);
   };
 
-  canvas.addEventListener('click', () => {
-    const x = rand(100, 400);
-    const y = rand(100, 200);
+  const adjustPosition = (position, r, max) => {
+    if (position - r < 0) {
+      return r;
+    } else if (position + r > max) {
+      return max - r;
+    }
+    return position;
+  };
+
+  canvas.addEventListener('click', e => {
+    const rect = e.target.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
     const r = rand(0, 100) < 20 ? rand(50, 80) : rand(10, 35);
+
+    x = adjustPosition(x, r, canvas.width);
+    y = adjustPosition(y, r, canvas.height);
+
     balls.push(new Ball(x, y, r));
   });
 
