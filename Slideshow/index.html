@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Slideshow</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
-$END$
+  <div class="container">
+    <div class="main">
+      <i class="fas fa-chevron-circle-left" id="prev"></i>
+      <img src="img/food0.jpg" width="300" height="200">
+      <i class="fas fa-chevron-circle-right" id="next"></i>
+    </div>
+    <nav>
+      <ul>
+        <li class="current"><img src="img/food0.jpg" width="45" height="30"></li>
+        <li><img src="img/food1.jpg" width="45" height="30"></li>
+        <li><img src="img/food2.jpg" width="45" height="30"></li>
+        <li><img src="img/food3.jpg" width="45" height="30"></li>
+      </ul>
+      <div id="play">
+        <i class="fas fa-play"></i> 再生
+      </div>
+  </nav>
+  </div>
 </body>
 </html>
