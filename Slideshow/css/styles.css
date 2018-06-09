@@ -3,7 +3,7 @@
   margin: 0 auto;
 }
 
-.main {
+main {
   position: relative;
 }
 
@@ -45,6 +45,11 @@ nav li:hover {
 
 nav li.current {
   opacity: 1;
+}
+
+nav img {
+  width: 45px;
+  height: 30px;
 }
 
 #play {
