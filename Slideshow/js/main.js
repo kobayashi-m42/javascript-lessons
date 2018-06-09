@@ -14,6 +14,9 @@
   const target = document.getElementById('target');
   const thumbnails = document.getElementById('thumbnails');
   const play = document.getElementById('play');
+  const pause = document.getElementById('pause');
+
+  let timerID;
 
   /**
    * リストクリック時の処理
@@ -45,7 +48,7 @@
   };
 
   const playSideshow = () => {
-    setTimeout(() => {
+    timerID = setTimeout(() => {
       next.click();
       playSideshow();
     }, 1500);
@@ -77,5 +80,13 @@
 
   play.addEventListener('click', () => {
     playSideshow();
+    play.className = 'hidden';
+    pause.className = '';
+  });
+
+  pause.addEventListener('click', () => {
+    clearTimeout(timerID);
+    play.className = '';
+    pause.className = 'hidden';
   });
 })();

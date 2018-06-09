@@ -52,7 +52,8 @@ nav img {
   height: 30px;
 }
 
-#play {
+#play,
+#pause {
   display: inline-block;
   width: 70px;
   line-height: 30px;
@@ -63,4 +64,9 @@ nav img {
   border-radius: 3px;
   cursor: pointer;
   float: right;
+}
+
+#play.hidden,
+#pause.hidden {
+  display: none;
 }
