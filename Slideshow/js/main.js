@@ -13,6 +13,7 @@
   const next = document.getElementById('next');
   const target = document.getElementById('target');
   const thumbnails = document.getElementById('thumbnails');
+  const play = document.getElementById('play');
 
   /**
    * リストクリック時の処理
@@ -43,6 +44,13 @@
     }
   };
 
+  const playSideshow = () => {
+    setTimeout(() => {
+      next.click();
+      playSideshow();
+    }, 1500);
+  };
+
   createThumbnails();
 
   thumbnails.children[currentNumber].className = 'current';
@@ -65,5 +73,9 @@
     }
     target.src = files[currentNumber];
     thumbnails.children[currentNumber].className = 'current';
+  });
+
+  play.addEventListener('click', () => {
+    playSideshow();
   });
 })();
