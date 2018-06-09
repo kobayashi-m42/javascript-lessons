@@ -13,6 +13,14 @@
   const next = document.getElementById('next');
   const target = document.getElementById('target');
   const thumbnails = document.getElementById('thumbnails');
+  const play = document.getElementById('play');
+  const pause = document.getElementById('pause');
+
+  let timerID;
+
+  const CLASS_CURRENT = 'current';
+  const CLASS_HIDDEN = 'hidden';
+  const CLASS_NONE = '';
 
   /**
    * リストクリック時の処理
@@ -43,27 +51,46 @@
     }
   };
 
+  const playSideshow = () => {
+    timerID = setTimeout(() => {
+      next.click();
+      playSideshow();
+    }, 1500);
+  };
+
   createThumbnails();
 
-  thumbnails.children[currentNumber].className = 'current';
+  thumbnails.children[currentNumber].className = CLASS_CURRENT;
 
   prev.addEventListener('click', () => {
-    thumbnails.children[currentNumber].className = '';
+    thumbnails.children[currentNumber].className = CLASS_NONE;
     currentNumber -= 1;
     if (currentNumber < 0) {
       currentNumber = filesLength - 1;
     }
     target.src = files[currentNumber];
-    thumbnails.children[currentNumber].className = 'current';
+    thumbnails.children[currentNumber].className = CLASS_CURRENT;
   });
 
   next.addEventListener('click', () => {
-    thumbnails.children[currentNumber].className = '';
+    thumbnails.children[currentNumber].className = CLASS_NONE;
     currentNumber += 1;
     if (currentNumber > filesLength - 1) {
       currentNumber = 0;
     }
     target.src = files[currentNumber];
-    thumbnails.children[currentNumber].className = 'current';
+    thumbnails.children[currentNumber].className = CLASS_CURRENT;
+  });
+
+  play.addEventListener('click', () => {
+    playSideshow();
+    play.className = CLASS_HIDDEN;
+    pause.className = CLASS_NONE;
+  });
+
+  pause.addEventListener('click', () => {
+    clearTimeout(timerID);
+    play.className = CLASS_NONE;
+    pause.className = CLASS_HIDDEN;
   });
 })();
