@@ -4,6 +4,7 @@
   let dimension;
   let size;
   let answer = [];
+  let isPlaying = true;
 
   if (typeof stage.getContext === 'undefined') return;
 
@@ -45,6 +46,9 @@
   };
 
   stage.addEventListener('click', e => {
+    if (isPlaying === false) {
+      return;
+    }
     const rect = e.target.getBoundingClientRect();
     const x = e.pageX - rect.left - window.scrollX;
     const y = e.pageY - rect.top - window.scrollY;
@@ -56,6 +60,9 @@
       count += 1;
       init();
       draw();
+    } else {
+      alert(`Your score: ${count}`);
+      isPlaying = false;
     }
   });
 
