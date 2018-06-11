@@ -52,6 +52,7 @@
     const rect = e.target.getBoundingClientRect();
     const x = e.pageX - rect.left - window.scrollX;
     const y = e.pageY - rect.top - window.scrollY;
+    const replay = document.getElementById('replay');
 
     if (
       answer[0] === Math.floor(x / size) &&
@@ -63,6 +64,7 @@
     } else {
       alert(`Your score: ${count}`);
       isPlaying = false;
+      replay.className = '';
     }
   });
 
