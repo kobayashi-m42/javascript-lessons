@@ -1,6 +1,7 @@
 (() => {
   const stage = document.getElementById('stage');
-  const dimension = 5;
+  let count = 0;
+  const dimension = Math.floor(count / 3) + 2;
   const size = Math.floor(stage.width / dimension);
   const answer = [
     Math.floor(Math.random() * dimension),
@@ -13,12 +14,17 @@
 
   const draw = () => {
     const offset = 2;
+    const hue = Math.random() * 360;
+    const baseColor = `hsl(${hue}, 80%, 50%`;
+    const lightness = Math.max(75 - count, 53);
+    const answerColor = `hsl(${hue}, 80%, ${lightness}%`;
+
     for (let x = 0; x < dimension; x += 1) {
       for (let y = 0; y < dimension; y += 1) {
         if (answer[0] === x && answer[1] === y) {
-          context.fillStyle = 'skyblue';
+          context.fillStyle = answerColor;
         } else {
-          context.fillStyle = 'lightblue';
+          context.fillStyle = baseColor;
         }
         context.fillRect(
           size * x + offset,
