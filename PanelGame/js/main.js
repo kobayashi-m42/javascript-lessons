@@ -30,5 +30,18 @@
     }
   };
 
+  stage.addEventListener('click', e => {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.pageX - rect.left - window.scrollX;
+    const y = e.pageY - rect.top - window.scrollY;
+
+    if (
+      answer[0] === Math.floor(x / size) &&
+      answer[1] === Math.floor(y / size)
+    ) {
+      console.log('hit!');
+    }
+  });
+
   draw();
 })();
