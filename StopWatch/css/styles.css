@@ -38,3 +38,7 @@ body {
 .btn + .btn {
   margin-left: 15px;
 }
+
+.inactive {
+  opacity: 0.6;
+}
