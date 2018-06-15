@@ -11,6 +11,12 @@
 
   let isRunning = false;
 
+  const updateButtonState = (startButton, stopButton, resetButton) => {
+    start.className = startButton ? 'btn' : 'btn inactive';
+    stop.className = stopButton ? 'btn' : 'btn inactive';
+    reset.className = resetButton ? 'btn' : 'btn inactive';
+  };
+
   const zeroPadding = (value, digit) => `000${value}`.slice(-digit);
 
   const updateTimerText = () => {
@@ -34,6 +40,7 @@
   start.addEventListener('click', () => {
     if (isRunning === true) return;
     isRunning = true;
+    updateButtonState(false, true, false);
     startTime = Date.now();
     countUp();
   });
@@ -41,14 +48,18 @@
   stop.addEventListener('click', () => {
     if (isRunning === false) return;
     isRunning = false;
+    updateButtonState(true, false, true);
     clearTimeout(timerId);
     timeToAdd += Date.now() - startTime;
   });
 
   reset.addEventListener('click', () => {
     if (isRunning === true) return;
+    updateButtonState(true, false, false);
     elapsedTime = 0;
     timeToAdd = 0;
     updateTimerText();
   });
+
+  updateButtonState(true, false, false);
 })();
