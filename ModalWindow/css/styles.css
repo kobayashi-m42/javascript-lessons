@@ -1,0 +1,49 @@
+body {
+  font-size: 14px;
+  font-family: Verdana, sans-serif;
+}
+
+#open,
+#close {
+  cursor: pointer;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 40px;
+  margin: 15px auto 0;
+}
+
+#mask {
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#modal {
+  background: #fff;
+  width: 300px;
+  padding: 20px;
+  border-radius: 4px;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+}
+
+#modal p {
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+#mask.hidden {
+  display: none;
+}
+
+#modal.hidden {
+  transform: translate(0, -500px);
+}
