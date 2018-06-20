@@ -87,6 +87,10 @@ header h1 {
   width: 100%;
 }
 
+.news-item:not(:last-child) {
+  margin-bottom: 60px;
+}
+
 .how-to-use iframe {
   position: absolute;
   width: 100%;
@@ -110,4 +114,69 @@ footer {
   text-align: center;
   padding: 60px 0;
   color: #ccc;
+}
+
+@media (min-width: 570px) {
+  .feature img {
+    width: 50%;
+  }
+
+  .feature p {
+    width: 45%;
+  }
+
+  .feature:nth-of-type(odd) p {
+    float: right;
+    padding-left: 5%;
+  }
+
+  .feature:nth-of-type(even) p {
+    float: left;
+    padding-right: 5%;
+  }
+
+  .feature {
+    overflow: hidden;
+  }
+
+  .news .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .news-item {
+    width: 30%;
+  }
+}
+
+@media (min-width: 912px) {
+  .container {
+    width: 820px;
+  }
+
+  #open_menu {
+    display: none;
+  }
+
+  #close_menu {
+    display: none;
+  }
+
+  #menu {
+    background: transparent;
+    color: #333;
+    display: block;
+    position: static;
+  }
+
+  #menu ul {
+    padding: 0;
+    float: right;
+  }
+
+  #menu li {
+    display: inline-block;
+    width: 60px;
+    text-align: center;
+  }
 }
