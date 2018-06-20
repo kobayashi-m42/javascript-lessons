@@ -34,9 +34,44 @@ header h1 {
   font-weight: normal;
 }
 
+#menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  display: none;
+}
+
+#menu.shown {
+  display: block;
+}
+
+#menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 20px;
+}
+
+#menu li {
+  line-height: 2;
+}
+
+#menu a {
+  text-decoration: none;
+  color: inherit;
+}
+
 #open_menu {
   float: right;
   font-size: 24px;
+  cursor: pointer;
+}
+
+#close_menu {
+  padding: 15px;
+  float: right;
   cursor: pointer;
 }
 
