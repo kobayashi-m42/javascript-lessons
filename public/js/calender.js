@@ -5,6 +5,7 @@
   const targetDate = document.getElementById('targetDate');
   const previous = document.getElementById('previous');
   const next = document.getElementById('next');
+  const thisMonth = document.getElementById('this_month');
   const calender = [];
 
   /**
@@ -167,6 +168,11 @@
     increaseMonth();
     createCalender();
     displayCalender();
+  });
+
+  thisMonth.addEventListener('click', e => {
+    e.preventDefault();
+    initCalender();
   });
 
   initCalender();
