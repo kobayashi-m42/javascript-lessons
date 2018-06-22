@@ -1,29 +1,18 @@
 (() => {
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth() + 1;
+  let targetYear;
+  let targetMonth;
 
   const targetDate = document.getElementById('targetDate');
+  const previous = document.getElementById('previous');
+  const next = document.getElementById('next');
   const calender = [];
-
-  /**
-   * 対象の年月を表示する
-   *
-   * @param year
-   * @param month
-   */
-  const displayTargetDate = (year, month) => {
-    targetDate.textContent = `${year}年 ${month}月`;
-  };
 
   /**
    * 前月のカレンダーの日付を作成する
    *
-   * @param year
-   * @param month
    */
-  const createPreviousMonth = (year, month) => {
-    const prevMonthLastDate = new Date(year, month - 1, 0);
+  const createPreviousMonth = () => {
+    const prevMonthLastDate = new Date(targetYear, targetMonth - 1, 0);
     let prevMonthLastDay = prevMonthLastDate.getDate();
     let weekday = prevMonthLastDate.getDay();
 
@@ -46,15 +35,11 @@
   /**
    * 翌月のカレンダーの日付を作成する
    *
-   * @param year
-   * @param month
    */
-  const createNextMonth = (year, month) => {
-    const nextMonthFirstDate = new Date(year, month, 1);
+  const createNextMonth = () => {
+    const nextMonthFirstDate = new Date(targetYear, targetMonth, 1);
     let nextMonthFirstDay = 1;
     let weekday = nextMonthFirstDate.getDay();
-
-    console.log(weekday);
 
     if (weekday === 0) {
       return;
@@ -75,12 +60,11 @@
   /**
    * カレンダーの日付を作成する
    *
-   * @param year
-   * @param month
    */
-  const createCalender = (year, month) => {
-    const firstDate = new Date(year, month - 1, 1);
-    const lastDay = new Date(year, month, 0).getDate();
+  const createCalender = () => {
+    calender.length = 0;
+    const firstDate = new Date(targetYear, targetMonth - 1, 1);
+    const lastDay = new Date(targetYear, targetMonth, 0).getDate();
     let weekday = firstDate.getDay();
 
     for (let i = 0; i < lastDay; i += 1) {
@@ -95,9 +79,16 @@
         weekday = 0;
       }
     }
-    createPreviousMonth(year, month);
-    createNextMonth(year, month);
-    displayTargetDate(year, month);
+    createPreviousMonth();
+    createNextMonth();
+  };
+
+  /**
+   * 対象の年月を表示する
+   *
+   */
+  const displayTargetDate = () => {
+    targetDate.textContent = `${targetYear}年 ${targetMonth}月`;
   };
 
   /**
@@ -105,6 +96,10 @@
    */
   const displayCalender = () => {
     const tbody = document.querySelector('tbody');
+    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
+    }
+
     let tr = document.createElement('tr');
 
     for (let i = 0; i < calender.length; i += 1) {
@@ -124,8 +119,55 @@
     }
 
     tbody.appendChild(tr);
+    displayTargetDate();
   };
 
-  createCalender(currentYear, currentMonth);
-  displayCalender();
+  /**
+   * 対象年月を翌月にする
+   */
+  const increaseMonth = () => {
+    targetMonth += 1;
+    if (targetMonth > 12) {
+      targetMonth = 1;
+      targetYear += 1;
+    }
+  };
+
+  /**
+   * 対象年月を前月にする
+   */
+  const decreaseMonth = () => {
+    targetMonth -= 1;
+    if (targetMonth < 1) {
+      targetMonth = 12;
+      targetYear -= 1;
+    }
+  };
+
+  /**
+   * カレンダーを初期化する
+   */
+  const initCalender = () => {
+    const today = new Date();
+    targetYear = today.getFullYear();
+    targetMonth = today.getMonth() + 1;
+    createCalender();
+    displayCalender();
+  };
+
+  previous.addEventListener('click', e => {
+    e.preventDefault();
+    decreaseMonth();
+    createCalender();
+    displayCalender();
+  });
+
+  next.addEventListener('click', e => {
+    e.preventDefault();
+    increaseMonth();
+    createCalender();
+    displayCalender();
+  });
+
+  initCalender();
 })();
