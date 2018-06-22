@@ -11,9 +11,11 @@ const mime = {
 };
 
 const server = http.createServer((req, res) => {
-  let filePath = `${__dirname}/Bingo`;
-  if (req.url === '/') {
-    filePath += '/index.html';
+  let filePath = `${__dirname}`;
+  if (req.url === '/Bingo') {
+    filePath += `/bingo.html`;
+  } else if (req.url.indexOf('/Calendar') === 0) {
+    filePath += `/calender.html`;
   } else {
     filePath += req.url;
   }
