@@ -92,7 +92,7 @@ class Calender {
    * @returns {Date}
    */
   static generateTargetDate(inputDate) {
-    if (this.validateDate(inputDate)) {
+    if (this.validateDate(inputDate) && Date.parse(inputDate)) {
       return new Date(Date.parse(inputDate));
     }
     return new Date();
