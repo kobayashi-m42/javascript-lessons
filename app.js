@@ -32,6 +32,10 @@ app.get('/calender', (req, res) => {
   res.render('calender.ejs', renderParams);
 });
 
+app.get('/imageUploader', (req, res) => {
+  res.sendFile(path.join(__dirname, 'imageUploader.html'));
+});
+
 app.listen(port, error => {
   if (error) {
     console.error(error);
