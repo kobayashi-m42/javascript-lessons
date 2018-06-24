@@ -1,14 +1,19 @@
 const express = require('express');
+const ejs = require('ejs');
 
 const app = express();
 const path = require('path');
+const Calender = require('./src/Calender.js');
 
 const port = 3000;
+
+app.set('views', `${__dirname}/src/views`);
+app.engine('ejs', ejs.renderFile);
 
 app.use('/public', express.static('public'));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.render('sample.ejs', { message: 'Hello there!' });
 });
 
 app.get('/bingo', (req, res) => {
@@ -16,7 +21,15 @@ app.get('/bingo', (req, res) => {
 });
 
 app.get('/calender', (req, res) => {
-  res.sendFile(path.join(__dirname, 'calender.html'));
+  const targetDate = Calender.generateTargetDate(req.query.date);
+  const calenderObj = Calender.generateCalender(targetDate);
+
+  const renderParams = {
+    calender: calenderObj,
+    targetDate
+  };
+
+  res.render('calender.ejs', renderParams);
 });
 
 app.listen(port, error => {

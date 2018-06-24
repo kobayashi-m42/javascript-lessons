@@ -2,7 +2,6 @@
   let targetYear;
   let targetMonth;
 
-  const targetDate = document.getElementById('targetDate');
   const previous = document.getElementById('previous');
   const next = document.getElementById('next');
   const thisMonth = document.getElementById('this_month');
@@ -89,7 +88,8 @@
    *
    */
   const displayTargetDate = () => {
-    targetDate.textContent = `${targetYear}年 ${targetMonth}月`;
+    document.getElementById('targetYear').textContent = targetYear;
+    document.getElementById('targetMonth').textContent = targetMonth;
   };
 
   /**
@@ -158,6 +158,8 @@
 
   previous.addEventListener('click', e => {
     e.preventDefault();
+    targetYear = Number(document.getElementById('targetYear').textContent);
+    targetMonth = Number(document.getElementById('targetMonth').textContent);
     decreaseMonth();
     createCalender();
     displayCalender();
@@ -165,7 +167,10 @@
 
   next.addEventListener('click', e => {
     e.preventDefault();
+    targetYear = Number(document.getElementById('targetYear').textContent);
+    targetMonth = Number(document.getElementById('targetMonth').textContent);
     increaseMonth();
+
     createCalender();
     displayCalender();
   });
@@ -174,6 +179,4 @@
     e.preventDefault();
     initCalender();
   });
-
-  initCalender();
 })();

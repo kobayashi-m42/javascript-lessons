@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Calender</title>
+    <link rel="stylesheet" href="./public/css/calender.css">
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+            <th><a href="#" id="previous">&laquo;</a></th>
+            <th colspan="5">
+                <span id="targetYear"><%= targetDate.getFullYear() %></span>年 <span id="targetMonth"><%= targetDate.getMonth() + 1 %></span>月
+            </th>
+            <th><a href="#" id="next">&raquo;</a></th>
+        </tr>
+        </thead>
+        <tr>
+            <% const calenderLength = Object.keys(calender).length %>
+            <% for (let i = 0; i < calenderLength; i += 1) { %>
+                <% if (calender[i].weekday === 0) { %>
+                </tr><tr>
+                <% } %>
+                <% const className = calender[i].month === 'target' ? `youbi_${calender[i].weekday}` : 'gray' %>
+                <td class="<%= className %>"><%= calender[i].day %></td>
+            <% } %>
+        </tr>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <th colspan="7"><a href="" id="this_month">今日</a></th>
+        </tfoot>
+    </table>
+<script src="./public/js/calender.js"></script>
+</body>
+</html>
