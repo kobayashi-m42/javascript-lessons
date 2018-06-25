@@ -4,7 +4,23 @@ const ejs = require('ejs');
 const app = express();
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const upload = multer({ dest: './images/' }).single('image');
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype !== 'image/gif' &&
+    file.mimetype !== 'image/jpeg' &&
+    file.mimetype !== 'image/png'
+  ) {
+    return cb(new Error('PNG/JPEG/GIF only!'));
+  }
+  return cb(null, true);
+};
+
+const upload = multer({
+  dest: './images/',
+  limits: { fileSize: 1048576 },
+  fileFilter
+}).single('image');
 
 const path = require('path');
 const Calender = require('./src/server/domain/Calender.js');
@@ -44,9 +60,15 @@ app.get('/imageUploader', (req, res) => {
 app.post('/imageUploader', (req, res) => {
   upload(req, res, err => {
     if (err) {
-      console.log("Failed to write " + req.file.destination + " with " + err);
+      res.status(500).send(err.message);
+    } else if (!req.file) {
+      res.status(500).send('Upload Error!');
     } else {
-      console.log("uploaded " + req.file.originalname + " as " + req.file.filename + " Size: " + req.file.size);
+      console.log(
+        `uploaded ${req.file.originalname} as ${req.file.filename} Size: ${
+          req.file.size
+        }`
+      );
     }
   });
 });
