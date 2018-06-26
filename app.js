@@ -3,7 +3,9 @@ const ejs = require('ejs');
 
 const app = express();
 const bodyParser = require('body-parser');
+const path = require('path');
 const multer = require('multer');
+const crypto = require('crypto');
 
 const fileFilter = (req, file, cb) => {
   if (
@@ -16,16 +18,28 @@ const fileFilter = (req, file, cb) => {
   return cb(null, true);
 };
 
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, './images/');
+  },
+  filename(req, file, cb) {
+    crypto.pseudoRandomBytes(16, (err, raw) => {
+      cb(
+        null,
+        raw.toString('hex') + Date.now() + path.extname(file.originalname)
+      );
+    });
+  }
+});
+
 const upload = multer({
-  dest: './images/',
+  storage,
   limits: { fileSize: 1048576 },
   fileFilter
 }).single('image');
 
-const path = require('path');
-const Calender = require('./src/server/domain/Calender.js');
-
 const port = 3000;
+const Calender = require('./src/server/domain/Calender.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', `${__dirname}/src/views`);
