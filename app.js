@@ -40,12 +40,14 @@ const upload = multer({
 
 const port = 3000;
 const Calender = require('./src/server/domain/Calender.js');
+const ImageUploader = require('./src/server/domain/ImageUploader.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', `${__dirname}/src/views`);
 app.engine('ejs', ejs.renderFile);
 
 app.use('/public', express.static('public'));
+app.use('/images', express.static('images'));
 
 app.get('/', (req, res) => {
   res.render('sample.ejs', { message: 'Hello there!' });
@@ -68,7 +70,10 @@ app.get('/calender', (req, res) => {
 });
 
 app.get('/imageUploader', (req, res) => {
-  res.sendFile(path.join(__dirname, 'imageUploader.html'));
+  const renderParams = {
+    images: ImageUploader.getImages()
+  };
+  res.render('imageUploader.ejs', renderParams);
 });
 
 app.post('/imageUploader', (req, res) => {
@@ -78,11 +83,10 @@ app.post('/imageUploader', (req, res) => {
     } else if (!req.file) {
       res.status(500).send('Upload Error!');
     } else {
-      console.log(
-        `uploaded ${req.file.originalname} as ${req.file.filename} Size: ${
-          req.file.size
-        }`
-      );
+      const renderParams = {
+        images: ImageUploader.getImages()
+      };
+      res.render('imageUploader.ejs', renderParams);
     }
   });
 });
