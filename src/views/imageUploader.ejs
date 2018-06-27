@@ -22,7 +22,7 @@
         <% for (let i = 0; i < imagesLength; i += 1) { %>
             <li>
                 <a href="../images/<%= images[i].filename %>">
-                    <img src="../images/<%= images[i].filename %>">
+                    <img src=".<%= images[i].path %><%= images[i].filename %>">
                 </a>
             </li>
         <% } %>

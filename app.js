@@ -48,6 +48,7 @@ app.engine('ejs', ejs.renderFile);
 
 app.use('/public', express.static('public'));
 app.use('/images', express.static('images'));
+app.use('/thumbs', express.static('thumbs'));
 
 app.get('/', (req, res) => {
   res.render('sample.ejs', { message: 'Hello there!' });
@@ -95,6 +96,8 @@ app.post('/imageUploader', (req, res) => {
       };
       res.render('imageUploader.ejs', renderParams);
     } else {
+      ImageUploader.createThumbnail(req.file);
+
       const renderParams = {
         images: ImageUploader.getImages(),
         successMessage: 'Upload Done!',
