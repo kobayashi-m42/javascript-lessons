@@ -11,6 +11,12 @@
         <input type="file" name="image">
         <input type="submit" value="upload">
     </form>
+    <% if (Object.keys(successMessage).length !== 0) { %>
+        <div class="msg success" id="success"><%= successMessage%></div>
+    <% } %>
+    <% if (Object.keys(errorMessage).length !== 0) { %>
+        <div class="msg error"  id="error"><%= errorMessage%></div>
+    <% } %>
     <ul>
         <% const imagesLength = Object.keys(images).length %>
         <% for (let i = 0; i < imagesLength; i += 1) { %>

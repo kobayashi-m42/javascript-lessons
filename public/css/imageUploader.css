@@ -9,6 +9,31 @@ ul {
   padding: 0;
 }
 
-li{
+li {
   margin-bottom: 5px;
+}
+
+.msg {
+  margin: 0 auto 15px;
+  width: 400px;
+  font-weight: bold;
+  animation: fadeOut 3s;
+  animation-fill-mode: both;
+}
+
+.msg.success {
+  color: #4caf50;
+}
+
+.msg.error {
+  color: #f44336;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
