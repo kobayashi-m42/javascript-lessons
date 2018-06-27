@@ -71,7 +71,9 @@ app.get('/calender', (req, res) => {
 
 app.get('/imageUploader', (req, res) => {
   const renderParams = {
-    images: ImageUploader.getImages()
+    images: ImageUploader.getImages(),
+    successMessage: '',
+    errorMessage: ''
   };
   res.render('imageUploader.ejs', renderParams);
 });
@@ -79,12 +81,24 @@ app.get('/imageUploader', (req, res) => {
 app.post('/imageUploader', (req, res) => {
   upload(req, res, err => {
     if (err) {
-      res.status(500).send(err.message);
+      const renderParams = {
+        images: ImageUploader.getImages(),
+        successMessage: '',
+        errorMessage: err.message
+      };
+      res.render('imageUploader.ejs', renderParams);
     } else if (!req.file) {
-      res.status(500).send('Upload Error!');
+      const renderParams = {
+        images: ImageUploader.getImages(),
+        successMessage: '',
+        errorMessage: 'Upload Error!'
+      };
+      res.render('imageUploader.ejs', renderParams);
     } else {
       const renderParams = {
-        images: ImageUploader.getImages()
+        images: ImageUploader.getImages(),
+        successMessage: 'Upload Done!',
+        errorMessage: ''
       };
       res.render('imageUploader.ejs', renderParams);
     }
