@@ -11,7 +11,7 @@ class ImageUploader {
     const imageSize = fs.statSync(file.path).size;
 
     if (imageSize > 51200) {
-      fs.copyFileSync(file.path, `./thumbs/${file.filename}`);
+      fs.copyFileSync(file.path, `./public/thumbs/${file.filename}`);
     }
   }
 
@@ -22,19 +22,19 @@ class ImageUploader {
    */
   static getImages() {
     const images = fs
-      .readdirSync('./images', err => {
+      .readdirSync('./public/images', err => {
         if (err) {
           console.log(err);
         }
       })
       .map(filename => {
-        let dir = './images/';
+        let dir = './public/images/';
 
         try {
-          fs.accessSync(`./thumbs/${filename}`);
-          dir = './thumbs/';
+          fs.accessSync(`./public/thumbs/${filename}`);
+          dir = './public/thumbs/';
         } catch (err) {
-          dir = './images/';
+          dir = './public/images/';
         }
 
         return {
