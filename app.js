@@ -14,8 +14,6 @@ app.set('views', `${__dirname}/src/views`);
 app.engine('ejs', ejs.renderFile);
 
 app.use('/public', express.static('public'));
-app.use('/images', express.static('images'));
-app.use('/thumbs', express.static('thumbs'));
 
 app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);

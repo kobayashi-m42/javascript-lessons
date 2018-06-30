@@ -21,7 +21,7 @@
         <% const imagesLength = Object.keys(images).length %>
         <% for (let i = 0; i < imagesLength; i += 1) { %>
             <li>
-                <a href="../images/<%= images[i].filename %>">
+                <a href="../public/images/<%= images[i].filename %>">
                     <img src=".<%= images[i].path %><%= images[i].filename %>">
                 </a>
             </li>
