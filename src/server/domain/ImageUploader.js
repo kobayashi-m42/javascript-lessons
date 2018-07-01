@@ -21,28 +21,35 @@ class ImageUploader {
    * @returns {*}
    */
   static getImages() {
-    const images = fs
-      .readdirSync('./public/images', err => {
-        if (err) {
-          console.log(err);
-        }
-      })
-      .map(filename => {
-        let dir = './public/images/';
+    /**
+     * 表示用のオブジェクトを作成する
+     *
+     * @param filename
+     * @returns {{filename: *, path: string, ctime: *}}
+     */
+    const generateObj = filename => {
+      let dir = './public/images/';
 
-        try {
-          fs.accessSync(`./public/thumbs/${filename}`);
-          dir = './public/thumbs/';
-        } catch (err) {
-          dir = './public/images/';
-        }
+      try {
+        fs.accessSync(`./public/thumbs/${filename}`);
+        dir = './public/thumbs/';
+      } catch (err) {
+        dir = './public/images/';
+      }
 
-        return {
-          filename,
-          path: dir,
-          ctime: fs.statSync(`${dir}${filename}`).ctime
-        };
-      });
+      return {
+        filename,
+        path: dir,
+        ctime: fs.statSync(`${dir}${filename}`).ctime
+      };
+    };
+
+    let images = fs.readdirSync('./public/images', err => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    images = images.map(filename => generateObj(filename));
 
     images.sort((a, b) => b.ctime - a.ctime);
     return images;
