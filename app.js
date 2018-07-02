@@ -26,6 +26,10 @@ app.get('/bingo', (req, res) => {
   res.sendFile(path.join(__dirname, 'bingo.html'));
 });
 
+app.get('/quiz', (req, res) => {
+  res.render('quiz.ejs');
+});
+
 app.listen(port, error => {
   if (error) {
     console.error(error);
