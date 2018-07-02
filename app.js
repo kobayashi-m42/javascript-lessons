@@ -8,6 +8,7 @@ const path = require('path');
 const port = 3000;
 const calender = require('./src/routes/calender');
 const imageUploader = require('./src/routes/imageUploader');
+const quiz = require('./src/routes/quiz');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', `${__dirname}/src/views`);
@@ -17,6 +18,7 @@ app.use('/public', express.static('public'));
 
 app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);
+app.use('/quiz', quiz);
 
 app.get('/', (req, res) => {
   res.render('sample.ejs', { message: 'Hello there!' });
@@ -24,10 +26,6 @@ app.get('/', (req, res) => {
 
 app.get('/bingo', (req, res) => {
   res.sendFile(path.join(__dirname, 'bingo.html'));
-});
-
-app.get('/quiz', (req, res) => {
-  res.render('quiz.ejs');
 });
 
 app.listen(port, error => {
