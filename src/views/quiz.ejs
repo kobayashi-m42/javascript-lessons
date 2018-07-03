@@ -7,12 +7,12 @@
 </head>
 <body>
     <div id="container">
-        <h1>Q.What is A?</h1>
+        <h1>Q. <%= quiz.question%></h1>
+        <% const answerLength = Object.keys(quiz.answer).length%>
         <ul>
-            <li class="answer">A0</li>
-            <li class="answer">A1</li>
-            <li class="answer">A2</li>
-            <li class="answer">A3</li>
+            <% for (let i = 0; i < answerLength; i += 1) { %>
+                <li class="answer"><%= quiz.answer[i] %></li>
+            <% } %>
         </ul>
         <div id="btn" class="disabled">Next Question</div>
     </div>
