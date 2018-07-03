@@ -17,10 +17,11 @@ class quiz {
   /**
    * 現在のクイズを取得する
    *
+   * @param targetQuizNumber
    * @returns {*}
    */
-  retrieveCurrentQuiz() {
-    return this.quizSet[0];
+  retrieveCurrentQuiz(targetQuizNumber) {
+    return this.quizSet[targetQuizNumber];
   }
 }
 
