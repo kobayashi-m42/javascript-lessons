@@ -1,5 +1,6 @@
 (() => {
   const answerList = document.getElementsByClassName('answer');
+  const nextQuestion = document.getElementById('btn');
   const answerLength = answerList.length;
 
   /**
@@ -61,6 +62,7 @@
     }
     try {
       selected.classList.add('selected');
+      nextQuestion.classList.remove('disabled');
 
       const answer = await fetchAnswer();
 
@@ -75,4 +77,11 @@
       await handleAnswerBtnClick(e.target);
     });
   }
+
+  nextQuestion.addEventListener('click', () => {
+    if (nextQuestion.classList.contains('disabled')) {
+      return;
+    }
+    window.location.reload();
+  });
 })();
