@@ -21,4 +21,17 @@ router.get('/', (req, res) => {
   res.render('quiz.ejs', renderParams);
 });
 
+router.post('/', (req, res) => {
+  const quiz = new Quiz(req.session.currentNumber);
+
+  if (req.session.currentNumber === undefined) {
+    req.session.currentNumber = 0;
+  }
+
+  const targetQuizNumber = req.session.currentNumber;
+
+  const answer = { correctAnswer: quiz.retrieveAnswer(targetQuizNumber) };
+  res.json(answer);
+});
+
 module.exports = router;

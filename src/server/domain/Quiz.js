@@ -23,6 +23,16 @@ class quiz {
   retrieveCurrentQuiz(targetQuizNumber) {
     return this.quizSet[targetQuizNumber];
   }
+
+  /**
+   * クイズの正解を取得する
+   *
+   * @param targetQuizNumber
+   * @returns {string}
+   */
+  retrieveAnswer(targetQuizNumber) {
+    return this.quizSet[targetQuizNumber].answer[0];
+  }
 }
 
 module.exports = quiz;

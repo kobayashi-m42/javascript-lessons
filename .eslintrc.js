@@ -7,6 +7,7 @@ module.exports = {
         "document": true,
         "window": true,
         "alert": true,
+        "fetch": true,
     },
     "rules": {
         "prettier/prettier": [
