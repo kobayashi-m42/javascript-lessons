@@ -49,3 +49,16 @@ ul > li {
 #btn.disabled {
   opacity: 0.5;
 }
+
+.selected {
+  font-weight: bold;
+}
+
+.correct {
+  color: limegreen;
+  font-weight: bold;
+}
+
+.wrong {
+  color: #ddd;
+}

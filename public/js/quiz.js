@@ -1,5 +1,6 @@
 (() => {
   const answerList = document.getElementsByClassName('answer');
+  const answerLength = answerList.length;
 
   /**
    * 正解を取得する
@@ -28,12 +29,21 @@
    * @param selected
    */
   const displayJudgement = (answer, selected) => {
+    for (let i = 0; i < answerLength; i += 1) {
+      if (answerList[i].textContent === answer) {
+        answerList[i].classList.add('correct');
+      } else {
+        answerList[i].classList.add('wrong');
+      }
+    }
+
+    const selectedList = selected;
     const selectedAnswer = selected.textContent;
 
     if (answer === selectedAnswer) {
-      selected.textContent = `${selectedAnswer} ... CORRECT!`;
+      selectedList.textContent = `${selectedAnswer} ... CORRECT!`;
     } else {
-      selected.textContent = `${selectedAnswer} ... WRONG!`;
+      selectedList.textContent = `${selectedAnswer} ... WRONG!`;
     }
   };
 
@@ -44,6 +54,8 @@
    */
   const handleAnswerBtnClick = async selected => {
     try {
+      selected.classList.add('selected');
+
       const answer = await fetchAnswer();
 
       displayJudgement(answer.correctAnswer, selected);
@@ -52,7 +64,6 @@
     }
   };
 
-  const answerLength = answerList.length;
   for (let i = 0; i < answerLength; i += 1) {
     answerList[i].addEventListener('click', async e => {
       await handleAnswerBtnClick(e.target);
