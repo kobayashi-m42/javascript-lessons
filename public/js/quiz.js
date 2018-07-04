@@ -53,6 +53,12 @@
    * @param selected
    */
   const handleAnswerBtnClick = async selected => {
+    if (
+      selected.classList.contains('correct') ||
+      selected.classList.contains('wrong')
+    ) {
+      return;
+    }
     try {
       selected.classList.add('selected');
 
