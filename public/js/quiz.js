@@ -11,7 +11,8 @@
   const fetchAnswer = async () => {
     try {
       const request = {
-        method: 'post'
+        method: 'post',
+        credentials: 'same-origin'
       };
       const response = await fetch('/quiz', request);
 
