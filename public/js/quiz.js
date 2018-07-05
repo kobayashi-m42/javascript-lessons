@@ -8,11 +8,16 @@
    *
    * @returns {Promise<void>}
    */
-  const fetchAnswer = async () => {
+  const fetchAnswer = async selectedAnswer => {
     try {
+      console.log(selectedAnswer);
       const request = {
         method: 'post',
-        credentials: 'same-origin'
+        credentials: 'same-origin',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `selectedAnswer=${selectedAnswer}`
       };
       const response = await fetch('/quiz', request);
 
@@ -65,7 +70,7 @@
       selected.classList.add('selected');
       nextQuestion.classList.remove('disabled');
 
-      const answer = await fetchAnswer();
+      const answer = await fetchAnswer(selected.textContent);
 
       displayJudgement(answer.correctAnswer, selected);
     } catch (error) {
