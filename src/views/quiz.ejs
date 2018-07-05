@@ -6,10 +6,14 @@
     <link rel="stylesheet" href="./public/css/quiz.css">
 </head>
 <body>
-    <% if (isLastQuiz) { %>
-        <a href="">finished!</a>
-    <% } else { %>
-        <div id="container">
+    <div id="container">
+        <% if (isFinished) { %>
+            <div id="result">
+                Your score ...
+                <div><%= score %> %</div>
+            </div>
+            <a href=""><div id="btn">Replay?</div></a>
+        <% } else { %>
             <h1>Q. <%= quiz.question%></h1>
             <% const answerLength = Object.keys(quiz.answer).length%>
             <ul>
@@ -17,7 +21,8 @@
                     <li class="answer"><%= quiz.answer[i] %></li>
                 <% } %>
             </ul>
-            <div id="btn" class="disabled">Next Question</div>
+                <% const buttonName =  isLast ? 'Show Result' : 'Next Question' %>
+            <div id="btn" class="disabled"><%= buttonName %></div>
         </div>
     <% } %>
     <script src="../public/js/quiz.js"></script>

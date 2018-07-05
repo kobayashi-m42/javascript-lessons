@@ -46,13 +46,44 @@ class Quiz {
   }
 
   /**
-   * 最後のクイズかどうか判定する
+   * クイズが終了しているかどうか判定する
    *
    * @param targetQuizNumber
    * @returns {boolean}
    */
-  isLastQuiz(targetQuizNumber) {
+  isFinished(targetQuizNumber) {
     return targetQuizNumber === this.quizSet.length;
+  }
+
+  /**
+   * 最後のクイズかどうかを判定する
+   *
+   * @param targetQuizNumber int
+   * @returns {boolean}
+   */
+  isLast(targetQuizNumber) {
+    return targetQuizNumber + 1 === this.quizSet.length;
+  }
+
+  /**
+   * 正解率を計算する
+   *
+   * @param correctScore
+   * @returns {number}
+   */
+  calculateScore(correctScore) {
+    return Math.round(correctScore / this.quizSet.length * 100);
+  }
+
+  /**
+   * 選択された回答が正解かどうか判定する
+   *
+   * @param targetQuizNumber
+   * @param selectedAnswer
+   * @returns {boolean}
+   */
+  isCorrect(targetQuizNumber, selectedAnswer) {
+    return this.quizSet[targetQuizNumber].answer[0] === selectedAnswer;
   }
 }
 
