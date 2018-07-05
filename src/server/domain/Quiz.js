@@ -1,4 +1,4 @@
-class quiz {
+class Quiz {
   constructor() {
     this.setupQuiz();
   }
@@ -21,7 +21,18 @@ class quiz {
    * @returns {*}
    */
   retrieveCurrentQuiz(targetQuizNumber) {
-    return this.quizSet[targetQuizNumber];
+    const targetQuiz = this.quizSet[targetQuizNumber];
+    const answerLength = targetQuiz.answer.length;
+
+    for (let i = answerLength - 1; i >= 0; i -= 1) {
+      const rand = Math.floor(Math.random() * (i + 1));
+      [targetQuiz.answer[i], targetQuiz.answer[rand]] = [
+        targetQuiz.answer[rand],
+        targetQuiz.answer[i]
+      ];
+    }
+
+    return targetQuiz;
   }
 
   /**
@@ -45,4 +56,4 @@ class quiz {
   }
 }
 
-module.exports = quiz;
+module.exports = Quiz;
