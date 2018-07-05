@@ -1,5 +1,6 @@
 (() => {
   const answerList = document.getElementsByClassName('answer');
+  const nextQuestion = document.getElementById('btn');
   const answerLength = answerList.length;
 
   /**
@@ -10,7 +11,8 @@
   const fetchAnswer = async () => {
     try {
       const request = {
-        method: 'post'
+        method: 'post',
+        credentials: 'same-origin'
       };
       const response = await fetch('/quiz', request);
 
@@ -53,8 +55,15 @@
    * @param selected
    */
   const handleAnswerBtnClick = async selected => {
+    if (
+      selected.classList.contains('correct') ||
+      selected.classList.contains('wrong')
+    ) {
+      return;
+    }
     try {
       selected.classList.add('selected');
+      nextQuestion.classList.remove('disabled');
 
       const answer = await fetchAnswer();
 
@@ -69,4 +78,11 @@
       await handleAnswerBtnClick(e.target);
     });
   }
+
+  nextQuestion.addEventListener('click', () => {
+    if (nextQuestion.classList.contains('disabled')) {
+      return;
+    }
+    window.location.reload();
+  });
 })();

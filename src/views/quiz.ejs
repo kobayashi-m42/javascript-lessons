@@ -6,16 +6,20 @@
     <link rel="stylesheet" href="./public/css/quiz.css">
 </head>
 <body>
-    <div id="container">
-        <h1>Q. <%= quiz.question%></h1>
-        <% const answerLength = Object.keys(quiz.answer).length%>
-        <ul>
-            <% for (let i = 0; i < answerLength; i += 1) { %>
-                <li class="answer"><%= quiz.answer[i] %></li>
-            <% } %>
-        </ul>
-        <div id="btn" class="disabled">Next Question</div>
-    </div>
+    <% if (isLastQuiz) { %>
+        <a href="">finished!</a>
+    <% } else { %>
+        <div id="container">
+            <h1>Q. <%= quiz.question%></h1>
+            <% const answerLength = Object.keys(quiz.answer).length%>
+            <ul>
+                <% for (let i = 0; i < answerLength; i += 1) { %>
+                    <li class="answer"><%= quiz.answer[i] %></li>
+                <% } %>
+            </ul>
+            <div id="btn" class="disabled">Next Question</div>
+        </div>
+    <% } %>
     <script src="../public/js/quiz.js"></script>
 </body>
 </html>

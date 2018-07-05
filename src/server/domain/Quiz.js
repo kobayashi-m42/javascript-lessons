@@ -33,6 +33,16 @@ class quiz {
   retrieveAnswer(targetQuizNumber) {
     return this.quizSet[targetQuizNumber].answer[0];
   }
+
+  /**
+   * 最後のクイズかどうか判定する
+   *
+   * @param targetQuizNumber
+   * @returns {boolean}
+   */
+  isLastQuiz(targetQuizNumber) {
+    return targetQuizNumber === this.quizSet.length;
+  }
 }
 
 module.exports = quiz;
