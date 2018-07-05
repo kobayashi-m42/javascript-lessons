@@ -4,7 +4,7 @@
   const answerLength = answerList.length;
 
   /**
-   * 正解を取得する*
+   * 正解を取得する
    *
    * @param selectedAnswer
    * @returns {Promise<*>}
