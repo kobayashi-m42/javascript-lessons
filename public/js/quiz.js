@@ -4,9 +4,10 @@
   const answerLength = answerList.length;
 
   /**
-   * 正解を取得する
+   * 正解を取得する*
    *
-   * @returns {Promise<void>}
+   * @param selectedAnswer
+   * @returns {Promise<*>}
    */
   const fetchAnswer = async selectedAnswer => {
     try {
