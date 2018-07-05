@@ -62,3 +62,17 @@ ul > li {
 .wrong {
   color: #ddd;
 }
+
+#result {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  padding: 30px 0 50px;
+}
+
+#result > div {
+  font-size: 64px;
+  font-weight: bold;
+  margin-top: 30px;
+}
