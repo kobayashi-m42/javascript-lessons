@@ -46,13 +46,23 @@ class Quiz {
   }
 
   /**
-   * 最後のクイズかどうか判定する
+   * クイズが終了しているかどうか判定する
    *
    * @param targetQuizNumber
    * @returns {boolean}
    */
-  isLastQuiz(targetQuizNumber) {
+  isFinished(targetQuizNumber) {
     return targetQuizNumber === this.quizSet.length;
+  }
+
+  /**
+   * 最後のクイズかどうかを判定する
+   *
+   * @param targetQuizNumber int
+   * @returns {boolean}
+   */
+  isLast(targetQuizNumber) {
+    return targetQuizNumber + 1 === this.quizSet.length;
   }
 }
 

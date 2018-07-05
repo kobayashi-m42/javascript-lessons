@@ -7,7 +7,7 @@
 </head>
 <body>
     <div id="container">
-        <% if (isLastQuiz) { %>
+        <% if (isFinished) { %>
             <div id="result">
                 Your score ...
                 <div>100 %</div>
@@ -21,7 +21,8 @@
                     <li class="answer"><%= quiz.answer[i] %></li>
                 <% } %>
             </ul>
-            <div id="btn" class="disabled">Next Question</div>
+                <% const buttonName =  isLast ? 'Show Result' : 'Next Question' %>
+            <div id="btn" class="disabled"><%= buttonName %></div>
         </div>
     <% } %>
     <script src="../public/js/quiz.js"></script>

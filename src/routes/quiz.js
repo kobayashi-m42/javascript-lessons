@@ -11,14 +11,16 @@ router.get('/', (req, res) => {
 
   const quiz = new Quiz();
   const targetQuizNumber = req.session.currentNumber;
-  const isLastQuiz = quiz.isLastQuiz(targetQuizNumber);
+  const isFinished = quiz.isFinished(targetQuizNumber);
+  const isLast = quiz.isLast(targetQuizNumber);
 
   const renderParams = {
-    isLastQuiz,
-    quiz: ''
+    quiz: '',
+    isFinished,
+    isLast
   };
 
-  if (isLastQuiz) {
+  if (isFinished) {
     req.session.currentNumber = 0;
   } else {
     renderParams.quiz = quiz.retrieveCurrentQuiz(targetQuizNumber);
