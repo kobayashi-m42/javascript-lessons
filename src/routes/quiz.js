@@ -40,7 +40,15 @@ router.post('/', (req, res) => {
 
   // TODO sessionにcurrentNumberが含まれていなかった場合エラー
   // TODO sessionにcorrectCountが含まれていなかった場合エラー
-  // TODO bodyにselectedAnswerが含まれていなかった場合エラー
+
+  if (!req.body.selectedAnswer) {
+    const errorResponse = {
+      errorCode: '422',
+      message: 'Unprocessable Entity'
+    };
+    res.status(422).json(errorResponse);
+    return;
+  }
 
   const targetQuizNumber = req.session.currentNumber;
   if (quiz.isCorrect(targetQuizNumber, req.body.selectedAnswer)) {
