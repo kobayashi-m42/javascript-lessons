@@ -8,12 +8,18 @@
 <body>
     <div id="container">
         <% if (isFinished) { %>
+
+            <!-- スコアの表示領域 -->
             <div id="result">
                 Your score ...
                 <div><%= score %> %</div>
             </div>
             <a href=""><div id="btn">Replay?</div></a>
+            <!-- スコアの表示領域 -->
+
         <% } else { %>
+
+            <!-- クイズの表示領域 -->
             <h1>Q. <%= quiz.question%></h1>
             <% const answerLength = Object.keys(quiz.answer).length%>
             <ul>
@@ -23,8 +29,15 @@
             </ul>
                 <% const buttonName =  isLast ? 'Show Result' : 'Next Question' %>
             <div id="btn" class="disabled"><%= buttonName %></div>
-        </div>
+            <!-- クイズの表示領域 -->
+
     <% } %>
+
+    <!-- エラーメッセージの表示領域（普段は非表示） -->
+    <div id="js-error-message" class="alert"></div>
+    <!-- エラーメッセージの表示領域（普段は非表示） -->
+
+    </div>
     <script src="../public/js/quiz.js"></script>
 </body>
 </html>
