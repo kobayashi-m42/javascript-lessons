@@ -4,6 +4,26 @@
   const answerLength = answerList.length;
 
   /**
+   * HTTPのErrorが発生した際に利用する
+   */
+  class HttpError extends Error {
+    /**
+     * @param body
+     * @param status
+     */
+    constructor(body, status) {
+      super(body.message);
+
+      this.name = this.constructor.name;
+
+      Error.captureStackTrace(this, this.constructor);
+
+      this.status = status || 500;
+      this.body = body;
+    }
+  }
+
+  /**
    * 正解を取得する
    *
    * @param selectedAnswer
@@ -11,7 +31,6 @@
    */
   const fetchAnswer = async selectedAnswer => {
     try {
-      console.log(selectedAnswer);
       const request = {
         method: 'post',
         credentials: 'same-origin',
@@ -22,7 +41,11 @@
       };
       const response = await fetch('/quiz', request);
 
-      // TODO ステータスが200以外だった場合の処理を追加
+      if (response.status !== 200) {
+        const responseBody = await response.json();
+
+        return Promise.reject(new HttpError(responseBody, response.status));
+      }
 
       return await response.json();
     } catch (error) {
@@ -56,6 +79,19 @@
   };
 
   /**
+   * エラーを表示する
+   *
+   * @param errorBody
+   */
+  const displayErrorHtml = errorBody => {
+    const errorMessage = document.getElementById('js-error-message');
+    errorMessage.style.display = 'block';
+    errorMessage.innerHTML = `${errorBody.errorCode} ${errorBody.message}`;
+
+    nextQuestion.style.display = 'none';
+  };
+
+  /**
    * クイズの選択肢が押された時の挙動
    *
    * @param selected
@@ -75,7 +111,16 @@
 
       displayJudgement(answer.correctAnswer, selected);
     } catch (error) {
-      // TODO エラー処理を追加
+      if (error.name === 'HttpError') {
+        displayErrorHtml(error.body);
+        return;
+      }
+
+      const errorBody = {
+        errorCode: 500,
+        message: 'Internal Server Error'
+      };
+      displayErrorHtml(errorBody);
     }
   };
 
