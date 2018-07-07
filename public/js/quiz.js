@@ -2,6 +2,9 @@
   const answerList = document.getElementsByClassName('answer');
   const nextQuestion = document.getElementById('btn');
   const answerLength = answerList.length;
+  const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content');
 
   /**
    * HTTPのErrorが発生した際に利用する
@@ -35,7 +38,8 @@
         method: 'post',
         credentials: 'same-origin',
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'CSRF-Token': csrfToken
         },
         body: `selectedAnswer=${selectedAnswer}`
       };
