@@ -45,6 +45,10 @@
       };
       const response = await fetch('/quiz', request);
 
+      if (response.status === 412) {
+        window.location.replace('/quiz');
+      }
+
       if (response.status !== 200) {
         const responseBody = await response.json();
 
