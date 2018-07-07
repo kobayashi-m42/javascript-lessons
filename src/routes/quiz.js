@@ -39,8 +39,17 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const quiz = new Quiz();
 
-  // TODO sessionにcurrentNumberが含まれていなかった場合エラー
-  // TODO sessionにcorrectCountが含まれていなかった場合エラー
+  if (
+    req.session.currentNumber === undefined ||
+    req.session.correctCount === undefined
+  ) {
+    const errorResponse = {
+      errorCode: '412',
+      message: 'Precondition Failed'
+    };
+    res.status(412).json(errorResponse);
+    return;
+  }
 
   if (!req.body.selectedAnswer) {
     const errorResponse = {
