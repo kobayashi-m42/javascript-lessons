@@ -21,7 +21,8 @@ router.get('/', (req, res) => {
     quiz: '',
     isFinished,
     isLast,
-    score: ''
+    score: '',
+    csrfToken: req.csrfToken()
   };
 
   if (isFinished) {

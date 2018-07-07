@@ -1,3 +1,5 @@
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
 const express = require('express');
 const ejs = require('ejs');
 
@@ -30,7 +32,6 @@ app.use('/public', express.static('public'));
 
 app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);
-app.use('/quiz', quiz);
 
 app.get('/', (req, res) => {
   res.render('sample.ejs', { message: 'Hello there!' });
@@ -39,6 +40,10 @@ app.get('/', (req, res) => {
 app.get('/bingo', (req, res) => {
   res.sendFile(path.join(__dirname, 'bingo.html'));
 });
+
+app.use(cookieParser());
+app.use(csrf({ cookie: true }));
+app.use('/quiz', quiz);
 
 app.listen(port, error => {
   if (error) {
