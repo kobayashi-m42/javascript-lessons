@@ -21,3 +21,16 @@ client.get('account/verify_credentials', {}).then(content => {
 client.get('statuses/home_timeline', { count: 3 }).then(tweet => {
   console.log(tweet);
 });
+
+/**
+ * ツイートする
+ */
+const tweetText = 'Tweet from Node.js';
+client
+  .post('statuses/update', { status: tweetText })
+  .then(tweet => {
+    console.log(tweet);
+  })
+  .catch(error => {
+    console.log(error);
+  });
