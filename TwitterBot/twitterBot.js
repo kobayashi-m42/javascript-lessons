@@ -8,6 +8,16 @@ const client = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
+/**
+ * アカウント情報を取得する
+ */
 client.get('account/verify_credentials', {}).then(content => {
   console.log(content);
+});
+
+/**
+ * タイムラインのツイートを取得する
+ */
+client.get('statuses/home_timeline', { count: 3 }).then(tweet => {
+  console.log(tweet);
 });
