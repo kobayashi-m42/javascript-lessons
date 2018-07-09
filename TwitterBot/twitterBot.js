@@ -34,3 +34,25 @@ client
   .catch(error => {
     console.log(error);
   });
+
+/**
+ * 画像付きでツイートする
+ */
+const image = require('fs').readFileSync('pengin.jpg');
+
+client
+  .post('media/upload', { media: image })
+  .then(media => {
+    const status = {
+      status: 'ペンギン',
+      media_ids: media.media_id_string
+    };
+
+    return client.post('statuses/update', status);
+  })
+  .then(result => {
+    console.log(result);
+  })
+  .catch(error => {
+    console.log(error);
+  });
