@@ -13,22 +13,21 @@
             <input type="text" id="new_todo" class="form-control" placeholder="What needs to be done?">
         </div>
     </form>
+
+    <!-- TODOリストの表示領域 -->
+    <% const todosLength = Object.keys(todos).length%>
     <ul class="list-group">
+        <% for (let i = 0; i < todosLength; i += 1) { %>
         <li class="list-group-item">
-            <input type="checkbox">
-            <span>Do something</span>
+            <input type="checkbox" <%= todos[i].state === 1 ? 'checked' : '' %>>
+            <span class="<%= todos[i].state === 1 ? 'done' : '' %>"><%= todos[i].title %></span>
             <button type="button" class="close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </li>
-        <li class="list-group-item">
-            <input type="checkbox" checked>
-            <span class="done">Do something again!</span>
-            <button type="button" class="close" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </li>
+        <% } %>
     </ul>
+    <!-- TODOリストの表示領域 -->
 </div>
 </body>
 </html>

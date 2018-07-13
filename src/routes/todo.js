@@ -5,6 +5,8 @@ const router = express.Router();
 
 const mysql = require('mysql');
 
+const Todo = require('../../src/server/domain/Todo.js');
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: process.env.DB_USER,
@@ -12,19 +14,23 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
-connection.connect(err => {
-  if (err) {
-    console.error(`error connecting: ${err.stack}`);
-    return;
-  }
-
-  console.log(`connected as id ${connection.threadId}`);
-});
-
-connection.end();
-
 router.get('/', (req, res) => {
-  res.render('todo.ejs');
+  const renderParams = {
+    todos: [],
+    statusCode: 200
+  };
+  const todo = new Todo(connection);
+  todo
+    .fetchTodos()
+    .then(response => {
+      renderParams.todos = response;
+      res.status(renderParams.statusCode).render('todo.ejs', renderParams);
+    })
+    .catch(error => {
+      console.log(error);
+      // TODO
+    });
+  connection.end();
 });
 
 module.exports = router;
