@@ -12,6 +12,7 @@ const port = 3000;
 const calender = require('./src/routes/calender');
 const imageUploader = require('./src/routes/imageUploader');
 const quiz = require('./src/routes/quiz');
+const todo = require('./src/routes/todo');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -32,6 +33,7 @@ app.use('/public', express.static('public'));
 
 app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);
+app.use('/todo', todo);
 
 app.get('/', (req, res) => {
   res.render('sample.ejs', { message: 'Hello there!' });

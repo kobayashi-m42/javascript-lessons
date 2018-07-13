@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title lang="ja">Todos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="./public/css/todo.css">
+<body>
+<div class="container">
+    <h1>Todos</h1>
+    <form action="">
+        <div class="input-group mb-3">
+            <input type="text" id="new_todo" class="form-control" placeholder="What needs to be done?">
+        </div>
+    </form>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <input type="checkbox">
+            <span>Do something</span>
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+        <li class="list-group-item">
+            <input type="checkbox" checked>
+            <span class="done">Do something again!</span>
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
