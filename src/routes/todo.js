@@ -15,19 +15,22 @@ const connection = mysql.createConnection({
 });
 
 router.get('/', (req, res) => {
+  const renderParams = {
+    todos: [],
+    statusCode: 200
+  };
   const todo = new Todo(connection);
   todo
     .fetchTodos()
     .then(response => {
-      console.log(response);
-
+      renderParams.todos = response;
+      res.status(renderParams.statusCode).render('todo.ejs', renderParams);
     })
     .catch(error => {
       console.log(error);
+      // TODO
     });
-
   connection.end();
-  res.render('todo.ejs');
 });
 
 module.exports = router;
