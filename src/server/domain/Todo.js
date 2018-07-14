@@ -7,15 +7,15 @@ class Todo {
   }
 
   /**
-   * token からデータを取得する
+   * todos からデータを取得する
    *
    * @returns {Promise<any>}
    */
   fetchTodos() {
     return new Promise((resolve, reject) => {
-      const $sql = 'SELECT * FROM todos ORDER BY id DESC';
+      const sql = 'SELECT * FROM todos ORDER BY id DESC';
 
-      this.connection.query($sql, (err, results) => {
+      this.connection.query(sql, (err, results) => {
         if (err) return reject(err);
 
         const responseArray = [];
@@ -29,6 +29,44 @@ class Todo {
         );
 
         return resolve(responseArray);
+      });
+    });
+  }
+
+  /**
+   * TODOのステータスを更新する
+   *
+   * @param id
+   */
+  updateTodo(id) {
+    return new Promise((resolve, reject) => {
+      const sql = 'UPDATE todos SET state = (state + 1) % 2 WHERE id = ?';
+      const options = [id];
+
+      this.connection.query(sql, options, (err, results) => {
+        if (err) return reject(err);
+
+        return resolve(results);
+      });
+    });
+  }
+
+  /**
+   * TODOを取得する
+   *
+   * @param id
+   */
+  findTodo(id) {
+    return new Promise((resolve, reject) => {
+      const sql = 'SELECT * FROM todos WHERE id = ?';
+      const options = [id];
+
+      this.connection.query(sql, options, (err, results) => {
+        if (err) return reject(err);
+
+        const response = { state: results[0].state };
+
+        return resolve(response);
       });
     });
   }

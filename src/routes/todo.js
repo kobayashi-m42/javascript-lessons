@@ -30,11 +30,20 @@ router.get('/', (req, res) => {
       console.log(error);
       // TODO
     });
-  connection.end();
 });
 
 router.post('/', (req, res) => {
-  console.log(req.body);
+  const todo = new Todo(connection);
+  todo
+    .updateTodo(req.body.id)
+    .then(() => todo.findTodo(req.body.id))
+    .then(response => {
+      res.json(response);
+    })
+    .catch(error => {
+      console.log(error);
+      // TODO
+    });
 });
 
 module.exports = router;

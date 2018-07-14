@@ -19,7 +19,8 @@
         body: `id=${id}`
       };
 
-      await fetch('/todo', request);
+      const response = await fetch('/todo', request);
+      return await response.json();
     } catch (error) {
       return Promise.reject(error);
     }
@@ -33,15 +34,15 @@
   const handleChecked = async checked => {
     const todoId = checked.parentNode.dataset.id;
     try {
-      await updateTodo(todoId);
+      const todo = await updateTodo(todoId);
     } catch (e) {
       // TODO エラー処理を追加
     }
   };
 
   for (let i = 0; i < checkListLength; i += 1) {
-    checkList[i].addEventListener('click', e => {
-      handleChecked(e.target);
+    checkList[i].addEventListener('click', async e => {
+      await handleChecked(e.target);
     });
   }
 })();
