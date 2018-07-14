@@ -27,6 +27,20 @@
   };
 
   /**
+   * TODOの状態に合わせてタイトルのスタイルを変更する
+   *
+   * @param checked
+   * @param state
+   */
+  const updateState = (checked, state) => {
+    if (state === 1) {
+      checked.nextElementSibling.classList.add('done');
+    } else {
+      checked.nextElementSibling.classList.remove('done');
+    }
+  };
+
+  /**
    * TODOのチェックが押された時の挙動
    *
    * @param checked
@@ -35,6 +49,7 @@
     const todoId = checked.parentNode.dataset.id;
     try {
       const todo = await updateTodo(todoId);
+      updateState(checked, todo);
     } catch (e) {
       // TODO エラー処理を追加
     }
