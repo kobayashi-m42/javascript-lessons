@@ -33,4 +33,8 @@ router.get('/', (req, res) => {
   connection.end();
 });
 
+router.post('/', (req, res) => {
+  console.log(req.body);
+});
+
 module.exports = router;

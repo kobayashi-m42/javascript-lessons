@@ -22,6 +22,7 @@ class Todo {
 
         results.map(todo =>
           responseArray.push({
+            id: todo.id,
             state: todo.state,
             title: todo.title
           })
