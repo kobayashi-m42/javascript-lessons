@@ -11,7 +11,7 @@ class Todo {
    *
    * @returns {Promise<any>}
    */
-  fetchTodos() {
+  fetch() {
     return new Promise((resolve, reject) => {
       const sql = 'SELECT * FROM todos ORDER BY id DESC';
 
@@ -38,7 +38,7 @@ class Todo {
    *
    * @param id
    */
-  updateTodo(id) {
+  updateState(id) {
     return new Promise((resolve, reject) => {
       const sql = 'UPDATE todos SET state = (state + 1) % 2 WHERE id = ?';
       const options = [id];
@@ -56,7 +56,7 @@ class Todo {
    *
    * @param id
    */
-  findTodo(id) {
+  find(id) {
     return new Promise((resolve, reject) => {
       const sql = 'SELECT * FROM todos WHERE id = ?';
       const options = [id];

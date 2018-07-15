@@ -8,7 +8,7 @@
    * @param id
    * @returns {Promise<never>}
    */
-  const updateTodo = async id => {
+  const updateState = async id => {
     try {
       const request = {
         method: 'post',
@@ -32,7 +32,8 @@
    * @param checked
    * @param state
    */
-  const updateState = (checked, state) => {
+  const updateStateHtml = (checked, state) => {
+    console.log(state);
     if (state === 1) {
       checked.nextElementSibling.classList.add('done');
     } else {
@@ -48,8 +49,8 @@
   const handleChecked = async checked => {
     const todoId = checked.parentNode.dataset.id;
     try {
-      const todo = await updateTodo(todoId);
-      updateState(checked, todo);
+      const todo = await updateState(todoId);
+      updateStateHtml(checked, todo.state);
     } catch (e) {
       // TODO エラー処理を追加
     }
