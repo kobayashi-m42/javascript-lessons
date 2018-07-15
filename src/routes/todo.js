@@ -21,16 +21,29 @@ router.get('/', (req, res) => {
   };
   const todo = new Todo(connection);
   todo
-    .fetchTodos()
-    .then(response => {
-      renderParams.todos = response;
+    .fetch()
+    .then(todos => {
+      renderParams.todos = todos;
       res.status(renderParams.statusCode).render('todo.ejs', renderParams);
     })
     .catch(error => {
       console.log(error);
       // TODO
     });
-  connection.end();
+});
+
+router.post('/', (req, res) => {
+  const todo = new Todo(connection);
+  todo
+    .updateState(req.body.id)
+    .then(() => todo.find(req.body.id))
+    .then(todoState => {
+      res.json(todoState);
+    })
+    .catch(error => {
+      console.log(error);
+      // TODO
+    });
 });
 
 module.exports = router;
