@@ -10,6 +10,8 @@ module.exports = {
         "fetch": true,
     },
     "rules": {
+        "no-console": 0,
+        "no-alert": 0,
         "prettier/prettier": [
             "error",
             {"singleQuote": true}
