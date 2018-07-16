@@ -47,6 +47,15 @@ router.put('/', (req, res) => {
 });
 
 router.delete('/', (req, res) => {
-  console.log(req.body.id );
+  const todo = new Todo(connection);
+  todo
+    .deleteTodo(req.body.id)
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch(error => {
+      console.log(error);
+      // TODO
+    });
 });
 module.exports = router;

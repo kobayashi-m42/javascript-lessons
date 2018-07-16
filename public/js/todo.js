@@ -44,6 +44,8 @@
       };
 
       await fetch('/todo', request);
+
+      return Promise.resolve();
     } catch (error) {
       return Promise.reject(error);
     }

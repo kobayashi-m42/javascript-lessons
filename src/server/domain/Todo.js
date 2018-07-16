@@ -34,24 +34,6 @@ class Todo {
   }
 
   /**
-   * TODOのステータスを更新する
-   *
-   * @param id
-   */
-  updateState(id) {
-    return new Promise((resolve, reject) => {
-      const sql = 'UPDATE todos SET state = (state + 1) % 2 WHERE id = ?';
-      const options = [id];
-
-      this.connection.query(sql, options, (err, results) => {
-        if (err) return reject(err);
-
-        return resolve(results);
-      });
-    });
-  }
-
-  /**
    * TODOを取得する
    *
    * @param id
@@ -67,6 +49,42 @@ class Todo {
         const response = { state: results[0].state };
 
         return resolve(response);
+      });
+    });
+  }
+
+  /**
+   * TODOのステータスを更新する
+   *
+   * @param id
+   */
+  updateState(id) {
+    return new Promise((resolve, reject) => {
+      const sql = 'UPDATE todos SET state = (state + 1) % 2 WHERE id = ?';
+      const options = [id];
+
+      this.connection.query(sql, options, err => {
+        if (err) return reject(err);
+
+        return resolve();
+      });
+    });
+  }
+
+  /**
+   * TODOを削除する
+   *
+   * @param id
+   */
+  deleteTodo(id) {
+    return new Promise((resolve, reject) => {
+      const sql = 'DELETE FROM todos WHERE id = ?';
+      const options = [id];
+
+      this.connection.query(sql, options, (err, results) => {
+        if (err) return reject(err);
+
+        return resolve(results);
       });
     });
   }
