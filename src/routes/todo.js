@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.put('/', (req, res) => {
   const todo = new Todo(connection);
   todo
     .updateState(req.body.id)

@@ -11,7 +11,7 @@
   const updateState = async id => {
     try {
       const request = {
-        method: 'post',
+        method: 'put',
         credentials: 'same-origin',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -33,7 +33,6 @@
    * @param state
    */
   const updateStateHtml = (checked, state) => {
-    console.log(state);
     if (state === 1) {
       checked.nextElementSibling.classList.add('done');
     } else {
