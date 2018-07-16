@@ -46,4 +46,7 @@ router.put('/', (req, res) => {
     });
 });
 
+router.delete('/', (req, res) => {
+  console.log(req.body.id );
+});
 module.exports = router;
