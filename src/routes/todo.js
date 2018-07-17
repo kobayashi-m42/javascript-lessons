@@ -32,13 +32,27 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  const todo = new Todo(connection);
+  todo
+    .createTodo(req.body.title)
+    .then(insertId => todo.find(insertId))
+    .then(todoItem => {
+      res.json({ todoItem });
+    })
+    .catch(error => {
+      console.log(error);
+      // TODO
+    });
+});
+
 router.put('/', (req, res) => {
   const todo = new Todo(connection);
   todo
     .updateState(req.body.id)
     .then(() => todo.find(req.body.id))
-    .then(todoState => {
-      res.json(todoState);
+    .then(todoItem => {
+      res.json({ state: todoItem.state });
     })
     .catch(error => {
       console.log(error);

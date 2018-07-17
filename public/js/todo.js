@@ -1,6 +1,35 @@
 (() => {
   const checkList = document.getElementsByClassName('js-check-todo');
   const closeButtonList = document.getElementsByClassName('js-close-todo');
+  const newTodoButton = document.getElementById('js-new-todo-btn');
+  const newTodo = document.getElementById('js-new-todo');
+
+  newTodo.focus();
+
+  /**
+   * TODOを更新する
+   *
+   * @param todo
+   * @returns {Promise<never>}
+   */
+  const createTodo = async todo => {
+    try {
+      const request = {
+        method: 'post',
+        credentials: 'same-origin',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `title=${todo}`
+      };
+
+      const response = await fetch('/todo', request);
+
+      return await response.json();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
 
   /**
    * TODOを更新する
@@ -80,6 +109,27 @@
   };
 
   /**
+   * TODOをHTMLのTODOリスの先頭に追加する
+   *
+   * @param todo
+   */
+  const insertBeforeTodoHtml = todo => {
+    const todosEmelent = document.getElementById('jd-todos');
+    const firstTodoList = todosEmelent.firstChild;
+
+    const todoList = document
+      .getElementById('js-todo-template')
+      .cloneNode(true);
+    todoList.id = todo.todoItem.id;
+    todoList.dataset.id = todo.todoItem.id;
+    todoList.style = '';
+    todoList.querySelector('span').textContent = todo.todoItem.title;
+
+    todosEmelent.insertBefore(todoList, firstTodoList);
+    return todoList;
+  };
+
+  /**
    * TODOのチェックが押された時の挙動
    *
    * @param checked
@@ -109,6 +159,41 @@
     }
   };
 
+  /**
+   * 追加されたTODOにイベントを追加する
+   *
+   * @param todoList
+   */
+  const addEventList = todoList => {
+    todoList
+      .getElementsByClassName('js-check-todo')[0]
+      .addEventListener('click', async e => {
+        await handleChecked(e.target);
+      });
+    todoList
+      .getElementsByClassName('js-close-todo')[0]
+      .addEventListener('click', async e => {
+        await handleClosed(e.currentTarget);
+      });
+  };
+
+  /**
+   * TODOの追加ボタンが押された時の挙動
+   */
+  const handleNewTodoBtn = async () => {
+    try {
+      const newTodoValue = newTodo.value;
+      const todo = await createTodo(newTodoValue);
+      const todoList = insertBeforeTodoHtml(todo);
+      addEventList(todoList);
+
+      newTodo.value = '';
+      newTodo.focus();
+    } catch (e) {
+      // TODO エラー処理を追加
+    }
+  };
+
   const checkListLength = checkList.length;
   for (let i = 0; i < checkListLength; i += 1) {
     checkList[i].addEventListener('click', async e => {
@@ -122,4 +207,8 @@
       await handleClosed(e.currentTarget);
     });
   }
+
+  newTodoButton.addEventListener('click', async () => {
+    await handleNewTodoBtn();
+  });
 })();

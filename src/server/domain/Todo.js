@@ -46,9 +46,34 @@ class Todo {
       this.connection.query(sql, options, (err, results) => {
         if (err) return reject(err);
 
-        const response = { state: results[0].state };
+        const response = {
+          id: results[0].id,
+          state: results[0].state,
+          title: results[0].title
+        };
 
         return resolve(response);
+      });
+    });
+  }
+
+  /**
+   * TODOを登録する
+   *
+   * @param title
+   */
+  createTodo(title) {
+    return new Promise((resolve, reject) => {
+      const sql = 'INSERT INTO todos SET ?';
+      const post = {
+        state: 0,
+        title
+      };
+
+      this.connection.query(sql, post, (err, results) => {
+        if (err) return reject(err);
+
+        return resolve(results.insertId);
       });
     });
   }
