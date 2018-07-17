@@ -3,11 +3,32 @@
   const closeButtonList = document.getElementsByClassName('js-close-todo');
   const newTodoButton = document.getElementById('js-new-todo-btn');
   const newTodo = document.getElementById('js-new-todo');
+  const errorMessage = document.getElementById('js-error-message');
 
   newTodo.focus();
 
   /**
-   * TODOを更新する
+   * HTTPのErrorが発生した際に利用する
+   */
+  class HttpError extends Error {
+    /**
+     * @param body
+     * @param status
+     */
+    constructor(body, status) {
+      super(body.message);
+
+      this.name = this.constructor.name;
+
+      Error.captureStackTrace(this, this.constructor);
+
+      this.status = status || 500;
+      this.body = body;
+    }
+  }
+
+  /**
+   * TODOを登録する
    *
    * @param todo
    * @returns {Promise<never>}
@@ -24,6 +45,12 @@
       };
 
       const response = await fetch('/todo', request);
+
+      if (response.status !== 200) {
+        const responseBody = await response.json();
+
+        return Promise.reject(new HttpError(responseBody, response.status));
+      }
 
       return await response.json();
     } catch (error) {
@@ -130,13 +157,25 @@
   };
 
   /**
+   * エラーを表示する
+   *
+   * @param errorBody
+   */
+  const displayErrorHtml = errorBody => {
+    errorMessage.style.display = 'block';
+    errorMessage.innerHTML = `${errorBody.errorCode} ${errorBody.message}`;
+  };
+
+  /**
    * TODOのチェックが押された時の挙動
    *
    * @param checked
    */
   const handleChecked = async checked => {
-    const todoId = checked.parentNode.dataset.id;
     try {
+      errorMessage.style.display = 'none';
+
+      const todoId = checked.parentNode.dataset.id;
       const todo = await updateState(todoId);
       updateStateHtml(checked, todo.state);
     } catch (e) {
@@ -150,8 +189,9 @@
    * @param closed
    */
   const handleClosed = async closed => {
-    const todoId = closed.parentNode.dataset.id;
     try {
+      errorMessage.style.display = 'none';
+      const todoId = closed.parentNode.dataset.id;
       await deleteTodo(todoId);
       closeTodoHtml(closed.parentNode);
     } catch (e) {
@@ -182,6 +222,12 @@
    */
   const handleNewTodoBtn = async () => {
     try {
+      errorMessage.style.display = 'none';
+
+      if (!newTodo.checkValidity()) {
+        return;
+      }
+
       const newTodoValue = newTodo.value;
       const todo = await createTodo(newTodoValue);
       const todoList = insertBeforeTodoHtml(todo);
@@ -189,8 +235,17 @@
 
       newTodo.value = '';
       newTodo.focus();
-    } catch (e) {
-      // TODO エラー処理を追加
+    } catch (error) {
+      if (error.name === 'HttpError') {
+        displayErrorHtml(error.body);
+        return;
+      }
+
+      const errorBody = {
+        errorCode: 500,
+        message: 'Internal Server Error'
+      };
+      displayErrorHtml(errorBody);
     }
   };
 
