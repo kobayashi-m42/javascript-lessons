@@ -10,12 +10,16 @@
     <h1>Todos</h1>
     <form action="">
         <div class="input-group mb-3">
-            <input type="text" id="js-new-todo" class="form-control" placeholder="What needs to be done?">
+            <input type="text" id="js-new-todo" class="form-control" placeholder="What needs to be done?" required>
             <div id="js-new-todo-btn" class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-addon2">TODOを追加</button>
             </div>
         </div>
     </form>
+
+    <!-- エラーメッセージの表示領域（普段は非表示） -->
+    <div id="js-error-message" class="alert alert-danger" role="alert" style="display: none"></div>
+    <!-- エラーメッセージの表示領域（普段は非表示） -->
 
     <!-- TODOリストの表示領域 -->
     <% const todosLength = Object.keys(todos).length%>

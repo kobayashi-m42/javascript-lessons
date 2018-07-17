@@ -113,6 +113,20 @@ class Todo {
       });
     });
   }
+
+  /**
+   * titleパラメータのバリデーションチェックを行なう
+   *
+   * @param title
+   * @returns {boolean}
+   */
+  static validateTitle(title) {
+    if (title === '') {
+      return false;
+    }
+
+    return true;
+  }
 }
 
 module.exports = Todo;

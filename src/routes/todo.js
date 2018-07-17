@@ -34,6 +34,19 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const todo = new Todo(connection);
+  const errorResponse = {
+    errorCode: '',
+    message: ''
+  };
+
+  const isValid = Todo.validateTitle(req.body.title);
+  if (!isValid) {
+    errorResponse.errorCode = 422;
+    errorResponse.message = 'Unprocessable Entity';
+    res.status(422).json(errorResponse);
+    return;
+  }
+
   todo
     .createTodo(req.body.title)
     .then(insertId => todo.find(insertId))
