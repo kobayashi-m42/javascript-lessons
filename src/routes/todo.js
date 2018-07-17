@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.put('/', (req, res) => {
   const todo = new Todo(connection);
   todo
     .updateState(req.body.id)
@@ -46,4 +46,16 @@ router.post('/', (req, res) => {
     });
 });
 
+router.delete('/', (req, res) => {
+  const todo = new Todo(connection);
+  todo
+    .deleteTodo(req.body.id)
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch(error => {
+      console.log(error);
+      // TODO
+    });
+});
 module.exports = router;

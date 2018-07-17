@@ -5,3 +5,14 @@ body {
 .done {
   text-decoration: line-through;
 }
+
+.close-todo {
+  transition: opacity 0.8s, visibility 0.8s;
+
+  opacity: 0;
+  visibility: hidden;
+}
+
+ul {
+  margin-top: 40px;
+}

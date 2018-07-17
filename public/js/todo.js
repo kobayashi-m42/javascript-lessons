@@ -1,6 +1,6 @@
 (() => {
   const checkList = document.getElementsByClassName('js-check-todo');
-  const checkListLength = checkList.length;
+  const closeButtonList = document.getElementsByClassName('js-close-todo');
 
   /**
    * TODOを更新する
@@ -11,7 +11,7 @@
   const updateState = async id => {
     try {
       const request = {
-        method: 'post',
+        method: 'put',
         credentials: 'same-origin',
         headers: {
           'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -27,18 +27,56 @@
   };
 
   /**
+   * TODOを削除する
+   *
+   * @param id
+   * @returns {Promise<never>}
+   */
+  const deleteTodo = async id => {
+    try {
+      const request = {
+        method: 'delete',
+        credentials: 'same-origin',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `id=${id}`
+      };
+
+      await fetch('/todo', request);
+
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
+  /**
    * TODOの状態に合わせてタイトルのスタイルを変更する
    *
    * @param checked
    * @param state
    */
   const updateStateHtml = (checked, state) => {
-    console.log(state);
     if (state === 1) {
       checked.nextElementSibling.classList.add('done');
     } else {
       checked.nextElementSibling.classList.remove('done');
     }
+  };
+
+  /**
+   * 削除されたTODOを非表示にする
+   *
+   * @param closedTodo
+   */
+  const closeTodoHtml = closedTodo => {
+    const todo = closedTodo;
+    todo.classList.add('close-todo');
+
+    todo.addEventListener('transitionend', () => {
+      todo.style.display = 'none';
+    });
   };
 
   /**
@@ -56,9 +94,32 @@
     }
   };
 
+  /**
+   * TODOの閉じるボタンが押された時の挙動
+   *
+   * @param closed
+   */
+  const handleClosed = async closed => {
+    const todoId = closed.parentNode.dataset.id;
+    try {
+      await deleteTodo(todoId);
+      closeTodoHtml(closed.parentNode);
+    } catch (e) {
+      // TODO エラー処理を追加
+    }
+  };
+
+  const checkListLength = checkList.length;
   for (let i = 0; i < checkListLength; i += 1) {
     checkList[i].addEventListener('click', async e => {
       await handleChecked(e.target);
+    });
+  }
+
+  const closeButtonListLength = closeButtonList.length;
+  for (let i = 0; i < closeButtonListLength; i += 1) {
+    closeButtonList[i].addEventListener('click', async e => {
+      await handleClosed(e.currentTarget);
     });
   }
 })();
