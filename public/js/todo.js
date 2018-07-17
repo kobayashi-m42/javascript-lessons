@@ -21,7 +21,8 @@
       };
 
       const response = await fetch('/todo', request);
-      return Promise.resolve();
+
+      return await response.json();
     } catch (error) {
       return Promise.reject(error);
     }
@@ -105,12 +106,13 @@
   };
 
   /**
-   * TODOのチェックが押された時の挙動
+   * TODOの追加ボタンが押された時の挙動
    */
   const handleNewTodoBtn = async () => {
     try {
       const newTodo = document.getElementById('js-new-todo').value;
       const todo = await createTodo(newTodo);
+      console.log(todo);
     } catch (e) {
       // TODO エラー処理を追加
     }
