@@ -106,13 +106,33 @@
   };
 
   /**
+   * TODOをHTMLのTODOリスの先頭に追加する
+   *
+   * @param todo
+   */
+  const insertBeforeTodoHtml = todo => {
+    const todosEmelent = document.getElementById('jd-todos');
+    const firstTodoList = todosEmelent.firstChild;
+
+    const todoList = document
+      .getElementById('js-todo-template')
+      .cloneNode(true);
+    todoList.id = todo.todoItem.id;
+    todoList.dataset.id = todo.todoItem.id;
+    todoList.style = '';
+    todoList.querySelector('span').textContent = todo.todoItem.title;
+
+    todosEmelent.insertBefore(todoList, firstTodoList);
+  };
+
+  /**
    * TODOの追加ボタンが押された時の挙動
    */
   const handleNewTodoBtn = async () => {
     try {
       const newTodo = document.getElementById('js-new-todo').value;
       const todo = await createTodo(newTodo);
-      console.log(todo);
+      insertBeforeTodoHtml(todo);
     } catch (e) {
       // TODO エラー処理を追加
     }

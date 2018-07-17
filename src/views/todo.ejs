@@ -19,7 +19,7 @@
 
     <!-- TODOリストの表示領域 -->
     <% const todosLength = Object.keys(todos).length%>
-    <ul class="list-group list-group-flush">
+    <ul id="jd-todos" class="list-group list-group-flush">
         <% for (let i = 0; i < todosLength; i += 1) { %>
         <li class="list-group-item" id="todo_<%= todos[i].id %>" data-id="<%= todos[i].id %>">
             <input type="checkbox" class="js-check-todo" <%= todos[i].state === 1 ? 'checked' : '' %>>
@@ -29,6 +29,13 @@
             </button>
         </li>
         <% } %>
+       <li class="list-group-item" id="js-todo-template" style="display: none">
+            <input type="checkbox" class="js-check-todo">
+            <span class="todo_title"></span>
+           <button type="button" class="close js-close-todo" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+           </button>
+        </li>
     </ul>
     <!-- TODOリストの表示領域 -->
 
