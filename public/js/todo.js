@@ -1,6 +1,31 @@
 (() => {
   const checkList = document.getElementsByClassName('js-check-todo');
   const closeButtonList = document.getElementsByClassName('js-close-todo');
+  const newTodoButton = document.getElementById('js-new-todo-btn');
+
+  /**
+   * TODOを更新する
+   *
+   * @param todo
+   * @returns {Promise<never>}
+   */
+  const createTodo = async todo => {
+    try {
+      const request = {
+        method: 'post',
+        credentials: 'same-origin',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `title=${todo}`
+      };
+
+      const response = await fetch('/todo', request);
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
 
   /**
    * TODOを更新する
@@ -81,6 +106,18 @@
 
   /**
    * TODOのチェックが押された時の挙動
+   */
+  const handleNewTodoBtn = async () => {
+    try {
+      const newTodo = document.getElementById('js-new-todo').value;
+      const todo = await createTodo(newTodo);
+    } catch (e) {
+      // TODO エラー処理を追加
+    }
+  };
+
+  /**
+   * TODOのチェックが押された時の挙動
    *
    * @param checked
    */
@@ -122,4 +159,8 @@
       await handleClosed(e.currentTarget);
     });
   }
+
+  newTodoButton.addEventListener('click', async () => {
+    await handleNewTodoBtn();
+  });
 })();

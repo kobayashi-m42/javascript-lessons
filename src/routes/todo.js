@@ -32,6 +32,10 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  console.log(req.body.title);
+});
+
 router.put('/', (req, res) => {
   const todo = new Todo(connection);
   todo
