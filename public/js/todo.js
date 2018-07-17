@@ -2,6 +2,9 @@
   const checkList = document.getElementsByClassName('js-check-todo');
   const closeButtonList = document.getElementsByClassName('js-close-todo');
   const newTodoButton = document.getElementById('js-new-todo-btn');
+  const newTodo = document.getElementById('js-new-todo');
+
+  newTodo.focus();
 
   /**
    * TODOを更新する
@@ -130,9 +133,12 @@
    */
   const handleNewTodoBtn = async () => {
     try {
-      const newTodo = document.getElementById('js-new-todo').value;
-      const todo = await createTodo(newTodo);
+      const newTodoValue = newTodo.value;
+      const todo = await createTodo(newTodoValue);
       insertBeforeTodoHtml(todo);
+
+      newTodo.value = '';
+      newTodo.focus();
     } catch (e) {
       // TODO エラー処理を追加
     }
