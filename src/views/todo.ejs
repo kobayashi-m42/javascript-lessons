@@ -16,7 +16,7 @@
 
     <!-- TODOリストの表示領域 -->
     <% const todosLength = Object.keys(todos).length%>
-    <ul class="list-group">
+    <ul class="list-group list-group-flush">
         <% for (let i = 0; i < todosLength; i += 1) { %>
         <li class="list-group-item" id="todo_<%= todos[i].id %>" data-id="<%= todos[i].id %>">
             <input type="checkbox" class="js-check-todo" <%= todos[i].state === 1 ? 'checked' : '' %>>

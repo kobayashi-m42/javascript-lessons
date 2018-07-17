@@ -66,6 +66,20 @@
   };
 
   /**
+   * 削除されたTODOを非表示にする
+   *
+   * @param closedTodo
+   */
+  const closeTodoHtml = closedTodo => {
+    const todo = closedTodo;
+    todo.classList.add('close-todo');
+
+    todo.addEventListener('transitionend', () => {
+      todo.style.display = 'none';
+    });
+  };
+
+  /**
    * TODOのチェックが押された時の挙動
    *
    * @param checked
@@ -89,6 +103,7 @@
     const todoId = closed.parentNode.dataset.id;
     try {
       await deleteTodo(todoId);
+      closeTodoHtml(closed.parentNode);
     } catch (e) {
       // TODO エラー処理を追加
     }
