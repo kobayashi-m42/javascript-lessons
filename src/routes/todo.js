@@ -17,6 +17,7 @@ const connection = mysql.createConnection({
 router.get('/', (req, res) => {
   const renderParams = {
     todos: [],
+    errorResponse: {},
     statusCode: 200
   };
   const todo = new Todo(connection);
@@ -26,9 +27,11 @@ router.get('/', (req, res) => {
       renderParams.todos = todos;
       res.status(renderParams.statusCode).render('todo.ejs', renderParams);
     })
-    .catch(error => {
-      console.log(error);
-      // TODO
+    .catch(() => {
+      renderParams.statusCode = 500;
+      renderParams.errorResponse = 'Internal Server Error';
+
+      res.status(renderParams.statusCode).render('error.ejs', renderParams);
     });
 });
 
@@ -43,7 +46,7 @@ router.post('/', (req, res) => {
   if (!isValid) {
     errorResponse.errorCode = 422;
     errorResponse.message = 'Unprocessable Entity';
-    res.status(422).json(errorResponse);
+    res.status(errorResponse.errorCode).json(errorResponse);
     return;
   }
 
@@ -53,36 +56,49 @@ router.post('/', (req, res) => {
     .then(todoItem => {
       res.json({ todoItem });
     })
-    .catch(error => {
-      console.log(error);
-      // TODO
+    .catch(() => {
+      errorResponse.errorCode = 500;
+      errorResponse.message = 'Internal Server Error';
+      res.status(errorResponse.errorCode).json(errorResponse);
     });
 });
 
 router.put('/', (req, res) => {
   const todo = new Todo(connection);
+  const errorResponse = {
+    errorCode: '',
+    message: ''
+  };
+
   todo
     .updateState(req.body.id)
     .then(() => todo.find(req.body.id))
     .then(todoItem => {
       res.json({ state: todoItem.state });
     })
-    .catch(error => {
-      console.log(error);
-      // TODO
+    .catch(() => {
+      errorResponse.errorCode = 500;
+      errorResponse.message = 'Internal Server Error';
+      res.status(errorResponse.errorCode).json(errorResponse);
     });
 });
 
 router.delete('/', (req, res) => {
   const todo = new Todo(connection);
+  const errorResponse = {
+    errorCode: '',
+    message: ''
+  };
+
   todo
     .deleteTodo(req.body.id)
     .then(() => {
       res.status(200).send();
     })
-    .catch(error => {
-      console.log(error);
-      // TODO
+    .catch(() => {
+      errorResponse.errorCode = 500;
+      errorResponse.message = 'Internal Server Error';
+      res.status(errorResponse.errorCode).json(errorResponse);
     });
 });
 module.exports = router;

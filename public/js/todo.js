@@ -76,6 +76,13 @@
       };
 
       const response = await fetch('/todo', request);
+
+      if (response.status !== 200) {
+        const responseBody = await response.json();
+
+        return Promise.reject(new HttpError(responseBody, response.status));
+      }
+
       return await response.json();
     } catch (error) {
       return Promise.reject(error);
@@ -99,7 +106,13 @@
         body: `id=${id}`
       };
 
-      await fetch('/todo', request);
+      const response = await fetch('/todo', request);
+
+      if (response.status !== 200) {
+        const responseBody = await response.json();
+
+        return Promise.reject(new HttpError(responseBody, response.status));
+      }
 
       return Promise.resolve();
     } catch (error) {
@@ -178,8 +191,17 @@
       const todoId = checked.parentNode.dataset.id;
       const todo = await updateState(todoId);
       updateStateHtml(checked, todo.state);
-    } catch (e) {
-      // TODO エラー処理を追加
+    } catch (error) {
+      if (error.name === 'HttpError') {
+        displayErrorHtml(error.body);
+        return;
+      }
+
+      const errorBody = {
+        errorCode: 500,
+        message: 'Internal Server Error'
+      };
+      displayErrorHtml(errorBody);
     }
   };
 
@@ -194,8 +216,17 @@
       const todoId = closed.parentNode.dataset.id;
       await deleteTodo(todoId);
       closeTodoHtml(closed.parentNode);
-    } catch (e) {
-      // TODO エラー処理を追加
+    } catch (error) {
+      if (error.name === 'HttpError') {
+        displayErrorHtml(error.body);
+        return;
+      }
+
+      const errorBody = {
+        errorCode: 500,
+        message: 'Internal Server Error'
+      };
+      displayErrorHtml(errorBody);
     }
   };
 
