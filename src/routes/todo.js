@@ -70,6 +70,14 @@ router.put('/', (req, res) => {
     message: ''
   };
 
+  const isValid = Todo.validateId(req.body.id);
+  if (!isValid) {
+    errorResponse.errorCode = 422;
+    errorResponse.message = 'Unprocessable Entity';
+    res.status(errorResponse.errorCode).json(errorResponse);
+    return;
+  }
+
   todo
     .updateState(req.body.id)
     .then(() => todo.find(req.body.id))
@@ -89,6 +97,14 @@ router.delete('/', (req, res) => {
     errorCode: '',
     message: ''
   };
+
+  const isValid = Todo.validateId(req.body.id);
+  if (!isValid) {
+    errorResponse.errorCode = 422;
+    errorResponse.message = 'Unprocessable Entity';
+    res.status(errorResponse.errorCode).json(errorResponse);
+    return;
+  }
 
   todo
     .deleteTodo(req.body.id)

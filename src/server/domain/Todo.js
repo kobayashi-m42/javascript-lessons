@@ -127,6 +127,17 @@ class Todo {
 
     return true;
   }
+
+  /**
+   * idパラメータのバリデーションチェックを行なう
+   *
+   * @param id
+   * @returns {boolean}
+   */
+  static validateId(id) {
+    const regPage = /^([1-9]\d*)$/;
+    return regPage.test(id);
+  }
 }
 
 module.exports = Todo;
