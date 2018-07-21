@@ -33,7 +33,6 @@ app.use('/public', express.static('public'));
 
 app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);
-app.use('/todo', todo);
 
 app.get('/', (req, res) => {
   res.render('sample.ejs', { message: 'Hello there!' });
@@ -45,7 +44,19 @@ app.get('/bingo', (req, res) => {
 
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
+
+app.use((err, req, res, next) => {
+  console.log(err.code);
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+  const errorResponse = {
+    errorCode: '403',
+    message: '不正なリクエストです。'
+  };
+  return res.status(errorResponse.errorCode).json(errorResponse);
+});
+
 app.use('/quiz', quiz);
+app.use('/todo', todo);
 
 app.listen(port, error => {
   if (error) {
