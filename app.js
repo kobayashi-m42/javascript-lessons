@@ -35,11 +35,11 @@ app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);
 
 app.get('/', (req, res) => {
-  res.render('sample.ejs', { message: 'Hello there!' });
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/bingo', (req, res) => {
-  res.sendFile(path.join(__dirname, 'bingo.html'));
+  res.sendFile(path.join(`${__dirname}/src/views`, 'bingo.html'));
 });
 
 app.use(cookieParser());
