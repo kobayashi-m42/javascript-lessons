@@ -4,6 +4,9 @@
   const newTodoButton = document.getElementById('js-new-todo-btn');
   const newTodo = document.getElementById('js-new-todo');
   const errorMessage = document.getElementById('js-error-message');
+  const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content');
 
   newTodo.focus();
 
@@ -39,7 +42,8 @@
         method: 'post',
         credentials: 'same-origin',
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'CSRF-Token': csrfToken
         },
         body: `title=${todo}`
       };
@@ -70,7 +74,8 @@
         method: 'put',
         credentials: 'same-origin',
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'CSRF-Token': csrfToken
         },
         body: `id=${id}`
       };
@@ -101,7 +106,8 @@
         method: 'delete',
         credentials: 'same-origin',
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'CSRF-Token': csrfToken
         },
         body: `id=${id}`
       };

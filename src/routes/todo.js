@@ -18,7 +18,8 @@ router.get('/', (req, res) => {
   const renderParams = {
     todos: [],
     errorResponse: {},
-    statusCode: 200
+    statusCode: 200,
+    csrfToken: req.csrfToken()
   };
   const todo = new Todo(connection);
   todo
