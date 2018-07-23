@@ -4,7 +4,7 @@
   "description": "JavaScriptの練習用",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "lint": "eslint **/js/**.js src/server/domain/**.js src/routes/**.js server.js app.js TwitterBot/twitterBot.js",
     "lint:fix": "eslint --fix **/js/**.js src/server/domain/**.js src/routes/**.js server.js app.js TwitterBot/twitterBot.js",
     "prettier": "./node_modules/prettier/bin-prettier.js --write"
