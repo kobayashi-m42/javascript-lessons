@@ -4,7 +4,7 @@
   "description": "JavaScriptの練習用",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "lint": "eslint **/js/**.js src/server/domain/**.js src/routes/**.js server.js app.js TwitterBot/twitterBot.js",
     "lint:fix": "eslint --fix **/js/**.js src/server/domain/**.js src/routes/**.js server.js app.js TwitterBot/twitterBot.js",
     "prettier": "./node_modules/prettier/bin-prettier.js --write"
@@ -25,6 +25,8 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "mocha": "^5.2.0",
+    "power-assert": "^1.6.0",
     "prettier": "^1.12.1"
   },
   "dependencies": {
