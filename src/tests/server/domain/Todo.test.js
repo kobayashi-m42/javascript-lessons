@@ -3,6 +3,32 @@ const Todo = require('../../../server/domain/Todo');
 
 describe('Todo', () => {
   /**
+   * Todo.validateTitle() でfalseが返るパターンの検証
+   * バリデーションを通過しないケース
+   */
+  it('should return false when the userId is empty', () => {
+    const isValidUserId = Todo.validateTitle('');
+    assert.strictEqual(isValidUserId, false, 'バリデーションエラーとなることを確認する');
+  });
+
+  /**
+   * Todo.validateTitle() でtrueが返るパターンの検証
+   * バリデーションを通過するケース
+   */
+  it('should return false when the userId is not empty', () => {
+    const testValues = [
+      'todo title',
+      'タイトル',
+    ];
+
+    testValues.map(value => assert.strictEqual(
+      Todo.validateTitle(value),
+      true,
+      `${value} を渡した結果がtrueである事を確認する。`,
+    ));
+  });
+
+  /**
    * Todo.validateId() でfalseが返るパターンの検証
    * バリデーションを通過しないケース
    */
