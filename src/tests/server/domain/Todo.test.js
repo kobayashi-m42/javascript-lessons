@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('power-assert');
 const Todo = require('../../../server/domain/Todo');
 
 describe('Todo', () => {
