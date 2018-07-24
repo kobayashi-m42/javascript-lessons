@@ -56,7 +56,7 @@ describe('Todo', () => {
       'todoが存在して、3件であること',
     );
 
-    // 1件のデータに id state url が存在すること
+    // 1件のデータに id state title が存在すること
     for (let i = 0; i < todosLength; i += 1) {
       assert.ok(response[i].id);
       assert.ok(String(response[i].state));
