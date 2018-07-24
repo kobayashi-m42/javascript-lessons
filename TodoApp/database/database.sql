@@ -4,6 +4,13 @@ CREATE DATABASE todo_app;
 CREATE USER todo_app@localhost IDENTIFIED WITH mysql_native_password BY '(YourPassword999)';
 GRANT ALL ON todo_app.* TO 'todo_app'@'localhost';
 
+-- データベース 'todo_app_test' に対して 'todo_app_test' というユーザー名のユーザーを '(YourPassword999)' というパスワードで作成
+-- データベース 'todo_app_test' への権限を付与
+-- こちらはテスト実行時のみ利用されるデータベース
+CREATE DATABASE todo_app_test;
+CREATE USER todo_app_test@localhost IDENTIFIED WITH mysql_native_password BY '(YourPassword999)';
+GRANT ALL ON todo_app_test.* TO 'todo_app_test'@'localhost';
+
 -- TODOの管理で利用するテーブル
 CREATE TABLE `todos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
