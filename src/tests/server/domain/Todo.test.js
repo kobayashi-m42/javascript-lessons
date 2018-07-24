@@ -64,7 +64,54 @@ describe('Todo', () => {
     }
   });
 
-  /**
+  it('should create todo', async () => {
+    const todo = new Todo(connection);
+
+    await todo.createTodo('TODO title 4').catch((error) => {
+      // このブロックに入るという事はテストが意図した通りに動いていない
+      // エラー内容を出力しテストを失敗させる
+      console.error(error);
+
+      assert.fail(error);
+    });
+
+    const sql = 'SELECT * FROM todos ORDER BY id DESC';
+    connection.query(sql, (err, results) => {
+      if (err) {
+        // このブロックに入るという事はテストが意図した通りに動いていない
+        // エラー内容を出力しテストを失敗させる
+        console.error(error);
+
+        assert.fail(error);
+      }
+
+      assert.strictEqual(
+        results.length,
+        4,
+        'todoが存在して、4件であること',
+      );
+
+      assert.strictEqual(
+        results[0].id,
+        4,
+        'idが意図した値である事を確認する',
+      );
+
+      assert.strictEqual(
+        results[0].state,
+        0,
+        'stateが意図した値である事を確認する',
+      );
+
+      assert.strictEqual(
+        results[0].title,
+        'TODO title 4',
+        'titleが意図した値である事を確認する',
+      );
+    });
+  });
+
+    /**
    * Todo.validateTitle() でfalseが返るパターンの検証
    * バリデーションを通過しないケース
    */
