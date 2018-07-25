@@ -111,7 +111,67 @@ describe('Todo', () => {
     });
   });
 
-    /**
+  it('should update todo state to 1', async () => {
+    const todo = new Todo(connection);
+    const updateTodoId = 1;
+
+    await todo.updateState(updateTodoId).catch((error) => {
+      // このブロックに入るという事はテストが意図した通りに動いていない
+      // エラー内容を出力しテストを失敗させる
+      console.error(error);
+
+      assert.fail(error);
+    });
+
+    const sql = `SELECT * FROM todos WHERE id = ${updateTodoId}`;
+    connection.query(sql, (err, results) => {
+      if (err) {
+        // このブロックに入るという事はテストが意図した通りに動いていない
+        // エラー内容を出力しテストを失敗させる
+        console.error(error);
+
+        assert.fail(error);
+      }
+
+      assert.strictEqual(
+        results[0].state,
+        1,
+        'idが意図した値である事を確認する',
+      );
+    });
+  });
+
+  it('should update todo state to 0', async () => {
+    const todo = new Todo(connection);
+    const updateTodoId = 2;
+
+    await todo.updateState(updateTodoId).catch((error) => {
+      // このブロックに入るという事はテストが意図した通りに動いていない
+      // エラー内容を出力しテストを失敗させる
+      console.error(error);
+
+      assert.fail(error);
+    });
+
+    const sql = `SELECT * FROM todos WHERE id = ${updateTodoId}`;
+    connection.query(sql, (err, results) => {
+      if (err) {
+        // このブロックに入るという事はテストが意図した通りに動いていない
+        // エラー内容を出力しテストを失敗させる
+        console.error(error);
+
+        assert.fail(error);
+      }
+
+      assert.strictEqual(
+        results[0].state,
+        0,
+        'idが意図した値である事を確認する',
+      );
+    });
+  });
+
+  /**
    * Todo.validateTitle() でfalseが返るパターンの検証
    * バリデーションを通過しないケース
    */
