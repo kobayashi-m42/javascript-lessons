@@ -64,6 +64,37 @@ describe('Todo', () => {
     }
   });
 
+  it('should find todo', async () => {
+    const todo = new Todo(connection);
+    const findTodoId = 3;
+
+    const response = await todo.find(findTodoId).catch((error) => {
+      // このブロックに入るという事はテストが意図した通りに動いていない
+      // エラー内容を出力しテストを失敗させる
+      console.error(error);
+
+      assert.fail(error);
+    });
+
+    assert.strictEqual(
+      response.id,
+      3,
+      'idが意図した値である事を確認する',
+    );
+
+    assert.strictEqual(
+      response.state,
+      0,
+      'stateが意図した値である事を確認する',
+    );
+
+    assert.strictEqual(
+      response.title,
+      'TODO title 3',
+      'titleが意図した値である事を確認する',
+    );
+  });
+
   it('should create todo', async () => {
     const todo = new Todo(connection);
 
