@@ -141,6 +141,36 @@ describe('Todo', () => {
     });
   });
 
+  it('should delete todo', async () => {
+    const todo = new Todo(connection);
+    const deleteTodoId = 3;
+
+    await todo.deleteTodo(deleteTodoId).catch((error) => {
+      // このブロックに入るという事はテストが意図した通りに動いていない
+      // エラー内容を出力しテストを失敗させる
+      console.error(error);
+
+      assert.fail(error);
+    });
+
+    const sql = `SELECT * FROM todos WHERE id = ${deleteTodoId}`;
+    connection.query(sql, (err, results) => {
+      if (err) {
+        // このブロックに入るという事はテストが意図した通りに動いていない
+        // エラー内容を出力しテストを失敗させる
+        console.error(error);
+
+        assert.fail(error);
+      }
+
+      assert.strictEqual(
+        results.length,
+        0,
+        'todoが存在しないこと',
+      );
+    });
+  });
+
   it('should update todo state to 0', async () => {
     const todo = new Todo(connection);
     const updateTodoId = 2;
