@@ -13,6 +13,7 @@ const calender = require('./src/routes/calender');
 const imageUploader = require('./src/routes/imageUploader');
 const quiz = require('./src/routes/quiz');
 const todo = require('./src/routes/todo');
+const poll = require('./src/routes/poll');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -33,6 +34,7 @@ app.use('/public', express.static('public'));
 
 app.use('/imageUploader', imageUploader);
 app.use('/calender', calender);
+app.use('/poll', poll);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));

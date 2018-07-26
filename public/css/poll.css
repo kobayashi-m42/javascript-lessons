@@ -1,0 +1,60 @@
+body {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-size: 22px;
+  margin: 30px 0;
+}
+
+.row {
+  margin-bottom: 15px;
+}
+
+.box {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  opacity: 0.5;
+  cursor: pointer;
+  color: #fff;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 150px;
+}
+
+.box + .box {
+  margin-left: 10px;
+}
+
+#box_0 {
+  background: url("../images/photo_0.jpg");
+}
+#box_1 {
+  background: url("../images/photo_1.jpg");
+}
+#box_2 {
+  background: url("../images/photo_2.jpg");
+}
+
+.selected {
+  opacity: 1;
+}
+
+#js-btn {
+  display: inline-block;
+  width: 150px;
+  padding: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  background: #00aaff;
+  box-shadow: 0 4px 0 #0088cc;
+  color: #fff;
+}
+
+#js-btn:hover {
+  opacity: 0.8;
+}
