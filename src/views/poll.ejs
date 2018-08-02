@@ -7,14 +7,16 @@
 <body>
     <div class="container">
         <h1>Which do you like best?</h1>
-        <form action="" method="post">
+        <form id="js-form" action="" method="post">
             <div class="row">
-                <div class="box" id="box_0" data-id="0"></div>
-                <div class="box" id="box_1" data-id="1">99</div>
-                <div class="box" id="box_2" data-id="2"></div>
+                <div class="js-box" id="box_0" data-id="0"></div>
+                <div class="js-box" id="box_1" data-id="1"></div>
+                <div class="js-box" id="box_2" data-id="2"></div>
+                <input type="hidden" id="js-answer" name="answer" value="">
             </div>
-            <div id="js-btn">Vote and See Results</div>
+            <div id="js-poll-btn">Vote and See Results</div>
         </form>
     </div>
+    <script src="../public/js/poll.js"></script>
 </body>
 </html>
