@@ -29,6 +29,18 @@ class Poll {
       });
     });
   }
+
+  /**
+   * answerパラメータのバリデーションチェックを行なう
+   */
+  static validateAnswer(answer) {
+    const array = ['0', '1', '2'];
+    if (array.indexOf(answer) === -1) {
+      return false;
+    }
+
+    return true;
+  }
 }
 
 module.exports = Poll;

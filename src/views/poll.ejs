@@ -5,6 +5,12 @@
     <title lang="ja">Poll</title>
     <link rel="stylesheet" href="./public/css/poll.css">
 <body>
+    <!-- エラー情報表示 -->
+    <% if (Object.keys(errorResponse).length !== 0) { %>
+    <div class="error"><%= errorResponse %></div>
+    <% } %>
+    <!-- エラー情報表示 -->
+
     <div class="container">
         <h1>Which do you like best?</h1>
         <form id="js-form" action="" method="post">
