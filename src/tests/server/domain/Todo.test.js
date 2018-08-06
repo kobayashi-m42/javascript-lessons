@@ -6,9 +6,9 @@ require('dotenv').config();
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: process.env.TEST_DB_USER,
-  password: process.env.TEST_DB_PASSWORD,
-  database: process.env.TEST_DB_NAME
+  user: process.env.TODO_TEST_DB_USER,
+  password: process.env.TODO_TEST_DB_PASSWORD,
+  database: process.env.TODO_TEST_DB_NAME
 });
 
 describe('Todo', () => {

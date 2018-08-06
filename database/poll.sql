@@ -14,7 +14,7 @@ GRANT ALL ON poll_app_test.* TO 'poll_app_test'@'localhost';
 -- 投票結果の管理で利用するテーブル
 CREATE TABLE `answers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `answers` int(10) NOT NULL,
+  `answer` int(10) NOT NULL,
   `lock_version` int(10) unsigned NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
