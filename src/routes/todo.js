@@ -9,9 +9,9 @@ const Todo = require('../../src/server/domain/Todo.js');
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  user: process.env.TODO_DB_USER,
+  password: process.env.TODO_DB_PASSWORD,
+  database: process.env.TODO_DB_NAME
 });
 
 router.get('/', (req, res) => {
