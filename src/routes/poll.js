@@ -15,11 +15,31 @@ const connection = mysql.createConnection({
 });
 
 router.get('/', (req, res) => {
-  res.render('poll.ejs');
+  const renderParams = {
+    errorResponse: {},
+    statusCode: 200
+  };
+
+  res.render('poll.ejs', renderParams);
 });
 
 router.post('/', (req, res) => {
+  const renderParams = {
+    errorResponse: {},
+    statusCode: ''
+  };
+
   const poll = new Poll(connection);
+  const isValid = Poll.validateAnswer(req.body.answer);
+
+  if (!isValid) {
+    renderParams.statusCode = 422;
+    renderParams.errorResponse = 'Unprocessable Entity';
+
+    res.status(renderParams.statusCode).render('poll.ejs', renderParams);
+    return;
+  }
+
   poll
     .saveAnswer(req.body.answer)
     .then(() => {})
