@@ -61,7 +61,7 @@
 
     render() {
       return (
-        <div>
+        <div className="container">
           <h1>My Todos</h1>
           <TodoList
             todos={this.state.todos}
