@@ -31,3 +31,10 @@ body {
   text-decoration: line-through;
   color: #ccc;
 }
+
+.command {
+  font-size: 12px;
+  cursor: pointer;
+  color: #08c;
+  margin-left: 5px;
+}
