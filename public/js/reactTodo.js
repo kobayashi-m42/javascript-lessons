@@ -1,9 +1,5 @@
 (() => {
-  const todos = [
-    {id: 0, title: 'Task 0', isDone: false},
-    {id: 1, title: 'Task 1', isDone: false},
-    {id: 2, title: 'Task 2', isDone: false},
-  ];
+  const todos = [];
 
   function TodoItem(props) {
     return (
@@ -46,15 +42,34 @@
     );
   }
 
+  function TodoForm(props) {
+    return (
+      <form onSubmit={props.onSubmit}>
+        <input
+          type="text"
+          value={props.item}
+          onChange={props.onChange}
+        />
+        <input type="submit" value="Add"/>
+      </form>
+    );
+
+  }
+
+  function generateUniqueId() {
+    return `${new Date().getTime().toString(36)}-${Math.random().toString(36)}`
+  }
+
   class App extends React.Component {
     constructor(){
       super();
       this.state = {
         todos: todos,
+        item: '',
       }
     }
 
-    handleChange(todo) {
+    handleChangeCheck(todo) {
       const todos = this.state.todos.slice();
       const position = this.state.todos.indexOf(todo);
 
@@ -78,14 +93,46 @@
       });
     }
 
+    handleChangeItem(e){
+      this.setState({
+        item: e.target.value
+      });
+    }
+
+    handleSubmitAdd(e){
+      e.preventDefault();
+
+      if(this.state.item.trim() === '') {
+        return;
+      }
+
+      const item = {
+        id: generateUniqueId(),
+        title: this.state.item,
+        isDone: false
+      };
+
+      const todos = this.state.todos.slice();
+      todos.push(item);
+      this.setState({
+        todos: todos,
+        item: '',
+      });
+    }
+
     render() {
       return (
         <div className="container">
           <h1>My Todos</h1>
           <TodoList
             todos={this.state.todos}
-            onChange={(todo) => this.handleChange(todo)}
-            onClick={(todo) => this.handleClickDeleteButton(todo)}
+            onChange={todo => this.handleChangeCheck(todo)}
+            onClick={todo => this.handleClickDeleteButton(todo)}
+          />
+          <TodoForm
+            item={this.state.item}
+            onChange={e => this.handleChangeItem(e)}
+            onSubmit={e => this.handleSubmitAdd(e)}
           />
         </div>
       );
