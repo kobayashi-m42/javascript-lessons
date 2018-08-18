@@ -7,7 +7,18 @@
 
   function TodoItem(props) {
     return (
-      <li>{props.todo.title}</li>
+      <li>
+        <label>
+          <input
+            type="checkbox"
+            checked={props.todo.isDone}
+            onChange={() => props.onChange(props.todo)}
+          />
+          <span className={props.todo.isDone ? 'done' : ''}>
+            {props.todo.title}
+          </span>
+        </label>
+      </li>
     );
   }
 
@@ -17,6 +28,7 @@
         <TodoItem
           key={todo.id}
           todo={todo}
+          onChange={props.onChange}
         />
       );
     });
@@ -35,11 +47,26 @@
       }
     }
 
+    handleChange(todo) {
+      const todos = this.state.todos.slice();
+      const position = this.state.todos.map(todo => {
+        return todo.id
+      }).indexOf(todo.id);
+
+      todos[position].isDone = !todos[position].isDone;
+      this.setState ({
+        todos: todos
+      });
+    }
+
     render() {
       return (
         <div>
           <h1>My Todos</h1>
-          <TodoList todos={this.state.todos}/>
+          <TodoList
+            todos={this.state.todos}
+            onChange={(todo) => this.handleChange(todo)}
+          />
         </div>
       );
     }
