@@ -27,6 +27,11 @@ body {
   margin-right: 5px;
 }
 
+.container input[type="text"] {
+  padding: 2px;
+  margin-right: 5px;
+}
+
 .done {
   text-decoration: line-through;
   color: #ccc;
