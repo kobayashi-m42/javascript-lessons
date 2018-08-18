@@ -44,6 +44,10 @@ app.get('/bingo', (req, res) => {
   res.sendFile(path.join(`${__dirname}/src/views`, 'bingo.html'));
 });
 
+app.get('/reactTodo', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/src/views`, 'reactTodo.html'));
+});
+
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 
