@@ -18,6 +18,12 @@
             {props.todo.title}
           </span>
         </label>
+        <span
+          className="command"
+          onClick={() => props.onClick(props.todo)}
+        >
+          [X]
+        </span>
       </li>
     );
   }
@@ -29,12 +35,13 @@
           key={todo.id}
           todo={todo}
           onChange={props.onChange}
+          onClick={props.onClick}
         />
       );
     });
     return (
       <ul>
-        {todos}
+        {props.todos.length ? todos : <li>Nothing to do!</li>}
       </ul>
     );
   }
@@ -49,11 +56,23 @@
 
     handleChange(todo) {
       const todos = this.state.todos.slice();
-      const position = this.state.todos.map(todo => {
-        return todo.id
-      }).indexOf(todo.id);
+      const position = this.state.todos.indexOf(todo);
 
       todos[position].isDone = !todos[position].isDone;
+      this.setState ({
+        todos: todos
+      });
+    }
+
+    handleClickDeleteButton(todo) {
+      if(!confirm('are you sure?')) {
+        return;
+      }
+
+      const todos = this.state.todos.slice();
+      const position = this.state.todos.indexOf(todo);
+
+      todos.splice(position, 1);
       this.setState ({
         todos: todos
       });
@@ -66,6 +85,7 @@
           <TodoList
             todos={this.state.todos}
             onChange={(todo) => this.handleChange(todo)}
+            onClick={(todo) => this.handleClickDeleteButton(todo)}
           />
         </div>
       );
