@@ -12,6 +12,7 @@ const port = 3000;
 const calender = require('./src/routes/calender');
 const imageUploader = require('./src/routes/imageUploader');
 const quiz = require('./src/routes/quiz');
+const reactQuiz = require('./src/routes/reactQuiz');
 const todo = require('./src/routes/todo');
 const poll = require('./src/routes/poll');
 
@@ -51,6 +52,8 @@ app.get('/reactTodo', (req, res) => {
 app.get('/reactQuiz', (req, res) => {
   res.sendFile(path.join(`${__dirname}/src/views`, 'reactQuiz.html'));
 });
+
+app.use('/api/reactQuiz', reactQuiz);
 
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
