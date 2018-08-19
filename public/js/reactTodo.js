@@ -1,6 +1,4 @@
 (() => {
-  const todos = [];
-
   function TodoHeader(props) {
     const remaining = props.todos.filter(todo => {
       return !todo.isDone;
@@ -78,7 +76,7 @@
     constructor(){
       super();
       this.state = {
-        todos: todos,
+        todos: [],
         item: '',
       }
     }
@@ -144,6 +142,16 @@
       });
       this.setState({
         todos: todos,
+      });
+    }
+
+    componentDidUpdate() {
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
+
+    componentDidMount() {
+      this.setState({
+        todos: JSON.parse(localStorage.getItem('todos')) || []
       });
     }
 
