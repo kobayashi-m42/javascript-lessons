@@ -48,6 +48,10 @@ app.get('/reactTodo', (req, res) => {
   res.sendFile(path.join(`${__dirname}/src/views`, 'reactTodo.html'));
 });
 
+app.get('/reactQuiz', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/src/views`, 'reactQuiz.html'));
+});
+
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 
