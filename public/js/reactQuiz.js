@@ -49,6 +49,18 @@
     );
   }
 
+  function NextButton(props) {
+    return (
+      <div
+        id="btn"
+        className={props.selectedAnswer ? '' : 'disabled'}
+        onClick={props.onClick}
+      >
+        NextQuestion
+      </div>
+    );
+  }
+
   class App extends React.Component {
     constructor() {
       super();
@@ -117,6 +129,18 @@
       });
     };
 
+    handleNextClick = async () => {
+      if(!this.state.selectedAnswer) {
+        return;
+      }
+
+      await this.fetchQuiz();
+      this.setState({
+        selectedAnswer: '',
+        correctAnswer: '',
+      });
+    };
+
     render() {
       return (
         <div id="container">
@@ -128,6 +152,10 @@
             selectedAnswer={this.state.selectedAnswer}
             correctAnswer={this.state.correctAnswer}
             onClick={this.handleAnswerClick}
+          />
+          <NextButton
+            selectedAnswer={this.state.selectedAnswer}
+            onClick={this.handleNextClick}
           />
         </div>
       )
