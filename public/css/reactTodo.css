@@ -39,6 +39,10 @@ h1 > span {
   margin-left: 5px;
 }
 
+h1 > button {
+  float: right;
+}
+
 .done {
   text-decoration: line-through;
   color: #ccc;
