@@ -1,6 +1,19 @@
 (() => {
   const todos = [];
 
+  function TodoHeader(props) {
+    const remaining = props.todos.filter(todo => {
+      return !todo.isDone;
+    });
+
+    return (
+      <h1>
+        My Todos
+        <span>({remaining.length}/{props.todos.length})</span>
+      </h1>
+    );
+  }
+
   function TodoItem(props) {
     return (
       <li>
@@ -123,7 +136,9 @@
     render() {
       return (
         <div className="container">
-          <h1>My Todos</h1>
+          <TodoHeader
+            todos={this.state.todos}
+          />
           <TodoList
             todos={this.state.todos}
             onChange={todo => this.handleChangeCheck(todo)}
