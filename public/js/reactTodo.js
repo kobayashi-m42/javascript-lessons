@@ -8,6 +8,7 @@
 
     return (
       <h1>
+        <button onClick={props.onClick}>Purge</button>
         My Todos
         <span>({remaining.length}/{props.todos.length})</span>
       </h1>
@@ -133,11 +134,25 @@
       });
     }
 
+    handleClickPurge() {
+      if(!confirm('are you sure?')) {
+        return;
+      }
+
+      const todos = this.state.todos.filter(todo => {
+        return !todo.isDone;
+      });
+      this.setState({
+        todos: todos,
+      });
+    }
+
     render() {
       return (
         <div className="container">
           <TodoHeader
             todos={this.state.todos}
+            onClick={() => this.handleClickPurge()}
           />
           <TodoList
             todos={this.state.todos}
