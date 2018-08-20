@@ -36,9 +36,20 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const quiz = new Quiz();
+  const selectedAnswer = req.body.selectedAnswer;
+
+  if (!selectedAnswer) {
+    const errorResponse = {
+      errorCode: '422',
+      message: 'Unprocessable Entity'
+    };
+    res.status(422).json(errorResponse);
+    return;
+  }
+
 
   const targetQuizNumber = req.session.currentNumber;
-  if (quiz.isCorrect(targetQuizNumber, req.body.selectedAnswer)) {
+  if (quiz.isCorrect(targetQuizNumber, selectedAnswer)) {
     req.session.correctCount += 1;
   }
 

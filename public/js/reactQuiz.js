@@ -1,4 +1,21 @@
 (() => {
+  class HttpError extends Error {
+    /**
+     * @param body
+     * @param status
+     */
+    constructor(body, status) {
+      super(body.message);
+
+      this.name = 'HttpError';
+
+      Error.captureStackTrace(this, this.constructor);
+
+      this.status = status || 500;
+      this.body = body;
+    }
+  }
+
   function Question(props) {
     return (
       <h1>Q. {props.quizSet.question}</h1>
@@ -76,6 +93,15 @@
     );
   }
 
+  function ErrorMessage(props) {
+    if (!props.errorBody) {
+      return null;
+    }
+
+    return (
+      <div className="alert">{props.errorBody.errorCode} {props.errorBody.message}</div>
+    );
+  }
   class App extends React.Component {
     constructor() {
       super();
@@ -89,6 +115,10 @@
         score: '',
         selectedAnswer: '',
         correctAnswer: '',
+        errorBody: {
+          errorCode: '',
+          message: ''
+        }
       };
     }
 
@@ -103,6 +133,11 @@
           body: `selectedAnswer=${selectedAnswer}`
         };
         const response = await fetch('/api/reactQuiz', request);
+
+        if (response.status !== 200) {
+          const responseBody = await response.json();
+          return Promise.reject(new HttpError(responseBody, response.status));
+        }
 
         return await response.json();
       } catch (error) {
@@ -140,12 +175,25 @@
       if (this.state.correctAnswer !== '') {
         return;
       }
+      try {
+        const response = await this.fetchAnswer(selectedAnswer);
+        this.setState({
+          selectedAnswer: selectedAnswer,
+          correctAnswer: response.correctAnswer,
+        });
+      } catch (error) {
+        if (error.name === 'HttpError') {
+          this.setState({
+            errorBody: {
+              errorCode: error.code,
+              message: error.message
+            }
+          });
+          return;
+        }
 
-      const response = await this.fetchAnswer(selectedAnswer);
-      this.setState({
-        selectedAnswer: selectedAnswer,
-        correctAnswer: response.correctAnswer,
-      });
+        console.log(error);
+      }
     };
 
     handleNextClick = async () => {
@@ -204,6 +252,7 @@
               <ReplayButton onClick={this.handleReplayClick}/>
             </div>
           )}
+          <ErrorMessage errorBody={this.state.errorBody} />
         </div>
       );
     };
