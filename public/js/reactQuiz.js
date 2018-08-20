@@ -1,7 +1,7 @@
 (() => {
   function Question(props) {
     return (
-      <h1>{props.quizSet.question}</h1>
+      <h1>Q. {props.quizSet.question}</h1>
     );
   }
 
@@ -177,34 +177,35 @@
     };
 
     render() {
-      let contents;
-      if (!this.state.isFinished) {
-        contents =
-          <div id="container">
-          <Question
-            quizSet={this.state.quizSet}
-          />
-          <AnswerList
-            quizSet={this.state.quizSet}
-            selectedAnswer={this.state.selectedAnswer}
-            correctAnswer={this.state.correctAnswer}
-            onClick={this.handleAnswerClick}
-          />
-          <NextButton
-            selectedAnswer={this.state.selectedAnswer}
-            isLast={this.state.isLast}
-            onClick={this.handleNextClick}
-          />
-        </div>;
-      } else {
-        contents =
-          <div id="container">
-            <Result score={this.state.score}/>
-            <ReplayButton onClick={this.handleReplayClick}/>
-          </div>;
-      }
+      const isFinished = this.state.isFinished;
 
-      return (contents);
+      return (
+        <div id="container">
+          {!isFinished ? (
+            <div>
+              <Question
+                quizSet={this.state.quizSet}
+              />
+              <AnswerList
+                quizSet={this.state.quizSet}
+                selectedAnswer={this.state.selectedAnswer}
+                correctAnswer={this.state.correctAnswer}
+                onClick={this.handleAnswerClick}
+              />
+              <NextButton
+                selectedAnswer={this.state.selectedAnswer}
+                isLast={this.state.isLast}
+                onClick={this.handleNextClick}
+              />
+            </div>
+          ) : (
+            <div>
+              <Result score={this.state.score}/>
+              <ReplayButton onClick={this.handleReplayClick}/>
+            </div>
+          )}
+        </div>
+      );
     };
   }
 
