@@ -53,8 +53,6 @@ app.get('/reactQuiz', (req, res) => {
   res.sendFile(path.join(`${__dirname}/src/views`, 'reactQuiz.html'));
 });
 
-app.use('/api/reactQuiz', reactQuiz);
-
 app.use(cookieParser());
 app.use(csrf({ cookie: true }));
 
@@ -70,6 +68,7 @@ app.use((err, req, res, next) => {
 
 app.use('/quiz', quiz);
 app.use('/todo', todo);
+app.use('/api/reactQuiz', reactQuiz);
 
 app.listen(port, error => {
   if (error) {
