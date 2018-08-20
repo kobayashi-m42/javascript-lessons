@@ -56,8 +56,23 @@
         className={props.selectedAnswer ? '' : 'disabled'}
         onClick={props.onClick}
       >
-        NextQuestion
+        {props.isLast ? 'Show Result' : 'NextQuestion'}
       </div>
+    );
+  }
+
+  function Result(props) {
+    return (
+      <div id="result">
+        Your score ...
+        <div>{props.score} %</div>
+      </div>
+    );
+  }
+
+  function ReplayButton(props) {
+    return (
+      <div id="btn" onClick={props.onClick}>Replay?</div>
     );
   }
 
@@ -69,6 +84,9 @@
           question: '',
           answer: []
         },
+        isFinished: false,
+        isLast: false,
+        score: '',
         selectedAnswer: '',
         correctAnswer: '',
       };
@@ -102,19 +120,20 @@
           },
         };
         const response = await fetch('/api/reactQuiz', request);
-        const currentQuiz= await response.json();
-
-        this.setState({
-          quizSet: currentQuiz
-        });
-
+        return await response.json();
       } catch (error) {
         console.log(error)
       }
     };
 
     async componentDidMount() {
-      await this.fetchQuiz();
+      const response = await this.fetchQuiz();
+      this.setState({
+        quizSet: response.currentQuiz,
+        isFinished: response.isFinished,
+        isLast: response.isLast,
+        score: response.score
+      });
     }
 
     handleAnswerClick = async selectedAnswer => {
@@ -134,16 +153,34 @@
         return;
       }
 
-      await this.fetchQuiz();
+      const response = await this.fetchQuiz();
       this.setState({
+        quizSet: response.currentQuiz,
+        isFinished: response.isFinished,
+        isLast: response.isLast,
+        score: response.score,
+        selectedAnswer: '',
+        correctAnswer: '',
+      });
+    };
+
+    handleReplayClick = async () => {
+      const response = await this.fetchQuiz();
+      this.setState({
+        quizSet: response.currentQuiz,
+        isFinished: response.isFinished,
+        isLast: response.isLast,
+        score: response.score,
         selectedAnswer: '',
         correctAnswer: '',
       });
     };
 
     render() {
-      return (
-        <div id="container">
+      let contents;
+      if (!this.state.isFinished) {
+        contents =
+          <div id="container">
           <Question
             quizSet={this.state.quizSet}
           />
@@ -155,10 +192,19 @@
           />
           <NextButton
             selectedAnswer={this.state.selectedAnswer}
+            isLast={this.state.isLast}
             onClick={this.handleNextClick}
           />
-        </div>
-      )
+        </div>;
+      } else {
+        contents =
+          <div id="container">
+            <Result score={this.state.score}/>
+            <ReplayButton onClick={this.handleReplayClick}/>
+          </div>;
+      }
+
+      return (contents);
     };
   }
 
