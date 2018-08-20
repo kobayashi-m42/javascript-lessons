@@ -67,6 +67,10 @@
   }
 
   function NextButton(props) {
+    if (props.errorBody.message) {
+      return null;
+    }
+
     return (
       <div
         id="btn"
@@ -94,7 +98,7 @@
   }
 
   function ErrorMessage(props) {
-    if (!props.errorBody) {
+    if (!props.errorBody.message) {
       return null;
     }
 
@@ -141,7 +145,7 @@
 
         return await response.json();
       } catch (error) {
-        console.log(error);
+        return Promise.reject(error);
       }
     };
 
@@ -155,9 +159,14 @@
           },
         };
         const response = await fetch('/api/reactQuiz', request);
+        if (response.status !== 200) {
+          const responseBody = await response.json();
+          return Promise.reject(new HttpError(responseBody, response.status));
+        }
+        
         return await response.json();
       } catch (error) {
-        console.log(error)
+        return Promise.reject(error);
       }
     };
 
@@ -191,8 +200,12 @@
           });
           return;
         }
-
-        console.log(error);
+        this.setState({
+          errorBody: {
+            errorCode: 500,
+            message: 'Internal Server Error'
+          }
+        });
       }
     };
 
@@ -200,16 +213,33 @@
       if(!this.state.selectedAnswer) {
         return;
       }
-
-      const response = await this.fetchQuiz();
-      this.setState({
-        quizSet: response.currentQuiz,
-        isFinished: response.isFinished,
-        isLast: response.isLast,
-        score: response.score,
-        selectedAnswer: '',
-        correctAnswer: '',
-      });
+      try {
+        const response = await this.fetchQuiz();
+        this.setState({
+          quizSet: response.currentQuiz,
+          isFinished: response.isFinished,
+          isLast: response.isLast,
+          score: response.score,
+          selectedAnswer: '',
+          correctAnswer: '',
+        });
+      } catch (error) {
+        if (error.name === 'HttpError') {
+          this.setState({
+            errorBody: {
+              errorCode: error.code,
+              message: error.message
+            }
+          });
+          return;
+        }
+        this.setState({
+          errorBody: {
+            errorCode: 500,
+            message: 'Internal Server Error'
+          }
+        });
+      }
     };
 
     handleReplayClick = async () => {
@@ -243,6 +273,7 @@
               <NextButton
                 selectedAnswer={this.state.selectedAnswer}
                 isLast={this.state.isLast}
+                errorBody={this.state.errorBody}
                 onClick={this.handleNextClick}
               />
             </div>
