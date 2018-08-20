@@ -14,9 +14,24 @@ router.get('/', (req, res) => {
 
   const quiz = new Quiz();
   const targetQuizNumber = req.session.currentNumber;
+  const isFinished = quiz.isFinished(targetQuizNumber);
+  const isLast = quiz.isLast(targetQuizNumber);
 
-  const currentQuiz = quiz.retrieveCurrentQuiz(targetQuizNumber);
-  res.json(currentQuiz);
+  const response = {
+    currentQuiz: '',
+    isFinished,
+    isLast,
+    score: quiz.calculateScore(req.session.correctCount)
+  };
+
+  if (isFinished) {
+    req.session.currentNumber = 0;
+    req.session.correctCount = 0;
+  } else {
+    response.currentQuiz = quiz.retrieveCurrentQuiz(targetQuizNumber);
+  }
+
+  res.json(response);
 });
 
 router.post('/', (req, res) => {
