@@ -122,7 +122,8 @@
         errorBody: {
           errorCode: '',
           message: ''
-        }
+        },
+        csrfToken: ''
       };
     }
 
@@ -133,6 +134,7 @@
           credentials: 'same-origin',
           headers: {
             'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'CSRF-Token': this.state.csrfToken
           },
           body: `selectedAnswer=${selectedAnswer}`
         };
@@ -176,7 +178,8 @@
         quizSet: response.currentQuiz,
         isFinished: response.isFinished,
         isLast: response.isLast,
-        score: response.score
+        score: response.score,
+        csrfToken: response.csrfToken
       });
     }
 
@@ -222,6 +225,7 @@
           score: response.score,
           selectedAnswer: '',
           correctAnswer: '',
+          csrfToken: response.csrfToken,
         });
       } catch (error) {
         if (error.name === 'HttpError') {
@@ -251,6 +255,7 @@
         score: response.score,
         selectedAnswer: '',
         correctAnswer: '',
+        csrfToken: response.csrfToken,
       });
     };
 
