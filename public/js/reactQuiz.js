@@ -1,4 +1,21 @@
 (() => {
+  class HttpError extends Error {
+    /**
+     * @param body
+     * @param status
+     */
+    constructor(body, status) {
+      super(body.message);
+
+      this.name = 'HttpError';
+
+      Error.captureStackTrace(this, this.constructor);
+
+      this.status = status || 500;
+      this.body = body;
+    }
+  }
+
   function Question(props) {
     return (
       <h1>Q. {props.quizSet.question}</h1>
@@ -50,6 +67,10 @@
   }
 
   function NextButton(props) {
+    if (props.errorBody.message) {
+      return null;
+    }
+
     return (
       <div
         id="btn"
@@ -76,6 +97,15 @@
     );
   }
 
+  function ErrorMessage(props) {
+    if (!props.errorBody.message) {
+      return null;
+    }
+
+    return (
+      <div className="alert">{props.errorBody.errorCode} {props.errorBody.message}</div>
+    );
+  }
   class App extends React.Component {
     constructor() {
       super();
@@ -89,6 +119,10 @@
         score: '',
         selectedAnswer: '',
         correctAnswer: '',
+        errorBody: {
+          errorCode: '',
+          message: ''
+        }
       };
     }
 
@@ -104,9 +138,14 @@
         };
         const response = await fetch('/api/reactQuiz', request);
 
+        if (response.status !== 200) {
+          const responseBody = await response.json();
+          return Promise.reject(new HttpError(responseBody, response.status));
+        }
+
         return await response.json();
       } catch (error) {
-        console.log(error);
+        return Promise.reject(error);
       }
     };
 
@@ -120,9 +159,14 @@
           },
         };
         const response = await fetch('/api/reactQuiz', request);
+        if (response.status !== 200) {
+          const responseBody = await response.json();
+          return Promise.reject(new HttpError(responseBody, response.status));
+        }
+        
         return await response.json();
       } catch (error) {
-        console.log(error)
+        return Promise.reject(error);
       }
     };
 
@@ -140,28 +184,62 @@
       if (this.state.correctAnswer !== '') {
         return;
       }
-
-      const response = await this.fetchAnswer(selectedAnswer);
-      this.setState({
-        selectedAnswer: selectedAnswer,
-        correctAnswer: response.correctAnswer,
-      });
+      try {
+        const response = await this.fetchAnswer(selectedAnswer);
+        this.setState({
+          selectedAnswer: selectedAnswer,
+          correctAnswer: response.correctAnswer,
+        });
+      } catch (error) {
+        if (error.name === 'HttpError') {
+          this.setState({
+            errorBody: {
+              errorCode: error.code,
+              message: error.message
+            }
+          });
+          return;
+        }
+        this.setState({
+          errorBody: {
+            errorCode: 500,
+            message: 'Internal Server Error'
+          }
+        });
+      }
     };
 
     handleNextClick = async () => {
       if(!this.state.selectedAnswer) {
         return;
       }
-
-      const response = await this.fetchQuiz();
-      this.setState({
-        quizSet: response.currentQuiz,
-        isFinished: response.isFinished,
-        isLast: response.isLast,
-        score: response.score,
-        selectedAnswer: '',
-        correctAnswer: '',
-      });
+      try {
+        const response = await this.fetchQuiz();
+        this.setState({
+          quizSet: response.currentQuiz,
+          isFinished: response.isFinished,
+          isLast: response.isLast,
+          score: response.score,
+          selectedAnswer: '',
+          correctAnswer: '',
+        });
+      } catch (error) {
+        if (error.name === 'HttpError') {
+          this.setState({
+            errorBody: {
+              errorCode: error.code,
+              message: error.message
+            }
+          });
+          return;
+        }
+        this.setState({
+          errorBody: {
+            errorCode: 500,
+            message: 'Internal Server Error'
+          }
+        });
+      }
     };
 
     handleReplayClick = async () => {
@@ -195,6 +273,7 @@
               <NextButton
                 selectedAnswer={this.state.selectedAnswer}
                 isLast={this.state.isLast}
+                errorBody={this.state.errorBody}
                 onClick={this.handleNextClick}
               />
             </div>
@@ -204,6 +283,7 @@
               <ReplayButton onClick={this.handleReplayClick}/>
             </div>
           )}
+          <ErrorMessage errorBody={this.state.errorBody} />
         </div>
       );
     };
