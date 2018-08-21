@@ -9,8 +9,14 @@
   <div id="app" className="container">
     <h1>My Todos</h1>
     <ul>
-      <li v-for="todo in todos">
-        {{ todo.title}}
+      <li v-for="todo in todos" :key="todo.id">
+        <label>
+          <input
+             type="checkbox"
+             v-model="todo.isDone"
+          />
+            {{ todo.title}}
+        </label>
       </li>
     </ul>
   </div>
