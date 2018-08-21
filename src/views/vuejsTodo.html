@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Todo App</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app" className="container">
+    <h1>My Todos</h1>
+    <ul>
+      <li v-for="todo in todos">
+        {{ todo.title}}
+      </li>
+    </ul>
+  </div>
+  <script src="../../public/js/vuejsTodo.js"></script>
+</body>
+</html>
