@@ -9,8 +9,8 @@
 <body>
   <div id="app" class="container">
     <h1>My Todos</h1>
-    <ul>
-      <li v-for="todo in todos" :key="todo.id">
+    <ul v-if="todos.length">
+      <li v-for="(todo, index) in todos" :key="todo.id">
         <label>
           <input
              type="checkbox"
@@ -18,7 +18,11 @@
           />
             {{ todo.title}}
         </label>
+        <span v-on:click="deleteItem(index)" class="command">[X]</span>
       </li>
+    </ul>
+    <ul v-else>
+      <li>Nothing to do!</li>
     </ul>
   </div>
   <script src="../../public/js/vuejsTodo.js"></script>
