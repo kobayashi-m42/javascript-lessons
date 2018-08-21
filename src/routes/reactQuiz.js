@@ -48,7 +48,6 @@ router.post('/', (req, res) => {
     return;
   }
 
-
   const targetQuizNumber = req.session.currentNumber;
   if (quiz.isCorrect(targetQuizNumber, selectedAnswer)) {
     req.session.correctCount += 1;

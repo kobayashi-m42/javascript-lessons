@@ -49,6 +49,10 @@ app.get('/reactTodo', (req, res) => {
   res.sendFile(path.join(`${__dirname}/src/views`, 'reactTodo.html'));
 });
 
+app.get('/vuejsTodo', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/src/views`, 'vuejsTodo.html'));
+});
+
 app.get('/reactQuiz', (req, res) => {
   res.sendFile(path.join(`${__dirname}/src/views`, 'reactQuiz.html'));
 });
