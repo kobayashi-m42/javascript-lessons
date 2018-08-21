@@ -24,6 +24,13 @@
     <ul v-else>
       <li>Nothing to do!</li>
     </ul>
+    <form  @submit.prevent="addItem">
+      <input
+         type="text"
+         v-model="item"
+      />
+      <input type="submit" value="Add"/>
+    </form>
   </div>
   <script src="../../public/js/vuejsTodo.js"></script>
 </body>
