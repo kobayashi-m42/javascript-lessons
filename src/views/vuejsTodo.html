@@ -14,18 +14,15 @@
       <span>({{ remaining.length }}/{{ todos.length }})</span>
     </h1>
     <ul v-if="todos.length">
-      <li v-for="(todo, index) in todos" :key="todo.id">
-        <label>
-          <input
-             type="checkbox"
-             v-model="todo.isDone"
-          />
-          <span v-bind:class="{ done : todo.isDone }">
-            {{ todo.title}}
-          </span>
-        </label>
-        <span v-on:click="deleteItem(index)" class="command">[X]</span>
-      </li>
+      <todo-item
+        v-for="(todo, index) in todos"
+        v-bind="todo"
+        v-bind:index="index"
+        :key="todo.id"
+        v-on:delete="deleteItem"
+        v-on:update="updateCheck"
+      >
+      </todo-item>
     </ul>
     <ul v-else>
       <li>Nothing to do!</li>
