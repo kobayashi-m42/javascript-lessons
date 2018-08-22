@@ -1,3 +1,36 @@
+Vue.component('todo-item', {
+  props: ['id','title','isDone', 'index'],
+  template: `
+    <li>
+      <label>
+        <input
+          type="checkbox"
+          v-model="childisChecked"
+          v-on:change="updateCheck"
+        />
+        <span v-bind:class="{ done : isDone }">
+          {{ title }}
+        </span>
+      </label>
+      <span v-on:click="deleteItem" class="command">[X]</span>
+     </li>
+  `,
+  data: function(){
+    return {
+      childisChecked: this.isDone,
+    }
+  },
+  methods: {
+    deleteItem: function(){
+      this.$emit('delete', this.index);
+    },
+    updateCheck: function(){
+      this.$emit('update', this.childisChecked, this.index);
+    }
+
+  }
+});
+
 new Vue({
   el: '#app',
   data: {
@@ -11,12 +44,14 @@ new Vue({
       }
       const item = {
         id: this.generateUniqueId(),
-
         title: this.item,
         isDone: false
       };
       this.item = '';
       this.todos.push(item);
+    },
+    updateCheck: function(childChecked, childIndex){
+      this.todos[childIndex].isDone = childChecked;
     },
     deleteItem: function (index) {
       if (!confirm('are you sure?')) {
