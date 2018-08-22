@@ -40,5 +40,11 @@ new Vue({
         return !todo.isDone;
       });
     }
+  },
+  mounted: function () {
+    this.todos = JSON.parse(localStorage.getItem('todos')) || []
+  },
+  updated: function () {
+    localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 });
