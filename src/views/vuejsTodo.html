@@ -8,7 +8,10 @@
 </head>
 <body>
   <div id="app" class="container">
-    <h1>My Todos</h1>
+    <h1>
+      My Todos
+      <span>({{ remaining.length }}/{{ todos.length }})</span>
+    </h1>
     <ul v-if="todos.length">
       <li v-for="(todo, index) in todos" :key="todo.id">
         <label>
@@ -24,7 +27,7 @@
     <ul v-else>
       <li>Nothing to do!</li>
     </ul>
-    <form  @submit.prevent="addItem">
+    <form @submit.prevent="addItem">
       <input
          type="text"
          v-model="item"
