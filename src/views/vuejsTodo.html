@@ -20,7 +20,9 @@
              type="checkbox"
              v-model="todo.isDone"
           />
+          <span v-bind:class="{ done : todo.isDone }">
             {{ todo.title}}
+          </span>
         </label>
         <span v-on:click="deleteItem(index)" class="command">[X]</span>
       </li>
