@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Quiz App</title>
+  <link rel="stylesheet" href="../../public/css/quiz.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="app">
+      <h1>Q. {{ quizSets.question }}</h1>
+      <ul>
+        <li v-for="answer in quizSets.answer">
+          {{ answer }}
+        </li>
+      </ul>
+      <div id="btn">
+        NextQuestion
+      </div>
+    </div>
+  </div>
+<script src="../../public/js/vuejsQuiz.js"></script>
+</body>
+</html>

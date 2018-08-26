@@ -138,7 +138,7 @@
           },
           body: `selectedAnswer=${selectedAnswer}`
         };
-        const response = await fetch('/api/reactQuiz', request);
+        const response = await fetch('/api/quiz', request);
 
         if (response.status !== 200) {
           const responseBody = await response.json();
@@ -160,7 +160,7 @@
             'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
           },
         };
-        const response = await fetch('/api/reactQuiz', request);
+        const response = await fetch('/api/quiz', request);
         if (response.status !== 200) {
           const responseBody = await response.json();
           return Promise.reject(new HttpError(responseBody, response.status));
