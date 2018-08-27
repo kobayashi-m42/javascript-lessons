@@ -21,7 +21,7 @@
           v-on:judge="handleAnswerClick"
         />
       </ul>
-      <div id="btn">
+      <div id="btn" @click="handleNextClick" v-bind:class="{ disabled: !selectedAnswer }">
         NextQuestion
       </div>
     </div>

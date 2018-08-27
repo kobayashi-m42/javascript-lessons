@@ -94,6 +94,20 @@ new Vue({
         console.log(error);
       }
     },
+    handleNextClick: async function (){
+      if(!this.selectedAnswer) {
+        return;
+      }
+      try {
+        const response = await this.fetchQuiz();
+        this.quizSets = response.currentQuiz;
+        this.csrfToken = response.csrfToken;
+        this.selectedAnswer = '';
+        this.correctAnswer = '';
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted: async function () {
     try {
