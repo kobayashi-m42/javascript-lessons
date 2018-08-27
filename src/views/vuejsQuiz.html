@@ -11,9 +11,15 @@
     <div id="app">
       <h1>Q. {{ quizSets.question }}</h1>
       <ul>
-        <li v-for="answer in quizSets.answer">
-          {{ answer }}
-        </li>
+        <answer
+          v-for="(answer, index) in quizSets.answer"
+          v-bind:answer="answer"
+          v-bind:index="index"
+          v-bind:selected-answer="selectedAnswer"
+          v-bind:correct-answer="correctAnswer"
+          :key="index"
+          v-on:judge="handleAnswerClick"
+        />
       </ul>
       <div id="btn">
         NextQuestion
