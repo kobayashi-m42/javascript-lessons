@@ -47,6 +47,9 @@ new Vue({
     },
     selectedAnswer: '',
     correctAnswer: '',
+    isFinished: false,
+    isLast: false,
+    score: '',
     csrfToken: ''
   },
   methods: {
@@ -102,17 +105,37 @@ new Vue({
         const response = await this.fetchQuiz();
         this.quizSets = response.currentQuiz;
         this.csrfToken = response.csrfToken;
+        this.isFinished = response.isFinished;
+        this.isLast = response.isLast;
+        this.score = response.score;
         this.selectedAnswer = '';
         this.correctAnswer = '';
       } catch (error) {
         console.log(error);
       }
     },
+    handleReplayClick: async function () {
+      try {
+        const response = await this.fetchQuiz();
+        this.quizSets = response.currentQuiz;
+        this.csrfToken = response.csrfToken;
+        this.isFinished = response.isFinished;
+        this.isLast = response.isLast;
+        this.score = response.score;
+        this.selectedAnswer = '';
+        this.correctAnswer = '';
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   mounted: async function () {
     try {
       const response = await this.fetchQuiz();
       this.quizSets = response.currentQuiz;
+      this.isFinished = response.isFinished;
+      this.isLast = response.isLast;
+      this.score = response.score;
       this.csrfToken = response.csrfToken;
     } catch (error) {
       console.log(error);
