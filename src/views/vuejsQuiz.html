@@ -9,20 +9,29 @@
 <body>
   <div id="container">
     <div id="app">
-      <h1>Q. {{ quizSets.question }}</h1>
-      <ul>
-        <answer
-          v-for="(answer, index) in quizSets.answer"
-          v-bind:answer="answer"
-          v-bind:index="index"
-          v-bind:selected-answer="selectedAnswer"
-          v-bind:correct-answer="correctAnswer"
-          :key="index"
-          v-on:judge="handleAnswerClick"
-        />
-      </ul>
-      <div id="btn" @click="handleNextClick" v-bind:class="{ disabled: !selectedAnswer }">
-        NextQuestion
+      <div v-if="isFinished">
+        <div id="result">
+          Your score ...
+          <div>{{ score }} %</div>
+        </div>
+        <div id="btn" @click="handleReplayClick">Replay?</div></a>
+      </div>
+      <div v-else>
+        <h1>Q. {{ quizSets.question }}</h1>
+        <ul>
+          <answer
+             v-for="(answer, index) in quizSets.answer"
+             v-bind:answer="answer"
+             v-bind:index="index"
+             v-bind:selected-answer="selectedAnswer"
+             v-bind:correct-answer="correctAnswer"
+             :key="answer"
+             v-on:judge="handleAnswerClick"
+          />
+        </ul>
+        <div id="btn" @click="handleNextClick" v-bind:class="{ disabled: !selectedAnswer }">
+          {{isLast ? 'Show Result' : 'NextQuestion'}}
+        </div>
       </div>
     </div>
   </div>
