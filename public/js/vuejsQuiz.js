@@ -1,3 +1,17 @@
+class HttpError extends Error {
+  /**
+   * @param body
+   * @param status
+   */
+  constructor(body, status) {
+    super(body.message);
+    this.name = 'HttpError';
+    Error.captureStackTrace(this, this.constructor);
+    this.status = status || 500;
+    this.body = body;
+  }
+}
+
 Vue.component('answer', {
   props: ['answer','selectedAnswer','correctAnswer'],
   template: `
@@ -50,6 +64,10 @@ new Vue({
     isFinished: false,
     isLast: false,
     score: '',
+    errorBody: {
+      errorCode: '',
+      message: ''
+    },
     csrfToken: ''
   },
   methods: {
@@ -63,6 +81,12 @@ new Vue({
           },
         };
         const response = await fetch('/api/quiz', request);
+
+        if (response.status !== 200) {
+          const responseBody = await response.json();
+          return Promise.reject(new HttpError(responseBody, response.status));
+        }
+
         return await response.json();
       } catch (error) {
         return Promise.reject(error);
@@ -80,6 +104,12 @@ new Vue({
           body: `selectedAnswer=${selectedAnswer}`
         };
         const response = await fetch('/api/quiz', request);
+
+        if (response.status !== 200) {
+          const responseBody = await response.json();
+          return Promise.reject(new HttpError(responseBody, response.status));
+        }
+
         return await response.json();
       } catch (error) {
         return Promise.reject(error);
@@ -94,7 +124,18 @@ new Vue({
         const response = await this.fetchAnswer(this.selectedAnswer);
         this.correctAnswer = response.correctAnswer;
       } catch (error) {
-        console.log(error);
+        if (error.name === 'HttpError') {
+          this.errorBody = {
+            errorCode: error.body.errorCode,
+            message: error.message
+          };
+          return;
+        }
+
+        this.errorBody = {
+          errorCode: 500,
+          message: 'Internal Server Error'
+        };
       }
     },
     handleNextClick: async function (){
@@ -111,7 +152,19 @@ new Vue({
         this.selectedAnswer = '';
         this.correctAnswer = '';
       } catch (error) {
-        console.log(error);
+        if (error.name === 'HttpError') {
+          this.errorBody = {
+            errorCode: error.body.errorCode,
+            message: error.message
+          };
+          return;
+        }
+
+        this.errorBody = {
+          errorCode: 500,
+          message: 'Internal Server Error'
+        };
+
       }
     },
     handleReplayClick: async function () {
@@ -125,7 +178,18 @@ new Vue({
         this.selectedAnswer = '';
         this.correctAnswer = '';
       } catch (error) {
-        console.log(error);
+        if (error.name === 'HttpError') {
+          this.errorBody = {
+            errorCode: error.body.errorCode,
+            message: error.message
+          };
+          return;
+        }
+
+        this.errorBody = {
+          errorCode: 500,
+          message: 'Internal Server Error'
+        };
       }
     }
   },
