@@ -29,9 +29,12 @@
              v-on:judge="handleAnswerClick"
           />
         </ul>
-        <div id="btn" @click="handleNextClick" v-bind:class="{ disabled: !selectedAnswer }">
+        <div v-if="!errorBody.message" id="btn" @click="handleNextClick" v-bind:class="{ disabled: !selectedAnswer }">
           {{isLast ? 'Show Result' : 'NextQuestion'}}
         </div>
+      </div>
+      <div v-if="errorBody.message" class="alert">
+        {{ errorBody.errorCode }} {{ errorBody.message }}
       </div>
     </div>
   </div>
