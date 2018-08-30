@@ -201,7 +201,18 @@ new Vue({
       this.score = response.score;
       this.csrfToken = response.csrfToken;
     } catch (error) {
-      console.log(error);
+      if (error.name === 'HttpError') {
+        this.errorBody = {
+          errorCode: error.body.errorCode,
+          message: error.message
+        };
+        return;
+      }
+
+      this.errorBody = {
+        errorCode: 500,
+        message: 'Internal Server Error'
+      };
     }
   }
 });
