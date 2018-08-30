@@ -17,7 +17,7 @@ Vue.component('answer', {
   template: `
     <li
       @click="judge(answer)"
-      v-bind:class="answerClass(answer)"
+      :class="answerClass(answer)"
     >
       {{ answer }} {{ resultMessage(answer) }}
     </li>
@@ -71,7 +71,7 @@ new Vue({
     csrfToken: ''
   },
   methods: {
-    fetchQuiz: async function (){
+    fetchQuiz: async function () {
       try {
         const request = {
           method: 'get',
@@ -115,7 +115,7 @@ new Vue({
         return Promise.reject(error);
       }
     },
-    handleAnswerClick: async function (answer){
+    handleAnswerClick: async function (answer) {
       if (this.selectedAnswer !== '') {
         return;
       }
@@ -138,7 +138,7 @@ new Vue({
         };
       }
     },
-    handleNextClick: async function (){
+    handleNextClick: async function () {
       if(!this.selectedAnswer) {
         return;
       }
@@ -164,7 +164,6 @@ new Vue({
           errorCode: 500,
           message: 'Internal Server Error'
         };
-
       }
     },
     handleReplayClick: async function () {
@@ -202,7 +201,18 @@ new Vue({
       this.score = response.score;
       this.csrfToken = response.csrfToken;
     } catch (error) {
-      console.log(error);
+      if (error.name === 'HttpError') {
+        this.errorBody = {
+          errorCode: error.body.errorCode,
+          message: error.message
+        };
+        return;
+      }
+
+      this.errorBody = {
+        errorCode: 500,
+        message: 'Internal Server Error'
+      };
     }
   }
 });
