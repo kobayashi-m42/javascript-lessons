@@ -14,22 +14,22 @@
           Your score ...
           <div>{{ score }} %</div>
         </div>
-        <div id="btn" @click="handleReplayClick">Replay?</div></a>
+        <div id="btn" @click="handleReplayClick">Replay?</div>
       </div>
       <div v-else>
         <h1>Q. {{ quizSets.question }}</h1>
         <ul>
           <answer
              v-for="(answer, index) in quizSets.answer"
-             v-bind:answer="answer"
-             v-bind:index="index"
-             v-bind:selected-answer="selectedAnswer"
-             v-bind:correct-answer="correctAnswer"
+             :answer="answer"
+             :index="index"
+             :selected-answer="selectedAnswer"
+             :correct-answer="correctAnswer"
              :key="answer"
-             v-on:judge="handleAnswerClick"
+             @judge="handleAnswerClick"
           />
         </ul>
-        <div v-if="!errorBody.message" id="btn" @click="handleNextClick" v-bind:class="{ disabled: !selectedAnswer }">
+        <div v-if="!errorBody.message" id="btn" @click="handleNextClick" :class="{ disabled: !selectedAnswer }">
           {{isLast ? 'Show Result' : 'NextQuestion'}}
         </div>
       </div>
